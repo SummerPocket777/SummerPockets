@@ -13,7 +13,12 @@ public final class SystemConstants {
     /**
      * 分页大小
      */
-    public static final long PAGE_SIZE = 8;
+    public static final int PAGE_SIZE = 8;
+    /**
+     * 默认当前页
+     */
+    public static final int PAGE_NO = 1;
+
     /**
      * 默认缓存页数
      */

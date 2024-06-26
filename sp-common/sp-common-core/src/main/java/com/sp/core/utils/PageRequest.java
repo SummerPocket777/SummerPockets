@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+import static com.sp.core.constants.SystemConstants.PAGE_NO;
+import static com.sp.core.constants.SystemConstants.PAGE_SIZE;
+
 /**
  * 页面请求
  *
@@ -12,7 +15,7 @@ import java.io.Serializable;
  */
 @Data
 public class PageRequest implements Serializable {
-    private int pageSize=8;
-    private int pageNo=1;
+    private int pageSize=PAGE_SIZE;
+    private int pageNo=PAGE_NO;
     private static final long serialVersionUID = 1L;
 }
