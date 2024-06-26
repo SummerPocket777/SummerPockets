@@ -10,6 +10,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/sp-common/sp-common-utils/pom.xml" />
+        <option value="$PROJECT_DIR$/sp-file-upload/pom.xml" />
       </set>
     </option>
   </component>

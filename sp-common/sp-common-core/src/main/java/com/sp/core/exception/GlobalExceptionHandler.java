@@ -1,7 +1,7 @@
 package com.sp.core.exception;
 
-import com.sp.core.domain.BaseResponse;
-import com.sp.core.domain.ResultUtils;
+import com.sp.core.common.BaseResponse;
+import com.sp.core.common.ResultUtils;
 import com.sp.core.enums.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;

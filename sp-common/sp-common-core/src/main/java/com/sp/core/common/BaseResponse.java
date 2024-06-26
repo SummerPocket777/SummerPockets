@@ -1,4 +1,4 @@
-package com.sp.core.domain;
+package com.sp.core.common;
 
 import com.sp.core.enums.ErrorCode;
 import lombok.Data;

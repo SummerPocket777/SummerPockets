@@ -15,6 +15,7 @@
         <module>sp-common-datasource</module>
         <module>sp-common-model</module>
         <module>sp-common-core</module>
+        <module>sp-common-fileupload</module>
     </modules>
     <artifactId>sp-common</artifactId>
     <packaging>pom</packaging>
