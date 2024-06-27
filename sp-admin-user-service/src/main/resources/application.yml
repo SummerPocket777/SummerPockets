@@ -1,6 +1,13 @@
 server:
   port: 9999
 
+
+mybatis:
+  type-aliases-package: com.sp.model.domain
+  configuration:
+    mapUnderscoreToCamelCase: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/test

@@ -42,8 +42,8 @@ module.exports = {
         changeOrigin: true
       }
     },
-    // 这里启动了mock服务，我将其关闭
-    before: require('./mock/mock-server.js')
+    // // 这里启动了mock服务，我将其关闭
+    // before: require('./mock/mock-server.js')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
