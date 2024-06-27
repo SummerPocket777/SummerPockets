@@ -21,7 +21,7 @@ public final class ResultUtils {
      * @return {@link BaseResponse}<{@link T}>
      */
     public static <T> BaseResponse<T> success(T data) {
-        return new BaseResponse<>(0, data, "ok");
+        return new BaseResponse<>(20000, data, "ok");
     }
 
     /**
@@ -32,7 +32,7 @@ public final class ResultUtils {
      * @return {@link BaseResponse}<{@link T}>
      */
     public static <T> BaseResponse<T> success(T data,String message) {
-        return new BaseResponse<>(0, data, message);
+        return new BaseResponse<>(20000, data, message);
     }
 
     /**
