@@ -2,11 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.sp</groupId>
+
     <artifactId>sp-admin-user-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>sp-admin-user-service</name>
     <description>sp-admin-user-service</description>
+    <parent>
+        <artifactId>SummerPockets</artifactId>
+        <groupId>com.sp</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
