@@ -22,6 +22,7 @@
         <module>sp-auth</module>
         <module>sp-pay</module>
         <module>sp-voucher</module>
+        <module>sp-admin-user-service</module>
     </modules>
 
     <properties>
