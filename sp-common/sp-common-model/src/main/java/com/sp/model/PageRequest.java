@@ -1,11 +1,10 @@
-package com.sp.core.utils;
+package com.sp.model;
 
+import com.sp.core.constants.SystemConstants;
 import lombok.Data;
 
 import java.io.Serializable;
 
-import static com.sp.core.constants.SystemConstants.PAGE_NO;
-import static com.sp.core.constants.SystemConstants.PAGE_SIZE;
 
 /**
  * 页面请求
@@ -15,7 +14,7 @@ import static com.sp.core.constants.SystemConstants.PAGE_SIZE;
  */
 @Data
 public class PageRequest implements Serializable {
-    private int pageSize=PAGE_SIZE;
-    private int pageNo=PAGE_NO;
+    private int pageSize= SystemConstants.PAGE_SIZE;
+    private int pageNo= SystemConstants.PAGE_NO;
     private static final long serialVersionUID = 1L;
 }
