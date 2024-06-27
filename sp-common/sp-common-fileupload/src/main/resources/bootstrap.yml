@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    nacos:
+      server-addr: 42.193.140.71:8848
+      username: nacos
+      password: summerrice
+      #注册中心
+      discovery:
+        namespace: 8df17812-8f13-4624-a16b-d95105438f2d
+      #配置中心
+      config:
+        namespace: 8df17812-8f13-4624-a16b-d95105438f2d
+        file-extension: yml
+        #        默认命名规则是 服务名-环境.文件后缀
+        name: sp_coomon_fileupload_config

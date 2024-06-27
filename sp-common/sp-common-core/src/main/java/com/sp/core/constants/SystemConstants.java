@@ -29,4 +29,13 @@ public final class SystemConstants {
      * 最小验证码
      */
     public static final int MINIMUM_VERIFICATION_CODE_NUM = 100000;
+
+    /**
+     * 默认缓冲区大小
+     */
+    public static final int DEFAULT_BUFFER_SIZE = 1024;
+    /**
+     * 文件结束
+     */
+    public static final int FILE_END = -1;
 }
