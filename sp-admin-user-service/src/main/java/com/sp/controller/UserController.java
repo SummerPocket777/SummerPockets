@@ -17,6 +17,7 @@ import java.util.ArrayList;
 @RequestMapping("api/admin/user")
 public class UserController {
     @RequestMapping("login")
+    //登录操作，通过登录获得token
     public BaseResponse<LoginTO> login(@RequestBody LoginVO vo) {
 
         System.out.println(vo.getUsername());
@@ -27,6 +28,9 @@ public class UserController {
         return ResultUtils.success(loginTO,"登录成功");
 //        return new BaseResponse<>(20000,"{roles:admin}","登录成功");
     }
+
+
+    //此处通过token获得用户的详细信息
     @RequestMapping("info")
     public BaseResponse<UserTO> info(@RequestParam("token") String token) {
 
@@ -40,5 +44,14 @@ public class UserController {
         user.setIntroduction("aaaaaaaaaa");
         user.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4878-b634-56703b4acafe.gif");
         return ResultUtils.success(user,"获取信息成功");
+    }
+
+
+    @RequestMapping("logout")
+    public BaseResponse<String> logout() {
+
+        //todo 这里写在redis上面清除token登录信息
+
+        return ResultUtils.success("退出成功");
     }
 }
