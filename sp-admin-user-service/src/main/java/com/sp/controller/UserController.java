@@ -1,27 +1,35 @@
 package com.sp.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sp.core.common.BaseResponse;
 import com.sp.core.common.ResultUtils;
 
+import com.sp.model.domain.SysBusiness;
+import com.sp.model.vo.SysBusinessVO;
+import com.sp.service.SysBusinessService;
 import com.sp.to.LoginTO;
 import com.sp.to.UserTO;
 
 import com.sp.vo.LoginVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/admin/user")
 public class UserController {
     @Autowired
     RedisTemplate<String,Object> redisTemplate;
+
+    @Resource
+    private SysBusinessService sysBusinessService;
     @RequestMapping("login")
     //登录操作，通过登录获得token
     public BaseResponse<LoginTO> login(@RequestBody LoginVO vo) {
@@ -72,4 +80,5 @@ public class UserController {
 
         return ResultUtils.success("退出成功");
     }
+
 }
