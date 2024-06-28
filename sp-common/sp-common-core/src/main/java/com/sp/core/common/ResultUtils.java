@@ -23,7 +23,9 @@ public final class ResultUtils {
     public static <T> BaseResponse<T> success(T data) {
         return new BaseResponse<>(20000, data, "ok");
     }
-
+    public static <T> BaseResponse<T> success() {
+        return new BaseResponse<>(20000, null, "ok");
+    }
     /**
      * 成功
      *

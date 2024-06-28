@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-
 /**
  * 全局异常处理程序
  *
@@ -25,6 +24,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public BaseResponse businessExceptionHandler(BusinessException e) {
+        log.error("BusinessException: ", e); // 打印完整的堆栈信息
         return ResultUtils.error(e.getCode(), e.getMessage(), e.getDescription());
     }
 
@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(RuntimeException.class)
     public BaseResponse runtimeExceptionHandler(RuntimeException e) {
+        log.error("RuntimeException: ", e); // 打印完整的堆栈信息
         return ResultUtils.error(ErrorCode.SYSTEM_ERROR, e.getMessage(), "");
     }
-
 }
