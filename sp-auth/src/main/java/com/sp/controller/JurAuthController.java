@@ -3,6 +3,8 @@ package com.sp.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sp.core.common.BaseResponse;
+import com.sp.core.common.ResultUtils;
 import com.sp.model.domain.SysBusiness;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,7 +85,7 @@ public class JurAuthController {
 	
 	// 权限校验  ---- http://localhost:8081/jur/checkPermission
 	@RequestMapping("checkPermission")
-	public SaResult checkPermission() {
+	public BaseResponse checkPermission() {
 		
 		// 判断：当前账号是否拥有一个权限，返回 true 或 false
 		// 		如果当前账号未登录，则永远返回 false 
@@ -97,7 +99,7 @@ public class JurAuthController {
 		StpUtil.checkPermissionAnd("user.add", "user.delete", "user.get");  // 指定多个，必须全部拥有才会校验通过 
 		StpUtil.checkPermissionOr("user.add", "user.delete", "user.get");  // 指定多个，只要拥有一个就会校验通过 
 		
-		return SaResult.ok();
+		return ResultUtils.success();
 	}
 
 	// 角色校验  ---- http://localhost:8081/jur/checkRole
