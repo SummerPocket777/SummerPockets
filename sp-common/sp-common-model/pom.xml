@@ -24,6 +24,10 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.sp</groupId>
             <artifactId>sp-common-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>

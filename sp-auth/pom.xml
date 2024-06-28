@@ -43,6 +43,12 @@
             <artifactId>sa-token-spring-boot-starter</artifactId>
             <version>1.38.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.sp</groupId>
+            <artifactId>sp-common-model</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 </project>

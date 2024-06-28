@@ -17,7 +17,7 @@ public class LoginController {
     public SaResult doLogin(String name, String pwd) {
         // 此处仅作模拟示例，真实项目需要从数据库中查询数据进行比对 
         if("zhang".equals(name) && "123456".equals(pwd)) {
-            StpUtil.login(10001);
+            StpUtil.login(1);
             return SaResult.ok("登录成功");
         }
         return SaResult.error("登录失败");
