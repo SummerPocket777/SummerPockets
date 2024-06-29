@@ -1,10 +1,9 @@
 <template>
 	<view>
 		点餐页面
-		<view>
-			<dishbox></dishbox>
-			<dishbox></dishbox>
-			<dishbox></dishbox>
+		<view class="a">
+
+			<dishbox class="b"></dishbox>
 			
 			
 		</view>
@@ -22,5 +21,16 @@
 </script>
 
 <style lang="scss">
-
+	.a{
+		display: flex;
+		 flex-wrap: wrap;
+		 height: 1400rpx;
+		
+		width: 100%;
+		.b{
+			margin-top: auto;
+			width: 100%;
+			height: 200rpx;
+		}
+	}
 </style>
