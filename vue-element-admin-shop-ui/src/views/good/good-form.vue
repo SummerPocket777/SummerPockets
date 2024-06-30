@@ -41,7 +41,7 @@
 
       <!-- 商品分类 -->
       <el-form-item label="商品分类" prop="cate">
-        <!-- <CateSelect></CateSelect> -->
+        <CateSelect />
       </el-form-item>
 
       <!-- 商品价格 -->
@@ -63,6 +63,17 @@
       <el-form-item label="商品图片" prop="type">
         <!-- action 就是图片上传的接口 -->
         <!-- <ImgUpload></ImgUpload> -->
+
+        <el-upload
+          class="upload-demo"
+          drag
+          action="https://jsonplaceholder.typicode.com/posts/"
+          multiple
+        >
+          <i class="el-icon-upload" />
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
       </el-form-item>
 
       <el-form-item>
@@ -77,13 +88,13 @@
 </template>
 
 <script>
-// import CateSelect from "./components/CateSelect.vue";
+import CateSelect from './components/CateSelect.vue'
 // import ImgUpload from "./components/ImgUpload.vue";
 
 export default {
   name: 'GoodForm',
   components: {
-    // CateSelect,
+    CateSelect
     // ImgUpload,
   },
   props: [],
