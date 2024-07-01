@@ -1,11 +1,11 @@
 <template>
   <div>
-    <el-select v-model="value" placeholder="请选择">
+    <el-select :value="value" placeholder="请选择" @change="$emit('input', $event)">
       <el-option
         v-for="item in options"
         :key="item.id"
-        :label="item.label"
-        :value="item.value"
+        :label="item.cate_zh"
+        :value="item.cate"
       />
     </el-select>
 
@@ -13,24 +13,37 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'CateSelect',
-  props: [],
+  props: {
+    value: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
-      value: '',
 
       options: [
-        { value: '选项1', label: '黄金糕' },
-        { value: '选项2', label: '双皮奶' },
-        { value: '选项3', label: '蚵仔煎' },
-        { value: '选项4', label: '龙须面' },
-        { value: '选项5', label: '北京烤鸭' }
+        { cate: '选项1', cate_zh: '黄金糕' },
+        { cate: '选项2', cate_zh: '双皮奶' },
+        { cate: '选项3', cate_zh: '蚵仔煎' },
+        { cate: '选项4', cate_zh: '龙须面' },
+        { cate: '选项5', cate_zh: '北京烤鸭' }
       ]
     }
   },
-  methods: {
+  computed: {
 
+    // goods模块下的分类选项的属性
+    ...mapState('goods', ['cates'])
+  },
+  created() {
+    // this.getCates()
+  },
+  methods: {
+    ...mapActions('goods', ['getCates'])
   }
 
 }

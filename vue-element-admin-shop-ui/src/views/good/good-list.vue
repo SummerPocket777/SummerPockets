@@ -21,7 +21,7 @@
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
         <el-button type="primary" icon="el-icon-edit">添加</el-button>
         <el-button type="primary" icon="el-icon-download">导出</el-button>
-        <el-checkbox style="margin-left: 20px">审核人</el-checkbox>
+
       </el-col>
     </el-row>
 
@@ -122,8 +122,8 @@ export default {
           name: '猪脚饭',
           address: '111',
           img: 'https://img10.360buyimg.com/mobilecms/s360x360_jfs/t1/132363/40/2790/109217/5ef04734E44252d8a/c9f28f327259059e.jpg!q70.dpg.webp',
-          price: 199,
-          cate: 'phone',
+          price: 19.9,
+          cate: '套餐饭',
           hot: true,
           published: false,
           check_status: false
@@ -134,8 +134,8 @@ export default {
           name: '鸡腿饭',
           address: '222',
           img: 'https://img10.360buyimg.com/mobilecms/s360x360_jfs/t1/132363/40/2790/109217/5ef04734E44252d8a/c9f28f327259059e.jpg!q70.dpg.webp',
-          price: 199,
-          cate: 'phone',
+          price: 19.9,
+          cate: '套餐饭',
           hot: false,
           published: true,
           check_status: true
