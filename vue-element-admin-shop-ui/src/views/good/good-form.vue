@@ -41,7 +41,7 @@
 
       <!-- 商品分类 -->
       <el-form-item label="商品分类" prop="cate">
-        <CateSelect />
+        <CateSelect v-model="ruleForm.cate" />
       </el-form-item>
 
       <!-- 商品价格 -->
@@ -90,6 +90,8 @@
 <script>
 import CateSelect from './components/CateSelect.vue'
 // import ImgUpload from "./components/ImgUpload.vue";
+
+import { submitGood } from '@/api/goods'
 
 export default {
   name: 'GoodForm',
@@ -141,7 +143,21 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          // alert('submit!')
+          // 此处进行提交操作
+          const data = { ...this.ruleForm }
+          submitGood(data).then(res => {
+            if (res.data.info) {
+              this.$message({
+                type: 'success',
+                message: '添加成功',
+                duration: 1500,
+                onClose: () => {
+                  this.$router.back('/good/good-list')
+                }
+              })
+            }
+          })
         } else {
           console.log('error submit!!')
           return false
