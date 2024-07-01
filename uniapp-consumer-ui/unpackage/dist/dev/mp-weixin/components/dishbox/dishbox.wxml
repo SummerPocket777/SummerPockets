@@ -1,0 +1,1 @@
+<view><view class="box"><image src="/static/logo.png" class="img"></image><view class="dish-box"><view class="dish-name">{{a}}</view><view class="num">月售{{b}}+</view><view class="bottom-box"><view class="price">￥{{c}}</view><view class="choice-num"><image src="/static/icon/加.png" class="add-img" bindtap="{{d}}"></image></view></view></view></view></view>

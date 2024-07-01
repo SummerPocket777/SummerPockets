@@ -1,0 +1,1 @@
+<view><view> 订单页面 <view bindtap="{{a}}">跳到点餐页面</view></view></view>

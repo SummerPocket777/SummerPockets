@@ -1,0 +1,1 @@
+<view> 点餐页面 <view><dishbox u-i="aabcca0a-0" bind:__l="__l"></dishbox><dishbox u-i="aabcca0a-1" bind:__l="__l"></dishbox><dishbox u-i="aabcca0a-2" bind:__l="__l"></dishbox></view></view>
