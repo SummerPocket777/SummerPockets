@@ -14,7 +14,7 @@
 			</view>
 			<view class="yuyue-view">
 				<text style="width: 150rpx;padding-top: 13rpx;">预计时间</text>
-				<uni-datetime-picker type="datetime" :clear-icon="false" :start="tody" v-model="yuyueInfo.datetimesingle" @change="handleChange" >
+				<uni-datetime-picker type="datetime" :clear-icon="false" :start="today" v-model="yuyueInfo.datetimesingle" @change="handleChange" >
 				</uni-datetime-picker>
 			</view>
 			<view class="yuyue-view">
