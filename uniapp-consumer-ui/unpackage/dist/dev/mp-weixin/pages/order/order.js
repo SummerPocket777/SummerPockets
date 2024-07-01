@@ -1,0 +1,1 @@
+"use strict";const e=require("../../common/vendor.js"),r={data(){return{}},async onLoad(){},methods:{}};function o(n,c,s,a,u,_){return{}}const t=e._export_sfc(r,[["render",o],["__file","C:/E/h/total/SummerPockets/uniapp-consumer-ui/pages/order/order.vue"]]);wx.createPage(t);
