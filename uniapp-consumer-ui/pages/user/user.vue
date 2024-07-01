@@ -19,7 +19,7 @@
 					<up-icon name="arrow-right"></up-icon>
 				</view>
 			</view>
-			<view class="text-t">
+			<view class="text-t" @click="gotomyyuyue">
 				<text class="description">我的预约</text>
 				<view class="right-icon">
 					<up-icon name="arrow-right"></up-icon>
@@ -42,7 +42,11 @@
 
 		},
 		methods: {
-
+			gotomyyuyue(){
+				uni.navigateTo({
+					url:'../yuyue/yuyue'
+				})
+			}
 		}
 	}
 </script>

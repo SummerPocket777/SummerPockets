@@ -4,7 +4,12 @@
     "pages/order/order",
     "pages/user/user",
     "pages/shop/shop",
-    "pages/order/test"
+    "pages/order/test",
+    "pages/user/coupons",
+    "pages/user/mycoupons",
+    "pages/user/redeem",
+    "pages/yuyue/yuyue",
+    "pages/yuyue/yuyueInfo"
   ],
   "window": {
     "navigationBarTextStyle": "white",

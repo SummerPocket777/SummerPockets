@@ -1,4 +1,13 @@
 {
+	"easycom": {
+			"autoscan": true,
+			// 注意一定要放在custom里，否则无效，https://ask.dcloud.net.cn/question/131175
+			"custom": {
+				"^u--(.*)": "@/uni_modules/uview-plus/components/u-$1/u-$1.vue",
+				"^up-(.*)": "@/uni_modules/uview-plus/components/u-$1/u-$1.vue",
+		    "^u-([^-].*)": "@/uni_modules/uview-plus/components/u-$1/u-$1.vue"
+			}
+	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 			"path": "pages/index/index",
@@ -57,6 +66,20 @@
 			{
 				"navigationBarTitleText" : "优惠券核销",
 				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/yuyue/yuyue",
+			"style" : 
+			{
+				"navigationBarTitleText" : "预约总览"
+			}
+		},
+		{
+			"path" : "pages/yuyue/yuyueInfo",
+			"style" : 
+			{
+				"navigationBarTitleText" : "预约详细信息"
 			}
 		}
 	],

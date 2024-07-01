@@ -37,7 +37,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .container {
   padding: 20rpx;
   background-color: #f5f5f5;

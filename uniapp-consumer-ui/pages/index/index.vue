@@ -3,7 +3,6 @@
 	
 
 		<button type="primary"  :loading="loading" @click="clike">预约</button>
-		<button @click="testt">跳转</button>
 		<view :class="yuyueClass">
 			<view class="yuyue-title">
 				<text>预约</text>
@@ -147,16 +146,11 @@
 				}
 				this.yuyueClass = "yuyue-box1"
 			},
-			testt(){
-				uni.navigateTo({
-					url:'/pages/my-yuyue/my-yuyue'
-				})
-			}
 		}
 	}
 </script>
 
-<style>
+<style lang="scss">
 	.content {
 		display: flex;
 		flex-direction: column;

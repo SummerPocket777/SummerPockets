@@ -134,5 +134,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-abebd402"], ["__file", "C:/E/h/total/SummerPockets/uniapp-consumer-ui/uni_modules/uview-plus/components/u-image/u-image.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-abebd402"], ["__file", "E:/lesson4/SummerPockets/uniapp-consumer-ui/uni_modules/uview-plus/components/u-image/u-image.vue"]]);
 wx.createComponent(Component);
