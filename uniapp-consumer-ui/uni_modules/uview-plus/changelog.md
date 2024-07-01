@@ -1,3 +1,7 @@
+## 3.3.2（2024-06-27）
+fix: 在Nvue环境中编译，出现大量警告 #406
+## 3.3.1（2024-06-27）
+u-button组件报错，找不到button mixins #407
 ## 3.3.0（2024-06-27）
 feat: checkbox支持label设置slot
 
@@ -22,11 +26,6 @@ feat: upload组建增加extension属性
 fix: upload组件参数mode添加left
 
 fix: 修复阴影在非nvue时白色背景色不显示
-
-
-
-
-
 
 ## 3.2.24（2024-06-11）
 fix: 修复时间选择器confirm事件触发时机导致2次才会触发v-model更新

@@ -33,7 +33,7 @@
 <style >
 .myyuyue-box{
 	display: flex;
-	background-color: aqua;
+	background: linear-gradient(186deg, #84F9B9 0%,#8fd3f4 100%);
 	margin-top: 20rpx;
 	margin-left: 25rpx;
 	width: 700rpx;
