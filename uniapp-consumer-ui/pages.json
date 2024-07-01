@@ -33,6 +33,31 @@
 			{
 				"navigationBarTitleText" : "test"
 			}
+		},
+		{
+			"path" : "pages/user/coupons",
+			"style" : 
+			{
+				"navigationBarTitleText" : "优惠券",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path" : "pages/user/mycoupons",
+			"style" : 
+			{
+				"navigationBarTitleText" : "优惠券详情",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/user/redeem",
+			"style" : 
+			{
+				"navigationBarTitleText" : "优惠券核销",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {
