@@ -7,7 +7,7 @@
 			<text class="user-name">{{userName}}</text>
 		</view>
 		<view class="container">
-			<view class="text-f">
+			<view class="text-f" @click="gotocoupons">
 				<text class="description">绑定手机号获取更多优惠推荐</text>
 				<view class="right-icon">
 					<up-icon name="arrow-right"></up-icon>
@@ -46,8 +46,17 @@
 				uni.navigateTo({
 					url:'../yuyue/yuyue'
 				})
+			},
+			gotocoupons(){
+				uni.navigateTo({
+					url:'/pages/user/coupons',
+					
+				})
+				console.log("点击量")
 			}
-		}
+			
+		},
+		   
 	}
 </script>
 
