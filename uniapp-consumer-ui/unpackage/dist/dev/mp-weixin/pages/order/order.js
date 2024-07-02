@@ -1,6 +1,5 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-<<<<<<< HEAD
 const common_assets = require("../../common/assets.js");
 const _sfc_main = {
   data() {
@@ -143,19 +142,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-93207a4f"], ["__file", "E:/lesson4/SummerPockets/uniapp-consumer-ui/pages/order/order.vue"]]);
-=======
-const _sfc_main = {
-  data() {
-    return {};
-  },
-  async onLoad() {
-  },
-  methods: {}
-};
-function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {};
-}
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/cc129/IdeaProjects/SummerPockets/uniapp-consumer-ui/pages/order/order.vue"]]);
->>>>>>> d6eafb7 (上传插件)
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-93207a4f"], ["__file", "E:/4thSummerPockets/uniapp-consumer-ui/pages/order/order.vue"]]);
 wx.createPage(MiniProgramPage);

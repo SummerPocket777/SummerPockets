@@ -26,5 +26,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     d: common_vendor.o((...args) => $options.gotomyyuyueInfo && $options.gotomyyuyueInfo(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/cc129/IdeaProjects/SummerPockets/uniapp-consumer-ui/pages/yuyue/yuyue.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/4thSummerPockets/uniapp-consumer-ui/pages/yuyue/yuyue.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -134,5 +134,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     n: common_vendor.n($data.yuyueClass)
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/lesson4/SummerPockets/uniapp-consumer-ui/pages/index/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/4thSummerPockets/uniapp-consumer-ui/pages/index/index.vue"]]);
 wx.createPage(MiniProgramPage);

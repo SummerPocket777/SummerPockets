@@ -64,5 +64,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     g: common_vendor.o((...args) => $options.redeemCoupon && $options.redeemCoupon(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-c5290c67"], ["__file", "E:/lesson4/SummerPockets/uniapp-consumer-ui/pages/user/redeem.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-c5290c67"], ["__file", "E:/4thSummerPockets/uniapp-consumer-ui/pages/user/redeem.vue"]]);
 wx.createPage(MiniProgramPage);
