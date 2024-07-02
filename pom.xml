@@ -23,6 +23,7 @@
         <module>sp-pay</module>
         <module>sp-voucher</module>
         <module>sp-admin-user-service</module>
+        <module>sp-consumer-book</module>
     </modules>
 
     <properties>
