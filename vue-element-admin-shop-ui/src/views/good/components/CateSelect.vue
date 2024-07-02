@@ -2,10 +2,10 @@
   <div>
     <el-select :value="value" placeholder="请选择" @change="$emit('input', $event)">
       <el-option
-        v-for="item in options"
+        v-for="item in cates"
         :key="item.id"
-        :label="item.cate_zh"
-        :value="item.cate"
+        :label="item.cate"
+        :value="item.id"
       />
     </el-select>
 
@@ -25,13 +25,6 @@ export default {
   data() {
     return {
 
-      options: [
-        { cate: '选项1', cate_zh: '黄金糕' },
-        { cate: '选项2', cate_zh: '双皮奶' },
-        { cate: '选项3', cate_zh: '蚵仔煎' },
-        { cate: '选项4', cate_zh: '龙须面' },
-        { cate: '选项5', cate_zh: '北京烤鸭' }
-      ]
     }
   },
   computed: {
@@ -40,7 +33,7 @@ export default {
     ...mapState('goods', ['cates'])
   },
   created() {
-    // this.getCates()
+    this.getCates()
   },
   methods: {
     ...mapActions('goods', ['getCates'])

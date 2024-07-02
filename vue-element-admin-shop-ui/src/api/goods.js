@@ -10,7 +10,7 @@ export function getGoodList(params) {
 
 export function getAllCates(params = {}) {
   return request({
-    url: '/cate/all',
+    url: '/consumer/dish/getAllCate',
     method: 'get',
     params
   })

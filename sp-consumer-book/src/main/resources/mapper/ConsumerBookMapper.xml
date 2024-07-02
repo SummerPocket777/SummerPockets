@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sp.mapper.ConsumerBookMapper">
+
+    <resultMap id="BaseResultMap" type="com.sp.pojo.ConsumerBook">
+            <id property="bookId" column="book_id" jdbcType="INTEGER"/>
+            <result property="bookNumber" column="book_number" jdbcType="INTEGER"/>
+            <result property="bookDate" column="book_date" jdbcType="TIMESTAMP"/>
+            <result property="bookName" column="book_name" jdbcType="VARCHAR"/>
+            <result property="bookPhone" column="book_phone" jdbcType="VARCHAR"/>
+            <result property="isStatus" column="is_status" jdbcType="INTEGER"/>
+            <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
+            <result property="consumerId" column="consumer_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        book_id,book_number,book_date,
+        book_name,book_phone,is_status,
+        is_delete,consumer_id
+    </sql>
+</mapper>

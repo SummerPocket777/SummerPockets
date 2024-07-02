@@ -39,6 +39,6 @@ public class UserStpInterfaceConfig implements StpInterface {
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
 //        假设自己是管理员 学生 老师
-        return Arrays.asList("admin","student","teacher");
+        return Arrays.asList("admin","student","teacher","user");
     }
 }
