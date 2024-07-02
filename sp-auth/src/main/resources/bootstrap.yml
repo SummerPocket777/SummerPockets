@@ -16,11 +16,6 @@ spring:
         file-extension: yml
         #        默认命名规则是 服务名-环境.文件后缀
         name: sp_mybatis_plus_config
-       # 配置数据库配置
-        extension-configs:
-          # 阿里的sms服务配置
-                     - data-id: sp_sms_config.yml
-                       group: DEFAULT_GROUP
   config:
     import: nacos:42.193.140.71:8848 # 添加这一行
   redis:
