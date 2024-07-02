@@ -9,6 +9,7 @@ package com.sp.core.constants;
 public final class SystemConstants {
     private SystemConstants() {
     }
+    public static final String SALT="SUMMER_POCKETS";
 
     /**
      * 分页大小
