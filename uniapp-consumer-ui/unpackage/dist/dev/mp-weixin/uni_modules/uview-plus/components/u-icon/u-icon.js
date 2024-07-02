@@ -1,1 +1,98 @@
-"use strict";const n=require("./icons.js"),t=require("./props.js"),l=require("../../libs/mixin/mpMixin.js"),o=require("../../libs/mixin/mixin.js"),u=require("../../libs/function/index.js"),s=require("../../libs/config/config.js"),i=require("../../../../common/vendor.js");require("../../libs/vue.js");require("../../libs/config/props.js");require("../../libs/config/props/actionSheet.js");require("../../libs/config/props/album.js");require("../../libs/config/props/alert.js");require("../../libs/config/props/avatar.js");require("../../libs/config/props/avatarGroup.js");require("../../libs/config/props/backtop.js");require("../../libs/config/props/badge.js");require("../../libs/config/props/button.js");require("../../libs/config/props/calendar.js");require("../../libs/config/props/carKeyboard.js");require("../../libs/config/props/cell.js");require("../../libs/config/props/cellGroup.js");require("../../libs/config/props/checkbox.js");require("../../libs/config/props/checkboxGroup.js");require("../../libs/config/props/circleProgress.js");require("../../libs/config/props/code.js");require("../../libs/config/props/codeInput.js");require("../../libs/config/props/col.js");require("../../libs/config/props/collapse.js");require("../../libs/config/props/collapseItem.js");require("../../libs/config/props/columnNotice.js");require("../../libs/config/props/countDown.js");require("../../libs/config/props/countTo.js");require("../../libs/config/props/datetimePicker.js");require("../../libs/config/props/divider.js");require("../../libs/config/props/empty.js");require("../../libs/config/props/form.js");require("../../libs/config/props/formItem.js");require("../../libs/config/props/gap.js");require("../../libs/config/props/grid.js");require("../../libs/config/props/gridItem.js");require("../../libs/config/props/icon.js");require("../../libs/config/props/image.js");require("../../libs/config/props/indexAnchor.js");require("../../libs/config/props/indexList.js");require("../../libs/config/props/input.js");require("../../libs/config/props/keyboard.js");require("../../libs/config/props/line.js");require("../../libs/config/props/lineProgress.js");require("../../libs/config/props/link.js");require("../../libs/config/props/list.js");require("../../libs/config/props/listItem.js");require("../../libs/config/props/loadingIcon.js");require("../../libs/config/props/loadingPage.js");require("../../libs/config/props/loadmore.js");require("../../libs/config/props/modal.js");require("../../libs/config/props/navbar.js");require("../../libs/config/color.js");require("../../libs/config/props/noNetwork.js");require("../../libs/config/props/noticeBar.js");require("../../libs/config/props/notify.js");require("../../libs/config/props/numberBox.js");require("../../libs/config/props/numberKeyboard.js");require("../../libs/config/props/overlay.js");require("../../libs/config/props/parse.js");require("../../libs/config/props/picker.js");require("../../libs/config/props/popup.js");require("../../libs/config/props/radio.js");require("../../libs/config/props/radioGroup.js");require("../../libs/config/props/rate.js");require("../../libs/config/props/readMore.js");require("../../libs/config/props/row.js");require("../../libs/config/props/rowNotice.js");require("../../libs/config/props/scrollList.js");require("../../libs/config/props/search.js");require("../../libs/config/props/section.js");require("../../libs/config/props/skeleton.js");require("../../libs/config/props/slider.js");require("../../libs/config/props/statusBar.js");require("../../libs/config/props/steps.js");require("../../libs/config/props/stepsItem.js");require("../../libs/config/props/sticky.js");require("../../libs/config/props/subsection.js");require("../../libs/config/props/swipeAction.js");require("../../libs/config/props/swipeActionItem.js");require("../../libs/config/props/swiper.js");require("../../libs/config/props/swipterIndicator.js");require("../../libs/config/props/switch.js");require("../../libs/config/props/tabbar.js");require("../../libs/config/props/tabbarItem.js");require("../../libs/config/props/tabs.js");require("../../libs/config/props/tag.js");require("../../libs/config/props/text.js");require("../../libs/config/props/textarea.js");require("../../libs/config/props/toast.js");require("../../libs/config/props/toolbar.js");require("../../libs/config/props/tooltip.js");require("../../libs/config/props/transition.js");require("../../libs/config/props/upload.js");require("../../libs/function/test.js");require("../../libs/util/route.js");require("../../libs/function/digit.js");const d={name:"u-icon",data(){return{}},emits:["click"],mixins:[l.mpMixin,o.mixin,t.props],computed:{uClasses(){let e=[];return e.push(this.customPrefix+"-"+this.name),this.customPrefix=="uicon"?e.push("u-iconfont"):e.push(this.customPrefix),this.color&&s.config.type.includes(this.color)&&e.push("u-icon__icon--"+this.color),e},iconStyle(){let e={};return e={fontSize:u.addUnit(this.size),lineHeight:u.addUnit(this.size),fontWeight:this.bold?"bold":"normal",top:u.addUnit(this.top)},this.color&&!s.config.type.includes(this.color)&&(e.color=this.color),e},isImg(){return this.name.indexOf("/")!==-1},imgStyle(){let e={};return e.width=this.width?u.addUnit(this.width):u.addUnit(this.size),e.height=this.height?u.addUnit(this.height):u.addUnit(this.size),e},icon(){return this.customPrefix!=="uicon"?"":n.icons["uicon-"+this.name]||this.name}},methods:{addStyle:u.addStyle,addUnit:u.addUnit,clickHandler(e){this.$emit("click",this.index),this.stop&&this.preventEvent(e)}}};function c(e,m,h,_,f,r){return i.e({a:r.isImg},r.isImg?{b:e.name,c:e.imgMode,d:i.s(r.imgStyle),e:i.s(r.addStyle(e.customStyle))}:{f:i.t(r.icon),g:i.n(r.uClasses),h:i.s(r.iconStyle),i:i.s(r.addStyle(e.customStyle)),j:e.hoverClass},{k:e.label!==""},e.label!==""?{l:i.t(e.label),m:e.labelColor,n:r.addUnit(e.labelSize),o:e.labelPos=="right"?r.addUnit(e.space):0,p:e.labelPos=="bottom"?r.addUnit(e.space):0,q:e.labelPos=="left"?r.addUnit(e.space):0,r:e.labelPos=="top"?r.addUnit(e.space):0}:{},{s:i.o((...q)=>r.clickHandler&&r.clickHandler(...q)),t:i.n("u-icon--"+e.labelPos)})}const a=i._export_sfc(d,[["render",c],["__scopeId","data-v-ac70166d"],["__file","C:/Users/57520/Desktop/SummerPockets/uniapp-consumer-ui/uni_modules/uview-plus/components/u-icon/u-icon.vue"]]);wx.createComponent(a);
+"use strict";
+const uni_modules_uviewPlus_components_uIcon_icons = require("./icons.js");
+const uni_modules_uviewPlus_components_uIcon_props = require("./props.js");
+const uni_modules_uviewPlus_libs_mixin_mpMixin = require("../../libs/mixin/mpMixin.js");
+const uni_modules_uviewPlus_libs_mixin_mixin = require("../../libs/mixin/mixin.js");
+const uni_modules_uviewPlus_libs_function_index = require("../../libs/function/index.js");
+const uni_modules_uviewPlus_libs_config_config = require("../../libs/config/config.js");
+const common_vendor = require("../../../../common/vendor.js");
+const _sfc_main = {
+  name: "u-icon",
+  data() {
+    return {};
+  },
+  emits: ["click"],
+  mixins: [uni_modules_uviewPlus_libs_mixin_mpMixin.mpMixin, uni_modules_uviewPlus_libs_mixin_mixin.mixin, uni_modules_uviewPlus_components_uIcon_props.props],
+  computed: {
+    uClasses() {
+      let classes = [];
+      classes.push(this.customPrefix + "-" + this.name);
+      if (this.customPrefix == "uicon") {
+        classes.push("u-iconfont");
+      } else {
+        classes.push(this.customPrefix);
+      }
+      if (this.color && uni_modules_uviewPlus_libs_config_config.config.type.includes(this.color))
+        classes.push("u-icon__icon--" + this.color);
+      return classes;
+    },
+    iconStyle() {
+      let style = {};
+      style = {
+        fontSize: uni_modules_uviewPlus_libs_function_index.addUnit(this.size),
+        lineHeight: uni_modules_uviewPlus_libs_function_index.addUnit(this.size),
+        fontWeight: this.bold ? "bold" : "normal",
+        // 某些特殊情况需要设置一个到顶部的距离，才能更好的垂直居中
+        top: uni_modules_uviewPlus_libs_function_index.addUnit(this.top)
+      };
+      if (this.color && !uni_modules_uviewPlus_libs_config_config.config.type.includes(this.color))
+        style.color = this.color;
+      return style;
+    },
+    // 判断传入的name属性，是否图片路径，只要带有"/"均认为是图片形式
+    isImg() {
+      return this.name.indexOf("/") !== -1;
+    },
+    imgStyle() {
+      let style = {};
+      style.width = this.width ? uni_modules_uviewPlus_libs_function_index.addUnit(this.width) : uni_modules_uviewPlus_libs_function_index.addUnit(this.size);
+      style.height = this.height ? uni_modules_uviewPlus_libs_function_index.addUnit(this.height) : uni_modules_uviewPlus_libs_function_index.addUnit(this.size);
+      return style;
+    },
+    // 通过图标名，查找对应的图标
+    icon() {
+      if (this.customPrefix !== "uicon")
+        return "";
+      return uni_modules_uviewPlus_components_uIcon_icons.icons["uicon-" + this.name] || this.name;
+    }
+  },
+  methods: {
+    addStyle: uni_modules_uviewPlus_libs_function_index.addStyle,
+    addUnit: uni_modules_uviewPlus_libs_function_index.addUnit,
+    clickHandler(e) {
+      this.$emit("click", this.index);
+      this.stop && this.preventEvent(e);
+    }
+  }
+};
+function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return common_vendor.e({
+    a: $options.isImg
+  }, $options.isImg ? {
+    b: _ctx.name,
+    c: _ctx.imgMode,
+    d: common_vendor.s($options.imgStyle),
+    e: common_vendor.s($options.addStyle(_ctx.customStyle))
+  } : {
+    f: common_vendor.t($options.icon),
+    g: common_vendor.n($options.uClasses),
+    h: common_vendor.s($options.iconStyle),
+    i: common_vendor.s($options.addStyle(_ctx.customStyle)),
+    j: _ctx.hoverClass
+  }, {
+    k: _ctx.label !== ""
+  }, _ctx.label !== "" ? {
+    l: common_vendor.t(_ctx.label),
+    m: _ctx.labelColor,
+    n: $options.addUnit(_ctx.labelSize),
+    o: _ctx.labelPos == "right" ? $options.addUnit(_ctx.space) : 0,
+    p: _ctx.labelPos == "bottom" ? $options.addUnit(_ctx.space) : 0,
+    q: _ctx.labelPos == "left" ? $options.addUnit(_ctx.space) : 0,
+    r: _ctx.labelPos == "top" ? $options.addUnit(_ctx.space) : 0
+  } : {}, {
+    s: common_vendor.o((...args) => $options.clickHandler && $options.clickHandler(...args)),
+    t: common_vendor.n("u-icon--" + _ctx.labelPos)
+  });
+}
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-ac70166d"], ["__file", "E:/4thSummerPockets/uniapp-consumer-ui/uni_modules/uview-plus/components/u-icon/u-icon.vue"]]);
+wx.createComponent(Component);

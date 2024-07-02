@@ -1,1 +1,138 @@
-"use strict";const e=require("../../common/vendor.js"),y={data(){return{loading:!1,yuyueClass:"yuyue-box1",yuyueInfo:{peopleNumber:"",userName:"",userPhone:"",datetimesingle:""},today:""}},onLoad(){this.setToday()},methods:{setToday(){const n=new Date,s=n.getFullYear(),i=String(n.getMonth()+1).padStart(2,"0"),r=String(n.getDate()).padStart(2,"0"),o=String(n.getHours()).padStart(2,"0"),u=String(n.getMinutes()).padStart(2,"0");this.today=`${s}-${i}-${r} ${o}:${u}`},clike(){console.log(this.yuyueClass),this.loading=!0,setTimeout(()=>{this.loading=!1,this.yuyueClass="yuyue-box"},2e3)},handleChange(n){console.log("日期"+n)},yuyueSure(n){console.log(this.yuyueInfo);const s=new Date(this.yuyueInfo.datetimesingle).getTime(),i=new Date().getTime(),r=i+7*24*60*60*1e3;this.yuyueInfo.datetimesingle==""?e.index.showToast({title:"请选择日期",icon:"error"}):this.yuyueInfo.userPhone==""?e.index.showToast({title:"请输入电话",icon:"error"}):this.yuyueInfo.userName==""?e.index.showToast({title:"请输入姓名",icon:"error"}):this.yuyueInfo.peopleNumber==""?e.index.showToast({title:"请选择人数",icon:"error"}):this.yuyueInfo.userPhone.length<11?e.index.showToast({title:"请输入正确的电话号码",icon:"none"}):s<i?e.index.showToast({title:"选择有误",icon:"none"}):s>r?e.index.showToast({title:"请选择7天内的日期",icon:"none"}):e.index.showToast({title:"预约成功",icon:"success"}),this.yuyueInfo={peopleNumber:"",userName:"",userPhone:"",datetimesingle:""},this.yuyueClass="yuyue-box1"},yuyueCancel(){this.yuyueInfo={peopleNumber:"",userName:"",userPhone:"",datetimesingle:""},this.yuyueClass="yuyue-box1"}}};Array||e.resolveComponent("uni-datetime-picker")();function a(n,s,i,r,o,u){return{a:o.loading,b:e.o((...t)=>u.clike&&u.clike(...t)),c:o.yuyueInfo.peopleNumber,d:e.o(t=>o.yuyueInfo.peopleNumber=t.detail.value),e:e.o(u.handleChange),f:e.o(t=>o.yuyueInfo.datetimesingle=t),g:e.p({type:"datetime",["clear-icon"]:!1,start:n.tody,modelValue:o.yuyueInfo.datetimesingle}),h:o.yuyueInfo.userName,i:e.o(t=>o.yuyueInfo.userName=t.detail.value),j:o.yuyueInfo.userPhone,k:e.o(t=>o.yuyueInfo.userPhone=t.detail.value),l:e.o((...t)=>u.yuyueCancel&&u.yuyueCancel(...t)),m:e.o((...t)=>u.yuyueSure&&u.yuyueSure(...t)),n:e.n(o.yuyueClass)}}const l=e._export_sfc(y,[["render",a],["__file","C:/Users/57520/Desktop/SummerPockets/uniapp-consumer-ui/pages/index/index.vue"]]);wx.createPage(l);
+"use strict";
+const common_vendor = require("../../common/vendor.js");
+const _sfc_main = {
+  data() {
+    return {
+      loading: false,
+      yuyueClass: "yuyue-box1",
+      yuyueInfo: {
+        peopleNumber: "",
+        userName: "",
+        userPhone: "",
+        datetimesingle: ""
+      },
+      today: ""
+    };
+  },
+  onLoad() {
+    this.setToday();
+  },
+  methods: {
+    setToday() {
+      const now = /* @__PURE__ */ new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const date = String(now.getDate()).padStart(2, "0");
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      this.today = `${year}-${month}-${date} ${hours}:${minutes}`;
+    },
+    clike() {
+      console.log(this.yuyueClass);
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        this.yuyueClass = "yuyue-box";
+      }, 2e3);
+    },
+    handleChange(e) {
+      console.log("日期" + e);
+    },
+    yuyueSure(e) {
+      console.log(this.yuyueInfo);
+      const selectedDateTime = new Date(this.yuyueInfo.datetimesingle).getTime();
+      const currentDateTime = (/* @__PURE__ */ new Date()).getTime();
+      const sevenDaysLaterDateTime = currentDateTime + 7 * 24 * 60 * 60 * 1e3;
+      if (this.yuyueInfo.datetimesingle == "") {
+        common_vendor.index.showToast({
+          title: "请选择日期",
+          icon: "error"
+        });
+      } else if (this.yuyueInfo.userPhone == "") {
+        common_vendor.index.showToast({
+          title: "请输入电话",
+          icon: "error"
+        });
+      } else if (this.yuyueInfo.userName == "") {
+        common_vendor.index.showToast({
+          title: "请输入姓名",
+          icon: "error"
+        });
+      } else if (this.yuyueInfo.peopleNumber == "") {
+        common_vendor.index.showToast({
+          title: "请选择人数",
+          icon: "error"
+        });
+      } else if (this.yuyueInfo.userPhone.length < 11) {
+        common_vendor.index.showToast({
+          title: "请输入正确的电话号码",
+          icon: "none"
+        });
+      } else if (selectedDateTime < currentDateTime) {
+        common_vendor.index.showToast({
+          title: "选择有误",
+          icon: "none"
+        });
+      } else if (selectedDateTime > sevenDaysLaterDateTime) {
+        common_vendor.index.showToast({
+          title: "请选择7天内的日期",
+          icon: "none"
+        });
+      } else {
+        common_vendor.index.showToast({
+          title: "预约成功",
+          icon: "success"
+        });
+      }
+      this.yuyueInfo = {
+        peopleNumber: "",
+        userName: "",
+        userPhone: "",
+        datetimesingle: ""
+      };
+      this.yuyueClass = "yuyue-box1";
+    },
+    yuyueCancel() {
+      this.yuyueInfo = {
+        peopleNumber: "",
+        userName: "",
+        userPhone: "",
+        datetimesingle: ""
+      };
+      this.yuyueClass = "yuyue-box1";
+    }
+  }
+};
+if (!Array) {
+  const _easycom_uni_datetime_picker2 = common_vendor.resolveComponent("uni-datetime-picker");
+  _easycom_uni_datetime_picker2();
+}
+const _easycom_uni_datetime_picker = () => "../../uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker.js";
+if (!Math) {
+  _easycom_uni_datetime_picker();
+}
+function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return {
+    a: $data.loading,
+    b: common_vendor.o((...args) => $options.clike && $options.clike(...args)),
+    c: $data.yuyueInfo.peopleNumber,
+    d: common_vendor.o(($event) => $data.yuyueInfo.peopleNumber = $event.detail.value),
+    e: common_vendor.o($options.handleChange),
+    f: common_vendor.o(($event) => $data.yuyueInfo.datetimesingle = $event),
+    g: common_vendor.p({
+      type: "datetime",
+      ["clear-icon"]: false,
+      start: $data.today,
+      modelValue: $data.yuyueInfo.datetimesingle
+    }),
+    h: $data.yuyueInfo.userName,
+    i: common_vendor.o(($event) => $data.yuyueInfo.userName = $event.detail.value),
+    j: $data.yuyueInfo.userPhone,
+    k: common_vendor.o(($event) => $data.yuyueInfo.userPhone = $event.detail.value),
+    l: common_vendor.o((...args) => $options.yuyueCancel && $options.yuyueCancel(...args)),
+    m: common_vendor.o((...args) => $options.yuyueSure && $options.yuyueSure(...args)),
+    n: common_vendor.n($data.yuyueClass)
+  };
+}
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/4thSummerPockets/uniapp-consumer-ui/pages/index/index.vue"]]);
+wx.createPage(MiniProgramPage);

@@ -1,1 +1,12 @@
-"use strict";const e=require("../../common/vendor.js"),r={data(){return{}}};function t(n,o,c,a,u,_){return{}}const s=e._export_sfc(r,[["render",t],["__file","C:/Users/57520/Desktop/SummerPockets/uniapp-consumer-ui/pages/order/test.vue"]]);wx.createPage(s);
+"use strict";
+const common_vendor = require("../../common/vendor.js");
+const _sfc_main = {
+  data() {
+    return {};
+  }
+};
+function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return {};
+}
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/4thSummerPockets/uniapp-consumer-ui/pages/order/test.vue"]]);
+wx.createPage(MiniProgramPage);
