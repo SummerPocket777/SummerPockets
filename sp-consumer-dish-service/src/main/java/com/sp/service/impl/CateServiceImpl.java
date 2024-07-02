@@ -30,14 +30,10 @@ public class CateServiceImpl implements CateService {
     @Override
     // 从redis中获取数据,如果redis数据库中有数据，则返回，如果没有数据，则加载数据至redis，然后返回
     public List<Category> getAllCate() {
-
-
         if(redisTemplate.opsForValue().get("cate")!=null){
-
             Object o = redisTemplate.opsForValue().get("cate");
             String json = String.valueOf(o);
             return JSON.parseArray(json, Category.class);
-
         }
         // redis数据库中没有数据,则加载数据至redis，然后返回
         return loadAllCateToRedis();

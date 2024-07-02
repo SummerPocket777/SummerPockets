@@ -31,4 +31,8 @@ public class DishServiceImpl implements DishService {
         redisTemplate.opsForValue().set("dishList", dishList);
         return dishList;
     }
+
+    public Boolean insertDish(Dish dish){
+        return true;
+    }
 }

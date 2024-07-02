@@ -21,4 +21,6 @@ public class DishController {
     public BaseResponse<List<Dish>> getDishList() {
         return ResultUtils.success(dishService.getDishList());
     }
+
+
 }

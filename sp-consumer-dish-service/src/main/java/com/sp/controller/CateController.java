@@ -22,9 +22,6 @@ public class CateController {
         return ResultUtils.success(cateService.getAllCate());
     }
 
-    @GetMapping("getDishList")
-    public BaseResponse<List<Dish>> getDishList(){
-        return null;
-    }
+
 
 }
