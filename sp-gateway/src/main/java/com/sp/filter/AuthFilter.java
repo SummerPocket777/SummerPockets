@@ -2,8 +2,7 @@ package com.sp.filter;
 
 import com.alibaba.fastjson.JSON;
 
-import com.sp.core.common.BaseResponse;
-import com.sp.core.common.ResultUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -61,7 +60,7 @@ public class AuthFilter implements GlobalFilter {
 
 
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        BaseResponse<Object> error = ResultUtils.error(401, "登录已过期，请重新登录", "登录已过期，请重新登录");
+        String error = "登录信息已失效";
         String jsonString = JSON.toJSONString(error);
         DataBuffer wrap = response.bufferFactory().wrap(jsonString.getBytes());
 
