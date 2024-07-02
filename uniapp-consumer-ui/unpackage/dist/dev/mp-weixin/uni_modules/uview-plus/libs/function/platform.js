@@ -1,7 +1,1 @@
-"use strict";
-let platform = "none";
-platform = "vue3";
-platform = "mp";
-platform = "weixin";
-const platform$1 = platform;
-exports.platform = platform$1;
+"use strict";let t="none";t="vue3";t="mp";t="weixin";const e=t;exports.platform=e;

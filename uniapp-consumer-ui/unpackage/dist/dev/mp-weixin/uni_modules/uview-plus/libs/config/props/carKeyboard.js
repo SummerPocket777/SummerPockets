@@ -1,8 +1,1 @@
-"use strict";
-const CarKeyboard = {
-  // 车牌号键盘
-  carKeyboard: {
-    random: false
-  }
-};
-exports.CarKeyboard = CarKeyboard;
+"use strict";const a={carKeyboard:{random:!1}};exports.CarKeyboard=a;

@@ -1,4 +1,1 @@
-"use strict";
-const uni_modules_uviewPlus_libs_luchRequest_adapters_index = require("../adapters/index.js");
-const dispatchRequest = (config) => uni_modules_uviewPlus_libs_luchRequest_adapters_index.adapter(config);
-exports.dispatchRequest = dispatchRequest;
+"use strict";const s=require("../adapters/index.js"),t=e=>s.adapter(e);exports.dispatchRequest=t;

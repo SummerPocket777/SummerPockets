@@ -1,5 +1,1 @@
-"use strict";
-function isAbsoluteURL(url) {
-  return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url);
-}
-exports.isAbsoluteURL = isAbsoluteURL;
+"use strict";function s(t){return/^([a-z][a-z\d+\-.]*:)?\/\//i.test(t)}exports.isAbsoluteURL=s;

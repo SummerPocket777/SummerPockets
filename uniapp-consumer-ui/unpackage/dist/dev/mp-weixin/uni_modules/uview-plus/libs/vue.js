@@ -1,5 +1,1 @@
-"use strict";
-const defineMixin = (options) => {
-  return options;
-};
-exports.defineMixin = defineMixin;
+"use strict";const e=i=>i;exports.defineMixin=e;

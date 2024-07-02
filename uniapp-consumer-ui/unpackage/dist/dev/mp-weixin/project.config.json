@@ -21,7 +21,17 @@
   "libVersion": "3.4.7",
   "appid": "touristappid",
   "projectname": "sp-consumer-ui",
-  "condition": {},
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/user/user",
+          "pathName": "pages/user/user",
+          "query": ""
+        }
+      ]
+    }
+  },
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
