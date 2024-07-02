@@ -1,0 +1,45 @@
+server:
+  port: 3777
+
+spring:
+  application:
+    name: sp-gateway
+  cloud:
+    nacos:
+      server-addr: 42.193.140.71:8848
+      username: nacos
+      password: summerrice
+      #注册中心
+      discovery:
+        namespace: 8df17812-8f13-4624-a16b-d95105438f2d
+    gateway:
+      routes:
+        - id: sp-consumer-dish-service  #nacos上面的路由名
+          uri: lb://sp-consumer-dish-service  #lb代表可以实现负载均衡,需要导入负载均衡的依赖
+          predicates: #断言，判断是否符合路径
+            - Path=/consumer-dish/**
+          filters:
+            - StripPrefix=1 # 转发路由之前先去掉第一层路径
+            - name: RequestRateLimiter
+              args:
+                #设置的数值就代表 每秒向令牌桶添加多少个令牌
+                redis-rate-limiter.replenishRate: 10
+                #令牌桶的容量，即允许在 1 秒内完成的最大请求数。设置为 0 则表示拒绝所有请求
+                redis-rate-limiter.burstCapacity: 5
+                # 一个引用名为 KeyResolver 的 bean 的 SpEL 表达式(限流维度)
+                key-resolver: "#{@keyResolver}"
+
+        - id: sp-admin-user-service  #nacos上面的路由名
+          uri: lb://sp-admin-user-service  #lb代表可以实现负载均衡,需要导入负载均衡的依赖
+          predicates: #断言，判断是否符合路径
+            - Path=/admin-user/**
+          filters:
+            - StripPrefix=1 # 转发路由之前先去掉第一层路径
+            - name: RequestRateLimiter
+              args:
+                #设置的数值就代表 每秒向令牌桶添加多少个令牌
+                redis-rate-limiter.replenishRate: 10
+                #令牌桶的容量，即允许在 1 秒内完成的最大请求数。设置为 0 则表示拒绝所有请求
+                redis-rate-limiter.burstCapacity: 5
+                # 一个引用名为 KeyResolver 的 bean 的 SpEL 表达式(限流维度)
+                key-resolver: "#{@keyResolver}"

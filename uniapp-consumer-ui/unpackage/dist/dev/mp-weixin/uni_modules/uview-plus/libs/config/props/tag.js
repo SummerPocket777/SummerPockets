@@ -1,1 +1,23 @@
-"use strict";const e={tag:{type:"primary",disabled:!1,size:"medium",shape:"square",text:"",bgColor:"",color:"",borderColor:"",closeColor:"#C6C7CB",name:"",plainFill:!1,plain:!1,closable:!1,show:!0,icon:"",iconColor:""}};exports.Tag=e;
+"use strict";
+const Tag = {
+  // tag 组件
+  tag: {
+    type: "primary",
+    disabled: false,
+    size: "medium",
+    shape: "square",
+    text: "",
+    bgColor: "",
+    color: "",
+    borderColor: "",
+    closeColor: "#C6C7CB",
+    name: "",
+    plainFill: false,
+    plain: false,
+    closable: false,
+    show: true,
+    icon: "",
+    iconColor: ""
+  }
+};
+exports.Tag = Tag;

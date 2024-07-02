@@ -5,6 +5,6 @@ import com.sp.model.domain.Dish;
 import org.apache.ibatis.annotations.Mapper;
 
 
-@Mapper
+
 public interface DishMapper extends BaseMapper<Dish> {
 }
