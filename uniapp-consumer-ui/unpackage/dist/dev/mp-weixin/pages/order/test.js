@@ -1,1 +1,1 @@
-"use strict";const e=require("../../common/vendor.js"),r={data(){return{}}};function t(o,c,s,a,u,_){return{}}const n=e._export_sfc(r,[["render",t],["__file","C:/E/h/total/SummerPockets/uniapp-consumer-ui/pages/order/test.vue"]]);wx.createPage(n);
+"use strict";const e=require("../../common/vendor.js"),r={data(){return{}}};function t(n,o,c,a,u,_){return{}}const s=e._export_sfc(r,[["render",t],["__file","C:/Users/57520/Desktop/SummerPockets/uniapp-consumer-ui/pages/order/test.vue"]]);wx.createPage(s);
