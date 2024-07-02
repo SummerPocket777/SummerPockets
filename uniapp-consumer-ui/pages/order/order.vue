@@ -57,11 +57,14 @@
 		data() {
 			return {
 				// 轮播图图片地址
-				// swiperList: [
-				// 	require('@/static/images/1.jpg'),
-				// 	require('@/static/images/2.jpg'),
-				// 	require('@/static/images/3.jpg'),
-				// ],
+				swiperList: [
+					'https://env-00jxgrtsee4i.normal.cloudstatic.cn/微信图片_20240701165424.jpg?expire_at=1719827771&er_sign=4a5bf17c70117b2f577525966764d5db',
+					'https://env-00jxgrtsee4i.normal.cloudstatic.cn/微信图片_20240701165433.jpg?expire_at=1719827864&er_sign=da2615285babc93e3b6d178d55aaa993',
+					'https://env-00jxgrtsee4i.normal.cloudstatic.cn/微信图片_20240701165436.jpg?expire_at=1719827871&er_sign=ddfb4cc5507557b9e29d1de3e6691ff1',
+					// require('@/static/images/1.jpg'),
+					// require('@/static/images/2.jpg'),
+					// require('@/static/images/3.jpg'),
+				],
 				// 状态-信息
 				status: new Map([
 					[10, '进行中'],
