@@ -21,6 +21,8 @@
     <file url="file://$PROJECT_DIR$/sp-common/sp-common-utils/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sp-consumer-book/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sp-consumer-book/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-consumer-dish-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-consumer-dish-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-consumer-dish-sub-service/src/main/java" charset="UTF-8" />
