@@ -102,6 +102,16 @@ public class SetmealController {
         return ResultUtils.success();
     }
 
-
-
+    /**
+     * 删除套餐 根据ids
+     *
+     * @param ids ids
+     * @return {@link BaseResponse }
+     */
+    @PostMapping
+    public BaseResponse delete(@RequestParam List<Long> ids){
+        log.info("批量删除套餐：{}",ids);
+        setmealService.removeByIds(ids);
+        return ResultUtils.success();
+    }
 }
