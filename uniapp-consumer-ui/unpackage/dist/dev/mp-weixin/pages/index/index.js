@@ -58,6 +58,11 @@ const _sfc_main = {
           title: "请输入姓名",
           icon: "error"
         });
+      } else if (this.yuyueInfo.userName.length > 10) {
+        common_vendor.index.showToast({
+          title: "请输入正确的昵称",
+          icon: "error"
+        });
       } else if (this.yuyueInfo.peopleNumber == "") {
         common_vendor.index.showToast({
           title: "请选择人数",
@@ -79,9 +84,34 @@ const _sfc_main = {
           icon: "none"
         });
       } else {
-        common_vendor.index.showToast({
-          title: "预约成功",
-          icon: "success"
+        common_vendor.index.request({
+          url: "http://127.0.0.1:9999/book/add",
+          method: "POST",
+          data: {
+            "bookNumber": this.yuyueInfo.peopleNumber,
+            "bookDate": this.yuyueInfo.datetimesingle,
+            "bookName": this.yuyueInfo.userName,
+            "bookPhone": this.yuyueInfo.userPhone
+          },
+          success: (res) => {
+            if (res.data.code == 2e4) {
+              common_vendor.index.showToast({
+                title: "预约成功",
+                icon: "success"
+              });
+            } else {
+              common_vendor.index.showToast({
+                title: "网络请求失败",
+                icon: "loading"
+              });
+            }
+          },
+          fail: (err) => {
+            common_vendor.index.showToast({
+              title: "网络请求失败",
+              icon: "loading"
+            });
+          }
         });
       }
       this.yuyueInfo = {

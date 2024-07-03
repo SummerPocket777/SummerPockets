@@ -19,7 +19,7 @@
 			</view>
 			<view class="yuyue-view">
 				<text style="width: 150rpx;text-align: center;letter-spacing: 40rpx;padding-top: 13rpx;">姓名</text>
-				<input class="yuyue-input" v-model="yuyueInfo.userName" placeholder="请输入姓名"  maxlength="5"/>
+				<input class="yuyue-input" v-model="yuyueInfo.userName" placeholder="请输入姓名" />
 			</view>
 			<view class="yuyue-view">
 				<text style="width: 150rpx;text-align: center;letter-spacing: 40rpx;padding-top: 13rpx;">电话</text>
@@ -100,6 +100,11 @@
 						title:'请输入姓名',
 						icon:'error',
 					})
+				}else if(this.yuyueInfo.userName.length > 10){
+					uni.showToast({
+						title:'请输入正确的昵称',
+						icon:'error',
+					})					
 				}else if(this.yuyueInfo.peopleNumber == ""){
 					uni.showToast({
 						title:'请选择人数',
@@ -123,11 +128,40 @@
 						icon:'none'
 					})
 				}else{
-					uni.showToast({
-						title:'预约成功',
-						icon:'success'
-						
+					uni.request({
+						url:'http://127.0.0.1:9999/book/add',
+						method:'POST',
+						data:{
+							"bookNumber": this.yuyueInfo.peopleNumber,
+							"bookDate": this.yuyueInfo.datetimesingle,
+							"bookName": this.yuyueInfo.userName,
+							"bookPhone": this.yuyueInfo.userPhone
+						},
+						success: (res) => {
+							if(res.data.code == 20000){
+								uni.showToast({
+									title:'预约成功',
+									icon:'success'
+									
+								})
+							}else{
+								uni.showToast({
+									title:'网络请求失败',
+									icon:'loading'
+									
+								})
+							}
+							
+						},
+						fail: (err) => {
+							uni.showToast({
+								title:'网络请求失败',
+								icon:'loading'
+								
+							})
+						}
 					})
+					
 				}
 				this.yuyueInfo = {
 					peopleNumber:'',
