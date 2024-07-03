@@ -4,6 +4,7 @@ package com.sp.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sp.model.domain.SysBusiness;
 import com.sp.model.vo.BusinessLoginVO;
+import com.sp.model.vo.BusinessRegisterVO;
 import com.sp.model.vo.SysBusinessVO;
 
 /**
@@ -20,4 +21,6 @@ public interface SysBusinessService extends IService<SysBusiness> {
     boolean updateBusiness(SysBusinessVO sysBusiness);
 
     String login(BusinessLoginVO vo);
+
+    long registerBusiness(BusinessRegisterVO vo);
 }

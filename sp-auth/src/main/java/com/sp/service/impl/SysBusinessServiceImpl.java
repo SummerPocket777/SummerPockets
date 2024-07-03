@@ -3,19 +3,25 @@ package com.sp.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sp.core.constants.RedisConstants;
+import com.sp.core.constants.StatusConstant;
 import com.sp.core.enums.ErrorCode;
 import com.sp.core.exception.BusinessException;
 import com.sp.mapper.SysBusinessMapper;
 import com.sp.model.domain.SysBusiness;
 import com.sp.model.vo.BusinessLoginVO;
+import com.sp.model.vo.BusinessRegisterVO;
 import com.sp.model.vo.SysBusinessVO;
 import com.sp.service.SysBusinessService;
+import com.sp.utils.RedisCacheUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,6 +38,9 @@ import static com.sp.core.constants.UserConstants.MINIMUM_PASSWORD_LEN;
 @Service
 public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBusiness>
     implements SysBusinessService{
+
+    @Resource
+    private RedisCacheUtil redisCacheUtil;
 
     /**
      * 获得安全店铺 后面可以用权限进行区分显示
@@ -134,6 +143,59 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
         StpUtil.login(safetyUser.getId());
         StpUtil.getTokenSession().set("user", safetyUser);
         return StpUtil.getTokenValue();
+    }
+
+    /**
+     * 注册业务
+     *
+     * @param vo 签证官
+     * @return long
+     */
+    @Override
+    public long registerBusiness(BusinessRegisterVO vo) {
+        String userAccount = vo.getAccount();
+        String userPassword = vo.getPassword();
+        String phone = vo.getPhone();
+        String code = vo.getCode();
+        //1 效验数据
+        if (!StringUtils.hasText(userAccount)||!StringUtils.hasText(userPassword)||!StringUtils.hasText(phone)||!StringUtils.hasText(code)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        validateAccPwd(userAccount,userPassword);
+        //2 从缓存中获取验证码
+        String redisKey = RedisConstants.REGISTER_CODE_KEY + phone;
+        String redisCode = redisCacheUtil.getCacheObject(redisKey);
+        if (redisCode == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"验证码已过期，请重新获取");
+        }
+        if (!redisCode.equals(code)){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"验证码错误");
+        }
+        //2.5 查询userAccount是否存在
+        if (this.getOne(new QueryWrapper<SysBusiness>().eq("account", userAccount)) != null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号已存在");
+        }
+
+        //2.6 查询手机号是否存在
+        if (this.getOne(new QueryWrapper<SysBusiness>().eq("phone", phone)) != null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"手机号已存在");
+        }
+        //3 插入数据库
+        SysBusiness sysBusiness = new SysBusiness();
+        sysBusiness.setAccount(userAccount);
+        // 2. 加密
+        String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
+        sysBusiness.setPassword(encryptPassword);
+        sysBusiness.setPhone(phone);
+        sysBusiness.setCreateTime(new Date());
+        sysBusiness.setStatus(StatusConstant.DISABLE);//未启用
+        sysBusiness.setUpdateTime(new Date());
+        sysBusiness.setIsDelete(0);
+        sysBusiness.setRoleId(1);//1 普通商家
+        long business = this.addBusiness(sysBusiness);
+        // 3 删除缓存的验证码
+        redisCacheUtil.deleteObject(redisKey);
+        return business;
     }
 
 
