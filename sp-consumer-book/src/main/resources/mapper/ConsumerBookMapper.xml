@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sp.mapper.ConsumerBookMapper">
+<mapper namespace="generator.mapper.ConsumerBookMapper">
 
-    <resultMap id="BaseResultMap" type="com.sp.pojo.ConsumerBook">
+    <resultMap id="BaseResultMap" type="generator.domain.ConsumerBook">
             <id property="bookId" column="book_id" jdbcType="INTEGER"/>
             <result property="bookNumber" column="book_number" jdbcType="INTEGER"/>
             <result property="bookDate" column="book_date" jdbcType="TIMESTAMP"/>
@@ -13,12 +13,12 @@
             <result property="isStatus" column="is_status" jdbcType="INTEGER"/>
             <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
             <result property="consumerId" column="consumer_id" jdbcType="INTEGER"/>
-<!--            <result property="bookCreateTime" column="book_createTime" javaType="TIMESTAMP"/>-->
+            <result property="bookCreatedate" column="book_createDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         book_id,book_number,book_date,
         book_name,book_phone,is_status,
-        is_delete,consumer_id
+        is_delete,consumer_id,book_createDate
     </sql>
 </mapper>
