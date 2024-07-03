@@ -6,13 +6,14 @@ import com.sp.core.common.BaseResponse;
 import com.sp.core.common.ResultUtils;
 import com.sp.core.constants.StatusConstant;
 import com.sp.model.domain.Setmeal;
+import com.sp.model.dto.DishItemDTO;
+import com.sp.model.vo.SetmealVO;
 import com.sp.service.SetmealService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.sql.Wrapper;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("consumer/setmeal")
+@Slf4j
 public class SetmealController {
     @Resource
     private SetmealService setmealService;
@@ -31,7 +33,6 @@ public class SetmealController {
      * @return
      */
     @GetMapping("/list")
-    @Cacheable(cacheNames = "setmealCache",key = "#categoryId")//key: setmealCache::100 value
     public BaseResponse<List<Setmeal>> list(Long categoryId) {
         Setmeal setmeal = new Setmeal();
         setmeal.setCategoryId(categoryId);
@@ -49,9 +50,29 @@ public class SetmealController {
      * @param id
      * @return
      */
-//    @GetMapping("/dish/{id}")
-//    public BaseResponse<List<DishItemVO>> dishList(@PathVariable("id") Long id) {
-//        List<DishItemVO> list = setmealService.getDishItemById(id);
-//        return ResultUtils.success(list);
-//    }
+    @GetMapping("/dish/{id}")
+    public BaseResponse<List<DishItemDTO>> dishList(@PathVariable("id") Long id) {
+        List<DishItemDTO> list = setmealService.getDishItemById(id);
+        return ResultUtils.success(list);
+    }
+
+
+    /**
+     * 新增套餐
+     *
+     * @param setmealVO setmeal签证官
+     */
+    @PostMapping("/add")
+    public BaseResponse<String> save(@RequestBody SetmealVO setmealVO) {
+
+        System.out.println("当前线程id："+Thread.currentThread().getId());
+
+        log.info("新增套餐：{}",setmealVO );
+        setmealService.saveSetmeal(setmealVO);
+        return ResultUtils.success();
+    }
+
+
+
+
 }

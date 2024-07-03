@@ -15,4 +15,13 @@
         id,setmeal_id,dish_id,
         copies
     </sql>
+
+    <insert id="insertBatch">
+        insert into setmeal_dish
+        (setmeal_id,dish_id,copies)
+        values
+        <foreach collection="setmealDishes" item="sd" separator=",">
+            (#{sd.setmealId},#{sd.dishId},#{sd.copies})
+        </foreach>
+    </insert>
 </mapper>
