@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sp.core.common.BaseResponse;
 import com.sp.core.common.ResultUtils;
 import com.sp.core.constants.StatusConstant;
+import com.sp.model.PageResult;
 import com.sp.model.domain.Setmeal;
 import com.sp.model.dto.DishItemDTO;
+import com.sp.model.vo.SetmealPageQueryVO;
 import com.sp.model.vo.SetmealVO;
 import com.sp.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
@@ -72,6 +74,33 @@ public class SetmealController {
         return ResultUtils.success();
     }
 
+    /**
+     * 套餐分页查询
+     *
+     * @param setmealPageQueryVO 设置页面查询volt}>
+     */
+    @GetMapping("/page")
+    public BaseResponse<PageResult> page(@RequestBody SetmealPageQueryVO setmealPageQueryVO){//springMVC会自动封装好
+        log.info("套餐分页查询参数：{}",setmealPageQueryVO );
+        PageResult pageResult = setmealService.pageQuery(setmealPageQueryVO);
+        return  ResultUtils.success(pageResult);
+    }
+
+
+    /**
+     * 起售停售套餐
+     *
+     * @param status 状态
+     * @param id     id
+     * @return {@link BaseResponse }
+     */
+    @PostMapping("status/{status}")
+    public BaseResponse startOrStop(@PathVariable Integer status,Long id){
+        // public BaseResponse startOtStop(@PathVariable("status") Integer status,Long id){//变量同名可以省略
+        log.info("起售停售套餐:{},{}",status,id);
+        setmealService.startOrStop(status,id);
+        return ResultUtils.success();
+    }
 
 
 

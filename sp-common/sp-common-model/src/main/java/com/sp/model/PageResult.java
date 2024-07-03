@@ -12,64 +12,77 @@ import java.util.List;
  * @date 2023/04/02
  */// T表示泛型，因为将来分页模型对应的数据类型是不确定的
 public class PageResult<T> {
-
-	// 分页导航的字符串 有待完成。。。。。。。。
-	// 因为每页显示多少条记录，是其它地方也可以使用
-	// ctrl+shift+u => 切换大小写 idea
-	public static final Integer PAGE_SIZE = SystemConstants.PAGE_SIZE;
+	public static final Long PAGE_SIZE = SystemConstants.PAGE_SIZE;
 
 	// 表示显示当前页[显示第几页]
 	// 前端页面来的
-	private Integer pageNo;
+	private Long pageNo;
 	// 表示每页显示几条记录
-	private Integer pageSize = PAGE_SIZE;
+	private Long pageSize = PAGE_SIZE;
 	// 表示共有多少页, 他是通过totalRow和pageSize计算得到
-	private Integer pageTotalCount;
+	private Long pageTotalCount;
 	// 表示的是共有多少条记录
 	// 计算得到pageTotalCount
 	// 是可以同数据库DB来的->DAO
-	private Integer totalRow;
+	private Long totalRow;
 	// 表示当前页，要显示的数据
 	// 从DB来的->DAO
 	private List<T> items;
-	private String url;
 
-	public PageResult() {
+	/**
+	 * 上一页
+	 */
+	private boolean hasPrevious;
+	/**
+	 * 下一页
+	 */
+	private boolean hasNext;
+
+	public boolean isHasPrevious() {
+		return hasPrevious;
 	}
-	public Integer getPageNo() {
+
+	public void setHasPrevious(boolean hasPrevious) {
+		this.hasPrevious = hasPrevious;
+	}
+
+	public boolean isHasNext() {
+		return hasNext;
+	}
+
+	public void setHasNext(boolean hasNext) {
+		this.hasNext = hasNext;
+	}
+
+	public Long getPageNo() {
 		return pageNo;
 	}
 
-	public void setPageNo(Integer pageNo) {
+	public void setPageNo(Long pageNo) {
 		this.pageNo = pageNo;
 	}
 
-	public Integer getPageSize() {
+	public Long getPageSize() {
 		return pageSize;
 	}
 
-	public void setPageSize(Integer pageSize) {
+	public void setPageSize(Long pageSize) {
 		this.pageSize = pageSize;
 	}
 
-	public Integer getPageTotalCount() {
+	public Long getPageTotalCount() {
 		return pageTotalCount;
 	}
 
-	/**
-	 * 设置页面总数
-	 *
-	 * @param pageTotalCount
-	 */
-	public void setPageTotalCount(Integer pageTotalCount) {
+	public void setPageTotalCount(Long pageTotalCount) {
 		this.pageTotalCount = pageTotalCount;
 	}
 
-	public Integer getTotalRow() {
+	public Long getTotalRow() {
 		return totalRow;
 	}
 
-	public void setTotalRow(Integer totalRow) {
+	public void setTotalRow(Long totalRow) {
 		this.totalRow = totalRow;
 	}
 
@@ -81,14 +94,6 @@ public class PageResult<T> {
 		this.items = items;
 	}
 
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
 	@Override
 	public String toString() {
 		return "PageResult{" +
@@ -97,7 +102,6 @@ public class PageResult<T> {
 				", pageTotalCount=" + pageTotalCount +
 				", totalRow=" + totalRow +
 				", items=" + items +
-				", url='" + url + '\'' +
 				'}';
 	}
 

@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Data
 public class PageRequest implements Serializable {
-    private int pageSize= SystemConstants.PAGE_SIZE;
-    private int pageNo= SystemConstants.PAGE_NO;
+    private Long pageSize= SystemConstants.PAGE_SIZE;
+    private Long pageNo= SystemConstants.PAGE_NO;
     private static final long serialVersionUID = 1L;
 }

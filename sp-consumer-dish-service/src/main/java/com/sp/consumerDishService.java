@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SpringBootApplication
-@MapperScan("com.sp.mapper")
 public class consumerDishService {
     public static void main( String[] args )
     {

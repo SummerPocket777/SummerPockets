@@ -7,7 +7,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 套餐
@@ -15,6 +19,9 @@ import lombok.Data;
  */
 @TableName(value ="setmeal")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Setmeal implements Serializable {
     /**
      * 主键

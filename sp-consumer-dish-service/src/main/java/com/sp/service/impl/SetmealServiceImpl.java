@@ -1,11 +1,17 @@
 package com.sp.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sp.core.enums.ErrorCode;
+import com.sp.core.exception.BusinessException;
 import com.sp.mapper.SetmealDishMapper;
 import com.sp.mapper.SetmealMapper;
+import com.sp.model.PageResult;
 import com.sp.model.domain.Setmeal;
 import com.sp.model.domain.SetmealDish;
 import com.sp.model.dto.DishItemDTO;
+import com.sp.model.vo.SetmealPageQueryVO;
 import com.sp.model.vo.SetmealVO;
 import com.sp.service.SetmealService;
 import org.springframework.beans.BeanUtils;
@@ -59,5 +65,56 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal>
 
         //保存套餐和菜品的关联关系
         setmealDishMapper.insertBatch(setmealDishes);
+    }
+
+    /**
+     * 页面查询
+     *
+     * @param setmealPageQueryVO 设置页面查询vo
+     * @return {@link PageResult }
+     */
+    @Override
+    public PageResult pageQuery(SetmealPageQueryVO setmealPageQueryVO) {
+        int PageNo = setmealPageQueryVO.getPageNo();
+        int pageSize = setmealPageQueryVO.getPageSize();
+        //设置分页参数
+        Page<Setmeal> page = new Page<>(PageNo, pageSize);
+        QueryWrapper<Setmeal> queryWrapper = new QueryWrapper<>();
+        //    private String name;
+        //    private Integer categoryId;
+        queryWrapper.like(setmealPageQueryVO.getName() != null, "name", setmealPageQueryVO.getName());
+        queryWrapper.eq(setmealPageQueryVO.getCategoryId() != null, "category_id", setmealPageQueryVO.getCategoryId());
+        setmealMapper.selectPage(page, queryWrapper);
+        //获取分页数据
+        List<Setmeal> list = page.getRecords();
+        PageResult<Setmeal> pageResult = new PageResult<>();
+        pageResult.setPageNo(page.getCurrent());
+        pageResult.setPageSize(page.getSize());
+        pageResult.setTotalRow(page.getTotal());
+        pageResult.setPageTotalCount(page.getPages());
+        pageResult.setItems(list);
+        if (page.getTotal() == 0) {
+            pageResult.setHasNext(false);
+            pageResult.setHasPrevious(false);
+        } else {
+            pageResult.setHasNext(page.hasNext());
+            pageResult.setHasPrevious(page.hasPrevious());
+        }
+        return pageResult;
+    }
+
+    /**
+     * 启动或停止
+     *
+     * @param status 状态
+     * @param id     id
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        if (status == null || id == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数为空");
+        }
+        Setmeal setmeal = Setmeal.builder().status(status).id(id).build();
+        setmealMapper.updateById(setmeal);
     }
 }

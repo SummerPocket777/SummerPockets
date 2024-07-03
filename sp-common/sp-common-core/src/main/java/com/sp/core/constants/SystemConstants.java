@@ -14,11 +14,11 @@ public final class SystemConstants {
     /**
      * 分页大小
      */
-    public static final int PAGE_SIZE = 8;
+    public static final Long PAGE_SIZE = 8L;
     /**
      * 默认当前页
      */
-    public static final int PAGE_NO = 1;
+    public static final Long PAGE_NO = 1L;
     //项目名
     public static final String PROJECT_NAME = "SummerPockets";
 
