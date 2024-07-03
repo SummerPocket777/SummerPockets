@@ -29,7 +29,6 @@ public class UserBookController {
         ConsumerBook consumerBook = new ConsumerBook();
         // 使用BeanUtils工具类，将SysBusinessVO对象的属性复制到SysBusiness对象中
         BeanUtils.copyProperties(bookVo, consumerBook);
-        consumerBook.setBookDate(new Date());
         consumerBook.setBookCreatedate(new Date());
         consumerBook.setIsStatus(1L);
         // 调用业务服务，添加业务信息，并返回新增业务的ID

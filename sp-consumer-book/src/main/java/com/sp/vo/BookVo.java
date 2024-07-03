@@ -15,7 +15,7 @@ public class BookVo extends PageRequest implements Serializable {
     @TableId(type = IdType.AUTO)
     private Long bookId;
     private Long bookNumber;
-    private Date bookDate;
+    private String bookDate;
     private String bookName;
     private String bookPhone;
     private Long isStatus;

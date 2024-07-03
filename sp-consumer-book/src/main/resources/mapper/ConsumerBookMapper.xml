@@ -7,7 +7,7 @@
     <resultMap id="BaseResultMap" type="generator.pojo.ConsumerBook">
             <id property="bookId" column="book_id" jdbcType="INTEGER"/>
             <result property="bookNumber" column="book_number" jdbcType="INTEGER"/>
-            <result property="bookDate" column="book_date" jdbcType="TIMESTAMP"/>
+            <result property="bookDate" column="book_date" jdbcType="VARCHAR"/>
             <result property="bookName" column="book_name" jdbcType="VARCHAR"/>
             <result property="bookPhone" column="book_phone" jdbcType="VARCHAR"/>
             <result property="isStatus" column="is_status" jdbcType="INTEGER"/>

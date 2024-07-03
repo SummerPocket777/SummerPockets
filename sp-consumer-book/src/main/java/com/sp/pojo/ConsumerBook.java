@@ -18,7 +18,7 @@ public class ConsumerBook implements Serializable {
 
 
   private Long bookNumber;//1
-  private Date bookDate;
+  private String bookDate;
   private String bookName;
   private String bookPhone;
   private Long isStatus;
