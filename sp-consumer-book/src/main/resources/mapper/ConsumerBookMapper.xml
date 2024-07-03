@@ -13,6 +13,7 @@
             <result property="isStatus" column="is_status" jdbcType="INTEGER"/>
             <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
             <result property="consumerId" column="consumer_id" jdbcType="INTEGER"/>
+<!--            <result property="bookCreateTime" column="book_createTime" javaType="TIMESTAMP"/>-->
     </resultMap>
 
     <sql id="Base_Column_List">
