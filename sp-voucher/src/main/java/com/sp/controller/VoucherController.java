@@ -10,6 +10,6 @@ public class VoucherController {
 
     @RequestMapping("/test")
     public ResponseDTO test() {
-        return new ResponseDTO(1,"优惠券获取成功", 123);
+        return new ResponseDTO(1,"优惠券获取成功1", 123);
     }
 }
