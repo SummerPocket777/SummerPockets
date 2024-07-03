@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="generator.mapper.ConsumerBookMapper">
 
-    <resultMap id="BaseResultMap" type="generator.domain.ConsumerBook">
+    <resultMap id="BaseResultMap" type="generator.pojo.ConsumerBook">
             <id property="bookId" column="book_id" jdbcType="INTEGER"/>
             <result property="bookNumber" column="book_number" jdbcType="INTEGER"/>
             <result property="bookDate" column="book_date" jdbcType="TIMESTAMP"/>
