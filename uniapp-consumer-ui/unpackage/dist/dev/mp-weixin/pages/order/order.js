@@ -5,11 +5,14 @@ const _sfc_main = {
   data() {
     return {
       // 轮播图图片地址
-      // swiperList: [
-      // 	require('@/static/images/1.jpg'),
-      // 	require('@/static/images/2.jpg'),
-      // 	require('@/static/images/3.jpg'),
-      // ],
+      swiperList: [
+        "https://env-00jxgrtsee4i.normal.cloudstatic.cn/微信图片_20240701165424.jpg?expire_at=1719827771&er_sign=4a5bf17c70117b2f577525966764d5db",
+        "https://env-00jxgrtsee4i.normal.cloudstatic.cn/微信图片_20240701165433.jpg?expire_at=1719827864&er_sign=da2615285babc93e3b6d178d55aaa993",
+        "https://env-00jxgrtsee4i.normal.cloudstatic.cn/微信图片_20240701165436.jpg?expire_at=1719827871&er_sign=ddfb4cc5507557b9e29d1de3e6691ff1"
+        // 	require('@/static/images/1.jpg'),
+        // 	require('@/static/images/2.jpg'),
+        // 	require('@/static/images/3.jpg'),
+      ],
       // 状态-信息
       status: /* @__PURE__ */ new Map([
         [10, "进行中"],
@@ -96,7 +99,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
     a: common_vendor.p({
       keyName: "image",
-      list: _ctx.swiperList,
+      list: $data.swiperList,
       indicator: true,
       indicatorMode: "line",
       circular: true
@@ -142,5 +145,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-93207a4f"], ["__file", "E:/4thSummerPockets/uniapp-consumer-ui/pages/order/order.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-93207a4f"], ["__file", "E:/lesson4/new/SummerPockets/uniapp-consumer-ui/pages/order/order.vue"]]);
 wx.createPage(MiniProgramPage);

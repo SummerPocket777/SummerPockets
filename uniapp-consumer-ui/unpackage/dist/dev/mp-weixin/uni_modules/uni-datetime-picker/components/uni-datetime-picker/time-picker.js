@@ -690,5 +690,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     K: common_vendor.s($data.fixNvueBug)
   }) : {});
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/4thSummerPockets/uniapp-consumer-ui/uni_modules/uni-datetime-picker/components/uni-datetime-picker/time-picker.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/lesson4/new/SummerPockets/uniapp-consumer-ui/uni_modules/uni-datetime-picker/components/uni-datetime-picker/time-picker.vue"]]);
 wx.createComponent(Component);

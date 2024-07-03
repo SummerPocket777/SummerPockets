@@ -25,7 +25,7 @@ const _sfc_main = {
     console.log("App Hide");
   }
 };
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/4thSummerPockets/uniapp-consumer-ui/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/lesson4/new/SummerPockets/uniapp-consumer-ui/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   app.use(uni_modules_uviewPlus_index.uviewPlus);
