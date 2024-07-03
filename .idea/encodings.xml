@@ -6,48 +6,28 @@
     <file url="file://$PROJECT_DIR$/sp-auth/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-auth/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-common/sp-common-core/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-common/sp-common-core/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-common/sp-common-datasource/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-common/sp-common-datasource/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-common/sp-common-fileupload/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-common/sp-common-fileupload/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-common/sp-common-log/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-common/sp-common-log/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-common/sp-common-model/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-common/sp-common-model/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-common/sp-common-redis/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-common/sp-common-redis/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-common/sp-common-utils/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-common/sp-common-utils/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-common/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-consumer-book/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-consumer-book/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-consumer-dish-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-consumer-dish-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-consumer-dish-sub-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-consumer-dish-sub-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-consumer-order-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-consumer-order-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-consumer-order-sub-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-consumer-order-sub-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-consumer-user-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-consumer-user-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-file-upload/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-file-upload/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-gateway/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-pay/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-pay/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-shop-menu-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-shop-menu-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-shop-order-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-shop-order-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-shop-user-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sp-shop-user-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-voucher/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-voucher/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
 </project>
