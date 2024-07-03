@@ -18,8 +18,8 @@ const actions = {
   getCates({ commit }) {
     getAllCates().then(res => {
       // console.log(res)
-      if (res.data.list) {
-        commit('set_cates', res.data.list)
+      if (res.data) {
+        commit('set_cates', res.data)
       }
     })
   }

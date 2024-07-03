@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/admin/user")
+@RequestMapping("admin/user")
 public class UserController {
     @Autowired
     RedisTemplate<String,Object> redisTemplate;

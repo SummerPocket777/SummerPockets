@@ -38,8 +38,11 @@ module.exports = {
     },
     proxy: {
       "/api": {
-        target: "http://localhost:9999",
-        changeOrigin: true
+        target: "http://localhost:3777",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/api": ""
+        }
       }
     },
     // // 这里启动了mock服务，我将其关闭

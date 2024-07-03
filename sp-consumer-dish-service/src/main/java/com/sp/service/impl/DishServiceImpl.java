@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.sp.mapper.DishMapper;
 import com.sp.model.domain.Dish;
 import com.sp.service.DishService;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class DishServiceImpl implements DishService {
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
     @Autowired
     private DishMapper dishMapper;
     @Autowired
@@ -31,8 +34,8 @@ public class DishServiceImpl implements DishService {
         redisTemplate.opsForValue().set("dishList", dishList);
         return dishList;
     }
-
-    public Boolean insertDish(Dish dish){
-        return true;
+    //发送消息队列
+    public void insertDish(Dish dish){
+        rocketMQTemplate.convertAndSend("addDish", JSON.toJSONString(dish));
     }
 }

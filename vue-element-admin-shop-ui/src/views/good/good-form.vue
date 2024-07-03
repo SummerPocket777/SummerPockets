@@ -141,6 +141,8 @@ export default {
   },
   methods: {
     submitForm(formName) {
+      console.log(this.ruleForm)
+
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // alert('submit!')

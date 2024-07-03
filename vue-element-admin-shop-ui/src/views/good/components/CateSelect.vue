@@ -4,7 +4,7 @@
       <el-option
         v-for="item in cates"
         :key="item.id"
-        :label="item.cate"
+        :label="item.name"
         :value="item.id"
       />
     </el-select>
@@ -13,12 +13,14 @@
 </template>
 
 <script>
+
 import { mapActions, mapState } from 'vuex'
+import { string } from 'clipboard'
 export default {
   name: 'CateSelect',
   props: {
     value: {
-      type: String,
+      type: string,
       default: ''
     }
   },

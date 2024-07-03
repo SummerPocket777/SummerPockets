@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getGoodList(params) {
   return request({
-    url: '/good/list',
+    url: '/api/consumer-dish/good/list',
     method: 'get',
     params
   })
@@ -10,7 +10,7 @@ export function getGoodList(params) {
 
 export function getAllCates(params = {}) {
   return request({
-    url: '/consumer/dish/getAllCate',
+    url: '/api/consumer-dish/consumer/dish/getAllCate',
     method: 'get',
     params
   })
@@ -18,7 +18,7 @@ export function getAllCates(params = {}) {
 
 export function submitGood(data) {
   return request({
-    url: '/good/update',
+    url: '/api/consumer-dish/consumer/dish/insertDish',
     method: 'POST',
     data
   })
@@ -26,7 +26,7 @@ export function submitGood(data) {
 
 export function getGoodInfo(id) {
   return request({
-    url: '/good/info',
+    url: '/api/consumer-dish/good/info',
     method: 'GET',
     params: {
       id
@@ -36,7 +36,7 @@ export function getGoodInfo(id) {
 
 export function getCheckGoodList(params) {
   return request({
-    url: '/check/good/list',
+    url: '/api/consumer-dish/check/good/list',
     method: 'get',
     params
   })
@@ -44,7 +44,7 @@ export function getCheckGoodList(params) {
 
 export function checkGood(good_id) {
   return request({
-    url: '/check/good',
+    url: '/api/consumer-dish/check/good',
     method: 'POST',
     data: {
       good_id,
@@ -55,7 +55,7 @@ export function checkGood(good_id) {
 
 export function goodDel(ids) {
   return request({
-    url: '/good/del',
+    url: '/api/consumer-dish/good/del',
     method: 'POST',
     data: {
       ids
