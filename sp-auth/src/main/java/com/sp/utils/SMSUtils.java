@@ -7,6 +7,10 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.sp.core.common.BaseResponse;
+import com.sp.core.common.ResultUtils;
+import com.sp.core.enums.ErrorCode;
+import com.sp.core.exception.BusinessException;
 import com.sp.properties.SMSProperties;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -37,7 +41,7 @@ public class SMSUtils {
      * @param phoneNum 电话号码
      * @param code     密码
      */
-    public static void sendMessage(String phoneNum, String code) {
+    public static BaseResponse sendMessage(String phoneNum, String code) {
         log.info("RegionId: " + smsProperties.getRegionId());
         log.info("AccessKey: " + smsProperties.getAccessKey());
         log.info("SecretKey: " + smsProperties.getSecretKey());
@@ -56,20 +60,21 @@ public class SMSUtils {
         request.setSignName(smsProperties.getSignName());
         request.setTemplateCode(smsProperties.getTemplateCode());
 
-
         // 使用 String.format 或者手动拼接 JSON 字符串
-//        String templateParam = String.format(smsProperties.getTemplateParam(), code);
-//        request.setTemplateParam(templateParam);
-
-
         request.setTemplateParam("{\"" + smsProperties.getTemplateParam() + "\":\"" + code + "\"}");
         try {
             SendSmsResponse response = client.getAcsResponse(request);
             log.info("发送结果: " + response.getMessage());
+            if (!"OK".equals(response.getCode())) {
+                throw new BusinessException(ErrorCode.SMS_SEND_FAILED, response.getMessage());
+            }
         } catch (ClientException e) {
-            throw new RuntimeException(e);
+            log.error("发送短信异常", e);
+            throw new BusinessException(ErrorCode.SMS_SEND_FAILED, "发送短信异常");
         }
+        return ResultUtils.success("短信发送成功");
     }
+
 
 
     /**

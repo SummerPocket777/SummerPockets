@@ -34,7 +34,8 @@ public enum ErrorCode {
     /**
      * 系统错误
      */
-    SYSTEM_ERROR(50000, "系统内部异常", "");
+    SYSTEM_ERROR(50000, "系统内部异常", ""),
+    SMS_SEND_FAILED(50001, "短信发送失败", "" );
 
     /**
      * 代码

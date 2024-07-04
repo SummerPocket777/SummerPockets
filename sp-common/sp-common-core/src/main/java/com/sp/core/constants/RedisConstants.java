@@ -9,15 +9,19 @@ package com.sp.core.constants;
 public final class RedisConstants {
     private RedisConstants() {
     }
-
+    /**
+     * 注册图片key
+     */
+    public static final String REGISTER_IMG_CODE_KEY = "SummerPockets:register:imgCode:";
     /**
      * 注册验证码键
      */
-    public static final String REGISTER_CODE_KEY = "SummerPockets:register:";
+    public static final String REGISTER_CODE_KEY = "SummerPockets:register:phoneCode:";
     /**
      * 注册验证码过期时间
      */
     public static final Integer REGISTER_CODE_TTL = 5;
+    public static final Integer REGISTER_IMG_CODE_TTL = 1;
     /**
      * 用户更新电话键
      */
