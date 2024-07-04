@@ -1,8 +1,8 @@
 <template>
 	<view class="content">
 		<view class="top">
-			<view class="user-img">
-				
+			<view  class="user-img">
+				<image :src="userImage"></image>
 			</view>
 			<text class="user-name">{{userName}}</text>
 		</view>
@@ -35,11 +35,14 @@
 	export default {
 		data() {
 			return {
-				userName:"用户名称"
+				userName:"用户名称",
+				userImage:''
 			}
 		},
 		onLoad() {
-
+			this.userName = getApp().globalData.userName
+			this.userImage = getApp().globalData.userImage
+			console.log(this.userImage)
 		},
 		methods: {
 			gotomyyuyue(){
