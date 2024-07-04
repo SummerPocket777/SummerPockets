@@ -197,6 +197,8 @@
 							console.log(res)
 							console.log(res.userInfo.nickName)
 							console.log(res.userInfo.avatarUrl)
+							getApp().globalData.userName = res.userInfo.nickName
+							getApp().globalData.userImage = res.userInfo.avatarUrl
 							this.clike()
 						},
 						fail: (err) => {
