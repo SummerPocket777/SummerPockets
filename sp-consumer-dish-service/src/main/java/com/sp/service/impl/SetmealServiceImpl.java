@@ -74,7 +74,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal>
      * @return {@link PageResult }
      */
     @Override
-    public PageResult pageQuery(SetmealPageQueryVO setmealPageQueryVO) {
+    public PageResult<Setmeal> pageQuery(SetmealPageQueryVO setmealPageQueryVO) {
         int PageNo = setmealPageQueryVO.getPageNo();
         int pageSize = setmealPageQueryVO.getPageSize();
         //设置分页参数

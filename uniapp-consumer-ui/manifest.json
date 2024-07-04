@@ -1,6 +1,6 @@
 {
     "name" : "sp-consumer-ui",
-    "appid" : "__UNI__B2F1613",
+    "appid" : "__UNI__B106DD4",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -50,7 +50,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx4cb76cbc95da958e",
+        "appid" : "wx33475484a15eed9b",
         "setting" : {
             "urlCheck" : false
         },

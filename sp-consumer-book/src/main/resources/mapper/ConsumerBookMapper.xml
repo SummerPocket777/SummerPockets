@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="generator.mapper.ConsumerBookMapper">
+<mapper namespace="com.sp.mapper.ConsumerBookMapper">
 
-    <resultMap id="BaseResultMap" type="generator.pojo.ConsumerBook">
+    <resultMap id="BaseResultMap" type="com.sp.pojo.ConsumerBook">
             <id property="bookId" column="book_id" jdbcType="INTEGER"/>
             <result property="bookNumber" column="book_number" jdbcType="INTEGER"/>
             <result property="bookDate" column="book_date" jdbcType="VARCHAR"/>
@@ -21,4 +21,7 @@
         book_name,book_phone,is_status,
         is_delete,consumer_id,book_createDate
     </sql>
+    <select id="getBNameById" resultType="com.sp.to.BookTo">
+        SELECT business_name,book_date from sys_business,consumer_book WHERE sys_business.book_id=consumer_book.consumer_id
+    </select>
 </mapper>
