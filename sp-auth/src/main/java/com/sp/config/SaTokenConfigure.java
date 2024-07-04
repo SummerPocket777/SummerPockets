@@ -16,7 +16,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                         // 指定一条 match 规则
                         SaRouter
                                 .match("/**")    // 拦截的 path 列表，可以写多个 */
-                                .notMatch("/user/doLogin", "/anno/doLogin","/business/getCode")        // 排除掉的 path 列表，可以写多个
+                                .notMatch("/user/doLogin", "/anno/doLogin","/business/getCode","/captcha/getCode")        // 排除掉的 path 列表，可以写多个
                                 .check(r -> {
                                     System.out.println("亲亲，我进来了");
                                     StpUtil.checkLogin();

@@ -41,4 +41,4 @@ build/
 /sp-consumer-book/src/main/java/com/sp/pojo/
 
 #不提交unpackage
-/uniapp-consumer-ui/unpackage/
+unpackage/

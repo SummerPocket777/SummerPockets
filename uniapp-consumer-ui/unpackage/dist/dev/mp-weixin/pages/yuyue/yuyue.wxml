@@ -1,1 +1,0 @@
-<view><view class="myyuyue-box" bindtap="{{d}}"><text class="y-where">{{a}}</text><text class="y-when">{{b}}</text><text class="y-how">{{c}}</text></view></view>
