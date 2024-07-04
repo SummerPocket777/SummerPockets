@@ -59,5 +59,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     e: common_vendor.o((...args) => _ctx.noop && _ctx.noop(...args))
   } : {});
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-5cec8177"], ["__file", "E:/lesson4/new/SummerPockets/uniapp-consumer-ui/uni_modules/uview-plus/components/u-transition/u-transition.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-5cec8177"], ["__file", "C:/Users/cc129/IdeaProjects/SummerPockets/uniapp-consumer-ui/uni_modules/uview-plus/components/u-transition/u-transition.vue"]]);
 wx.createComponent(Component);

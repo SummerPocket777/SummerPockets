@@ -1,5 +1,6 @@
 package com.sp.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sp.core.common.BaseResponse;
 import com.sp.core.common.ResultUtils;
 import com.sp.core.enums.ErrorCode;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/book")
@@ -35,6 +37,12 @@ public class UserBookController {
         long bookId = consumerBookService.bookInsert(consumerBook);
         // 构建成功响应，包含新增业务的ID
         return ResultUtils.success(bookId);
+    }
+    @GetMapping("/selectPage")
+    public BaseResponse<List<ConsumerBook>> list(){
+        QueryWrapper<ConsumerBook> consumerBookQueryWrapper = new QueryWrapper<>();
+        List<ConsumerBook> list = consumerBookService.list(consumerBookQueryWrapper);
+        return ResultUtils.success(list);
     }
 
 }
