@@ -4,7 +4,11 @@ package com.sp.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sp.core.enums.ErrorCode;
 import com.sp.core.exception.BusinessException;
+import com.sp.model.dto.DishItemDTO;
 import com.sp.pojo.ConsumerBook;
+import com.sp.to.BookTo;
+
+import java.util.List;
 
 /**
 * @author cc129
@@ -13,7 +17,7 @@ import com.sp.pojo.ConsumerBook;
 * @Entity generator.domain.ConsumerBook
 */
 public interface ConsumerBookMapper extends BaseMapper<ConsumerBook> {
-
+    List<BookTo> getBNameById(Long consumerId);
 }
 
 

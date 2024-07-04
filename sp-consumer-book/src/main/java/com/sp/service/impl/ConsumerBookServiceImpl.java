@@ -9,6 +9,7 @@ import com.sp.mapper.ConsumerBookMapper;
 import com.sp.model.PageResult;
 import com.sp.pojo.ConsumerBook;
 import com.sp.service.ConsumerBookService;
+import com.sp.to.BookTo;
 import com.sp.vo.BookPageQueryVo;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +62,10 @@ public class ConsumerBookServiceImpl extends ServiceImpl<ConsumerBookMapper, Con
         return pageResult;
     }
 
-
+    @Override
+    public List<BookTo> getBNameById(Long id) {
+        return consumerBookMapper.getBNameById(id);
+    }
 
 
 }

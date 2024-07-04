@@ -4,7 +4,10 @@ package com.sp.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sp.model.PageResult;
 import com.sp.pojo.ConsumerBook;
+import com.sp.to.BookTo;
 import com.sp.vo.BookPageQueryVo;
+
+import java.util.List;
 
 /**
 * @author cc129
@@ -14,4 +17,5 @@ import com.sp.vo.BookPageQueryVo;
 public interface ConsumerBookService extends IService<ConsumerBook> {
     long bookInsert(ConsumerBook consumerBook);
     PageResult<ConsumerBook> pageQuery(BookPageQueryVo bookPageQueryVo);
+    List<BookTo> getBNameById(Long id);
 }

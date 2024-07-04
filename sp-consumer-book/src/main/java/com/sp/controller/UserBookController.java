@@ -7,11 +7,13 @@ import com.sp.core.enums.ErrorCode;
 import com.sp.core.exception.BusinessException;
 import com.sp.pojo.ConsumerBook;
 import com.sp.service.ConsumerBookService;
+import com.sp.to.BookTo;
 import com.sp.vo.BookVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +44,11 @@ public class UserBookController {
     public BaseResponse<List<ConsumerBook>> list(){
         QueryWrapper<ConsumerBook> consumerBookQueryWrapper = new QueryWrapper<>();
         List<ConsumerBook> list = consumerBookService.list(consumerBookQueryWrapper);
+        return ResultUtils.success(list);
+    }
+    @GetMapping("/getBNameById/{id}")
+    public BaseResponse<List<BookTo>> getBNameById(@PathVariable("id") Long id){
+        List<BookTo> list = consumerBookService.getBNameById(id);
         return ResultUtils.success(list);
     }
 

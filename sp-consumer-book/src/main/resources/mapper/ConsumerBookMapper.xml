@@ -21,4 +21,7 @@
         book_name,book_phone,is_status,
         is_delete,consumer_id,book_createDate
     </sql>
+    <select id="getBNameById" resultType="com.sp.to.BookTo">
+        SELECT business_name,book_date from sys_business,consumer_book WHERE sys_business.book_id=consumer_book.consumer_id
+    </select>
 </mapper>

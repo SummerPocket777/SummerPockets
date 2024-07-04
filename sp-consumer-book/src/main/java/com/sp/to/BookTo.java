@@ -1,15 +1,17 @@
 package com.sp.to;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Data
-public class BookTo {
-    private long bookId;
-    private long bookNumber;
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class BookTo implements Serializable {
     private String bookDate;
-    private String bookName;
-    private String bookPhone;
-    private long isStatus;
-    private long isDelete;
-    private long consumerId;
+    private String businessName;
 }
