@@ -31,7 +31,7 @@ public class UserBookController {
         }
         // 创建SysBusiness实例，用于存储业务信息
         ConsumerBook consumerBook = new ConsumerBook();
-        // 使用BeanUtils工具类，将SysBusinessVO对象的属性复制到SysBusiness对象中
+        // 使用BeanUtils工具类，将SysBusinessVO对象的属性复制到SysBusiness对象中1
         BeanUtils.copyProperties(bookVo, consumerBook);
         consumerBook.setBookCreatedate(new Date());
         consumerBook.setIsStatus(1L);
