@@ -30,7 +30,6 @@ const _sfc_main = {
       btn2: {
         width: "160rpx",
         height: "68rpx",
-        fontSize: "28rpx",
         borderRadius: "14rpx",
         fontSize: "34rpx"
       },
