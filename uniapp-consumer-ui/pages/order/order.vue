@@ -36,7 +36,7 @@
 						<u-button text="催单" :customStyle="btn2"></u-button>
 					</view>
 					<view>
-						<u-button text="结算" :customStyle="btn2"></u-button>
+						<u-button text="结算" :customStyle="btn2" @click="open"></u-button>
 					</view>
 					<view>
 						<u-button text="加餐" :customStyle="btn"></u-button>
@@ -47,15 +47,50 @@
 		<!-- 没有订单信息时显示 -->
 		<u-empty v-if="List.length < 1" mode="order">
 		</u-empty>
+    <!-- 支付方式选择弹窗 -->
+    <u-popup :show="typeShow" :closeable="true" :round="8" mode="center" @close="closePayment">
+      <view class="popup">
+        <!-- 弹窗标题 -->
+        <view class="title">请选择支付方式</view>
+        <!-- 微信支付选项 -->
+        <view class="cell">
+          <view>微信支付</view>
+          <view>
+            <!-- 微信支付选项按钮组 -->
+            <u-radio-group v-model="radioValue">
+              <u-radio name="wx_lite" activeColor="#00CA5B" size="22"></u-radio>
+            </u-radio-group>
+          </view>
+        </view>
+        <!-- 前台支付选项 -->
+        <view class="cell">
+          <view>到前台支付</view>
+          <view>
+            <!-- 前台支付选项按钮组 -->
+            <u-radio-group v-model="radioValue">
+              <u-radio name="member_amount" activeColor="#00CA5B" size="22"></u-radio>
+            </u-radio-group>
+          </view>
+        </view>
+        <!-- 确定按钮，用于确认支付方式选择 -->
+        <u-button @click="payment" :customStyle="btn4" text="确定"
+                  color="linear-gradient(to bottom, #FFB176, #FF7942)">
+        </u-button>
+      </view>
+    </u-popup>
 
 
-	</view>
+
+  </view>
 </template>
 
 <script>
 	export default {
 		data() {
 			return {
+				radioValue: 'wx_lite',
+        // 控制类型显示状态，默认隐藏 
+				typeShow: false,
 				// 轮播图图片地址
 				swiperList: [
             'https://env-00jxgrtsee4i.normal.cloudstatic.cn/微信图片_20240701165424.jpg?expire_at=1719827771&er_sign=4a5bf17c70117b2f577525966764d5db',
@@ -70,6 +105,15 @@
 					[10, '进行中'],
 					[20, '已完成'],
 				]),
+				btn4: {
+					width: '600rpx',
+					height: '80rpx',
+					background: 'red',
+					borderRadius: '10rpx',
+					border: 'none',
+					color: '#FFFFFF',
+					marginTop: '200rpx'
+				},
                 // 按钮的样式
 				btn: {
 					width: "160rpx",
@@ -129,6 +173,19 @@
 		onLoad() {
 		},
 		methods: {
+			// 确定
+			payment(){
+				console.log('类型',this.radioValue)
+			},
+			closePayment(){
+				this.typeShow = false
+			},
+			open(){
+				this.typeShow = true
+			},
+			clickRadio(val){
+				this.radioValue = val
+			}
 		}
 	}
 </script>
@@ -239,8 +296,40 @@
 		margin-top: 22rpx;
 		background-color: white !important;
 	}
-	
+
 	::v-deep .u-swiper__wrapper__item__wrapper__image {
 		height: 220rpx !important;
+	}
+	
+	.popup {
+		padding: 60rpx 60rpx 60rpx 60rpx;
+	     display: flex;flex-wrap: wrap;justify-content: center;
+		 width: 580rpx;
+		.title {
+			font-size: 36rpx;
+			font-weight: 600;
+			color: #333333;
+			width: 100%;
+			text-align: center;
+		}
+	
+		.label {
+			height: 40rpx;
+			font-size: 28rpx;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #999999;
+			margin: 14rpx 0 0 20rpx;
+		}
+		.cell{
+			display: flex;
+			width: 100%;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 20rpx;
+			margin-top: 40rpx;
+			box-shadow: 0rpx 8rpx 16rpx gray;
+			line-height: 74rpx;
+		}
 	}
 </style>
