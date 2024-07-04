@@ -1,8 +1,7 @@
 <template>
 	<view class="content" style="background-image: url(../../static/index-back.jpg);">
-	
-
-		<button type="primary"  :loading="loading" @click="clike">预约</button>
+	<!-- 小程序基础库需配置为 2.22.1 -->
+		<button  size="mini" open-type="getUserInfo" @tap="getUserProfile">预约</button>  
 		<view :class="yuyueClass">
 			<view class="yuyue-title">
 				<text>预约</text>
@@ -29,6 +28,7 @@
 				<button @click="yuyueCancel">取消</button>
 				<button type="primary" @click="yuyueSure">确认预约</button>		
 			</view>
+
 		</view>
 	</view>
 </template>
@@ -51,6 +51,11 @@
 		},
 		onLoad() {
 			this.setToday()
+			
+		},
+		onReady() {
+			
+			
 		},
 		methods: {
 			setToday() {
@@ -180,6 +185,33 @@
 				}
 				this.yuyueClass = "yuyue-box1"
 			},
+			getUserProfile(){
+				if(false){
+					console.log("一登陆")
+				}else{
+					console.log("未登录")
+					wx.getUserProfile({
+						desc:'测试',
+						success: (res) => {
+							console.log("进来了")
+							console.log(res)
+							console.log(res.userInfo.nickName)
+							console.log(res.userInfo.avatarUrl)
+							this.clike()
+						},
+						fail: (err) => {
+							console.log(err)
+							//拒绝授权
+							wx.showToast({
+								title:'拒绝授权',
+								icon:'error',
+								duration:2000
+							})
+						}
+					})
+				}
+				
+			}
 		}
 	}
 </script>

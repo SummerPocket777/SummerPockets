@@ -8,5 +8,5 @@ const _sfc_main = {
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {};
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/cc129/IdeaProjects/SummerPockets/uniapp-consumer-ui/pages/order/test.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/lesson4/new/SummerPockets/uniapp-consumer-ui/pages/order/test.vue"]]);
 wx.createPage(MiniProgramPage);

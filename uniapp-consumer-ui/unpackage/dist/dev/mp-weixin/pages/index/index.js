@@ -17,6 +17,8 @@ const _sfc_main = {
   onLoad() {
     this.setToday();
   },
+  onReady() {
+  },
   methods: {
     setToday() {
       const now = /* @__PURE__ */ new Date();
@@ -130,6 +132,29 @@ const _sfc_main = {
         datetimesingle: ""
       };
       this.yuyueClass = "yuyue-box1";
+    },
+    getUserProfile() {
+      {
+        console.log("未登录");
+        common_vendor.wx$1.getUserProfile({
+          desc: "测试",
+          success: (res) => {
+            console.log("进来了");
+            console.log(res);
+            console.log(res.userInfo.nickName);
+            console.log(res.userInfo.avatarUrl);
+            this.clike();
+          },
+          fail: (err) => {
+            console.log(err);
+            common_vendor.wx$1.showToast({
+              title: "拒绝授权",
+              icon: "error",
+              duration: 2e3
+            });
+          }
+        });
+      }
     }
   }
 };
@@ -143,26 +168,25 @@ if (!Math) {
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: $data.loading,
-    b: common_vendor.o((...args) => $options.clike && $options.clike(...args)),
-    c: $data.yuyueInfo.peopleNumber,
-    d: common_vendor.o(($event) => $data.yuyueInfo.peopleNumber = $event.detail.value),
-    e: common_vendor.o($options.handleChange),
-    f: common_vendor.o(($event) => $data.yuyueInfo.datetimesingle = $event),
-    g: common_vendor.p({
+    a: common_vendor.o((...args) => $options.getUserProfile && $options.getUserProfile(...args)),
+    b: $data.yuyueInfo.peopleNumber,
+    c: common_vendor.o(($event) => $data.yuyueInfo.peopleNumber = $event.detail.value),
+    d: common_vendor.o($options.handleChange),
+    e: common_vendor.o(($event) => $data.yuyueInfo.datetimesingle = $event),
+    f: common_vendor.p({
       type: "datetime",
       ["clear-icon"]: false,
       start: $data.today,
       modelValue: $data.yuyueInfo.datetimesingle
     }),
-    h: $data.yuyueInfo.userName,
-    i: common_vendor.o(($event) => $data.yuyueInfo.userName = $event.detail.value),
-    j: $data.yuyueInfo.userPhone,
-    k: common_vendor.o(($event) => $data.yuyueInfo.userPhone = $event.detail.value),
-    l: common_vendor.o((...args) => $options.yuyueCancel && $options.yuyueCancel(...args)),
-    m: common_vendor.o((...args) => $options.yuyueSure && $options.yuyueSure(...args)),
-    n: common_vendor.n($data.yuyueClass)
+    g: $data.yuyueInfo.userName,
+    h: common_vendor.o(($event) => $data.yuyueInfo.userName = $event.detail.value),
+    i: $data.yuyueInfo.userPhone,
+    j: common_vendor.o(($event) => $data.yuyueInfo.userPhone = $event.detail.value),
+    k: common_vendor.o((...args) => $options.yuyueCancel && $options.yuyueCancel(...args)),
+    l: common_vendor.o((...args) => $options.yuyueSure && $options.yuyueSure(...args)),
+    m: common_vendor.n($data.yuyueClass)
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/cc129/IdeaProjects/SummerPockets/uniapp-consumer-ui/pages/index/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/lesson4/new/SummerPockets/uniapp-consumer-ui/pages/index/index.vue"]]);
 wx.createPage(MiniProgramPage);
