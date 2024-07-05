@@ -26,6 +26,11 @@ import Layout from '@/layout'
  */
 
 /**
+ * 动态路由
+*/
+export const asyncRoutes = []
+
+/**
  * constantRoutes
  * a base page that does not have permission requirements
  * all roles can be accessed
@@ -62,19 +67,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    meta: { title: '案例', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'table',
         name: 'Table',
         component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '表格', icon: 'table' }
       },
       {
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        meta: { title: '树状表格', icon: 'tree' }
       }
     ]
   },

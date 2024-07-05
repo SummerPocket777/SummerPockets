@@ -27,6 +27,7 @@
     <file url="file://$PROJECT_DIR$/sp-consumer-order-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-consumer-order-sub-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-consumer-user-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sp-consumer-user-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-gateway/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sp-pay/src/main/java" charset="UTF-8" />
