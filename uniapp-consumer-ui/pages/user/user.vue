@@ -1,9 +1,7 @@
 <template>
 	<view class="content">
 		<view class="top">
-			<view  class="user-img">
-				<image :src="userImage"></image>
-			</view>
+			<image class="user-img" :src="userImage"></image>
 			<text class="user-name">{{userName}}</text>
 		</view>
 		<view class="container">
