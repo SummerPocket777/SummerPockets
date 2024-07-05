@@ -1,70 +1,56 @@
 package com.sp.filter;
 
-import com.alibaba.fastjson.JSON;
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.reactor.filter.SaReactorFilter;
+import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaResult;
+import com.sp.config.properties.IgnoreWhiteProperties;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.net.URI;
+/**
+ * [Sa-Token 权限认证] 拦截器
+ *
+ * @author Lion Li
+ */
+@Configuration
+@Slf4j
+public class AuthFilter {
 
-@Component
-public class AuthFilter implements GlobalFilter {
-    @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
+    /**
+     * 注册 Sa-Token 全局过滤器
+     */
+    @Bean
+    public SaReactorFilter getSaReactorFilter(IgnoreWhiteProperties ignoreWhite) {
 
+        return new SaReactorFilter()
+            // 拦截地址
+            .addInclude("/**")
+            .addExclude("/favicon.ico", "/actuator/**")
+            // 鉴权方法：每次访问进入
+            .setAuth(obj -> {
+                // 登录校验 -- 拦截所有路由
+                SaRouter.match("/**")
+                    .notMatch(ignoreWhite.getWhites())
+//                    .notMatch(whites)
+                    .check(r -> {
+                        System.err.println(ignoreWhite.getWhites());
+                        // 检查是否登录 是否有token
+                        StpUtil.checkLogin();
 
-
-    @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-
-//        定义一个白名单集合，然后获取访问的路由，如果在白名单内就放行
-//        如果不在就去redis里面检查一下，查看是否放行。
-        String[] whiteList = {"/user/login","/user/info","user/logout"};
-        ServerHttpRequest request = exchange.getRequest();
-        ServerHttpResponse response = exchange.getResponse();
-
-        URI uri = request.getURI();
-        System.out.println(uri);
-
-        for (String s : whiteList) {
-            if(uri.getPath().contains(s)){
-                System.out.println("我被放行了");
-                return chain.filter(exchange);
-            }
-        }
-
-
-
-        String token = request.getHeaders().getFirst("X-Token");
-
-
-        if (token != null){
-            token = token.replace("X-Token", "");
-            Boolean b = redisTemplate.hasKey(token);
-
-            if (b){
-                System.out.println("我被放行了");
-                return chain.filter(exchange);
-            }
-        }
-
-
-        response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        String error = "登录信息已失效";
-        String jsonString = JSON.toJSONString(error);
-        DataBuffer wrap = response.bufferFactory().wrap(jsonString.getBytes());
-
-
-        return response.writeWith(Mono.just(wrap));
+                    });
+            }).setError(e -> {
+                    log.error("网关过滤器的异常: ", e); // 打印完整的堆栈信息
+                if (e instanceof NotLoginException) {
+                    return SaResult.error(e.getMessage()).setCode(40100);
+                }
+                return SaResult.error("认证失败，无法访问系统资源").setCode(40101);
+            });
     }
 }

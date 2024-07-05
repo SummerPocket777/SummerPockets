@@ -1,5 +1,6 @@
 package com.sp.core.exception;
 
+import cn.dev33.satoken.exception.SameTokenInvalidException;
 import com.sp.core.common.BaseResponse;
 import com.sp.core.common.ResultUtils;
 import com.sp.core.enums.ErrorCode;
@@ -37,6 +38,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public BaseResponse runtimeExceptionHandler(RuntimeException e) {
         log.error("RuntimeException: ", e); // 打印完整的堆栈信息
+        return ResultUtils.error(ErrorCode.SYSTEM_ERROR, e.getMessage(), "");
+    }
+    /**
+     * sa-token认证异常
+     *
+     * @param e e
+     * @return {@link BaseResponse}
+     */
+    @ExceptionHandler(SameTokenInvalidException.class)
+    public BaseResponse sameTokenInvalidException(SameTokenInvalidException e) {
+        log.error("BusinessException: ", e); // 打印完整的堆栈信息
         return ResultUtils.error(ErrorCode.SYSTEM_ERROR, e.getMessage(), "");
     }
 }

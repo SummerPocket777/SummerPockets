@@ -4,7 +4,6 @@ server:
 spring:
   application:
     name: sp-gateway
-
   cloud:
     nacos:
       server-addr: 42.193.140.71:8848
