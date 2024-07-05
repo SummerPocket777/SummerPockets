@@ -35,3 +35,6 @@ sa-token:
   token-style: uuid
   # 是否输出操作日志
   is-log: true
+  #  开启内网服务鉴权
+  check-same-token: true
+

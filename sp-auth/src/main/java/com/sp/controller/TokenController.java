@@ -25,6 +25,8 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @RequestMapping("/user/")
+//允许跨域
+//@CrossOrigin(origins = "*")
 public class TokenController {
     @Resource
     private SysBusinessService sysBusinessService;
