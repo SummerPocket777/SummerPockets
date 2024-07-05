@@ -8,10 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SpringBootApplication
-public class VoucherService
+public class ConSummerVoucherService
 {
     public static void main( String[] args )
     {
-        SpringApplication.run(VoucherService.class, args);
+        SpringApplication.run(ConSummerVoucherService.class, args);
     }
 }

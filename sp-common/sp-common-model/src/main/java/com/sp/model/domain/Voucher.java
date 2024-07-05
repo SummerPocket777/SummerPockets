@@ -64,12 +64,17 @@ public class Voucher implements Serializable {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private String createTime;
 
     /**
      * 更新时间
      */
-    private Date updateTime;
+    private String updateTime;
+
+    /**
+     * 过期时间
+     */
+    private String expirationTime;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
