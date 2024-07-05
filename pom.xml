@@ -12,9 +12,7 @@
         <module>sp-common</module>
         <module>sp-gateway</module>
         <module>sp-consumer-dish-service</module>
-        <module>sp-consumer-dish-sub-service</module>
         <module>sp-consumer-order-service</module>
-        <module>sp-consumer-order-sub-service</module>
         <module>sp-consumer-user-service</module>
         <module>sp-shop-menu-service</module>
         <module>sp-shop-order-service</module>

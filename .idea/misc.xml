@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
@@ -11,6 +12,8 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/sp-common/sp-common-utils/pom.xml" />
+        <option value="$PROJECT_DIR$/sp-consumer-dish-sub-service/pom.xml" />
+        <option value="$PROJECT_DIR$/sp-consumer-order-sub-service/pom.xml" />
         <option value="$PROJECT_DIR$/sp-file-upload/pom.xml" />
       </set>
     </option>
