@@ -1,0 +1,9 @@
+server:
+  port: 9900
+
+spring:
+  datasource:
+    url: jdbc:mysql://42.193.140.71:3306/db_test
+    username: db_test
+    password: tWyiEEMG3RJiKZ7j
+    driver-class-name: com.mysql.cj.jdbc.Driver

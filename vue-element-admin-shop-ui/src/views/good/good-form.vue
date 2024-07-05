@@ -62,18 +62,7 @@
       <!-- 商品图片 -->
       <el-form-item label="商品图片" prop="type">
         <!-- action 就是图片上传的接口 -->
-        <!-- <ImgUpload></ImgUpload> -->
-
-        <el-upload
-          class="upload-demo"
-          drag
-          action="https://jsonplaceholder.typicode.com/posts/"
-          multiple
-        >
-          <i class="el-icon-upload" />
-          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-        </el-upload>
+        <ImgUpload />
       </el-form-item>
 
       <el-form-item>
@@ -89,15 +78,15 @@
 
 <script>
 import CateSelect from './components/CateSelect.vue'
-// import ImgUpload from "./components/ImgUpload.vue";
+import ImgUpload from './components/ImgUpload.vue'
 
 import { submitGood } from '@/api/goods'
 
 export default {
   name: 'GoodForm',
   components: {
-    CateSelect
-    // ImgUpload,
+    CateSelect,
+    ImgUpload
   },
   props: [],
   data() {
@@ -112,20 +101,13 @@ export default {
       },
       rules: {
         // 对name这个字段进行校验
-        name: [
-          { required: true, message: '请输入商品名称', trigger: 'blur' },
-          {
-            pattern: /[\u4e00-\u9fa5]{4,8}/,
-            message: '商品名称要求4~8个中文汉字',
-            trigger: 'blur'
-          }
-        ],
+
         desc: [
           { required: true, message: '请填写商品介绍', trigger: 'blur' },
           {
-            min: 20,
+            min: 0,
             max: 30,
-            message: '商品名称要求20~30个字符',
+            message: '商品名称最多30个字符',
             trigger: 'blur'
           }
         ],
@@ -134,8 +116,8 @@ export default {
         ],
         price: [
           { required: true, message: '请填写商品价格', trigger: 'change' }
-        ],
-        img: [{ required: true, message: '请上传商品图片', trigger: 'change' }]
+        ]
+        // img: [{ required: true, message: '请上传商品图片', trigger: 'change' }]
       }
     }
   },

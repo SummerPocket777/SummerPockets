@@ -78,6 +78,8 @@ public class Dish implements Serializable {
      */
     private Integer isHot;
 
+    private Long shopId;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

@@ -54,7 +54,7 @@ public class SysBusiness implements Serializable {
     /**
      * 商家头像url
      */
-    private Integer logoUrl;
+    private String logoUrl;
 
     /**
      * 商家店铺启用状态 0未启用 1已经启用
@@ -80,6 +80,8 @@ public class SysBusiness implements Serializable {
      * 权限id 1普通商家
      */
     private Integer roleId;
+
+    private String businessName;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

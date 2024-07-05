@@ -29,7 +29,7 @@ public class AuthFilter implements GlobalFilter {
 
 //        定义一个白名单集合，然后获取访问的路由，如果在白名单内就放行
 //        如果不在就去redis里面检查一下，查看是否放行。
-        String[] whiteList = {"/user/login","user/ok","my-user/user/ok","user/test"};
+        String[] whiteList = {"/user/login","/user/info","user/logout"};
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
 

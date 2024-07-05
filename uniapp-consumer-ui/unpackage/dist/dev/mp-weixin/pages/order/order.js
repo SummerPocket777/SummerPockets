@@ -210,5 +210,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   });
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-93207a4f"], ["__file", "E:/lesson4/new/SummerPockets/uniapp-consumer-ui/pages/order/order.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-93207a4f"], ["__file", "E:/4thSummerPockets/uniapp-consumer-ui/pages/order/order.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -130,7 +130,7 @@
 				"text": "我的",
 				"pagePath": "pages/user/user",
 				"iconPath": "static/icon/我的.png",
-				"selectedIconPath": "static/icon/我的 (1).png"
+				"selectedIconPath": "static/icon/我的.png"
 			}
 		]
 	},

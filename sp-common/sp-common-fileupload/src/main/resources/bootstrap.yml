@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: sp-common-fileupload
   cloud:
     nacos:
       server-addr: 42.193.140.71:8848
