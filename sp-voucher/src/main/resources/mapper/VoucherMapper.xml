@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sp.mapper.VoucherMapper">
+
+    <resultMap id="BaseResultMap" type="com.sp.model.domain.Voucher">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="dishId" column="dish_id" jdbcType="BIGINT"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="subTitle" column="sub_title" jdbcType="VARCHAR"/>
+            <result property="rules" column="rules" jdbcType="VARCHAR"/>
+            <result property="payValue" column="pay_value" jdbcType="BIGINT"/>
+            <result property="actualValue" column="actual_value" jdbcType="BIGINT"/>
+            <result property="type" column="type" jdbcType="TINYINT"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="expirationTime" column="expiration_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,dish_id,title,
+        sub_title,rules,pay_value,
+        actual_value,type,status,
+        create_time,update_time，
+        expiration_time
+    </sql>
+
+    <insert id="createdVoucher">
+        INSERT INTO voucher (dish_id, title, sub_title, rules, pay_value, actual_value, type, status, create_time, update_time, expiration_time)
+        VALUES (#{dishId}, #{title}, #{subTitle}, #{rules}, #{payValue}, #{actualValue}, #{type},#{status}, #{createTime}, #{updateTime}, #{expirationTime});
+    </insert>
+
+    <insert id="issueVoucher">
+        insert into voucher_user (user_id, voucher_id, voucher_unique_code, status)
+        values (#{userId}, #{voucherId}, #{voucherUniqueCode}, #{status})
+    </insert>
+
+    <select id="userQuery" resultType="com.sp.model.domain.VoucherUser">
+        select vu.* from voucher_user vu, voucher v
+                    where vu.voucher_id = v.id and vu.user_id = #{userId}
+    </select>
+
+    <select id="getById" resultType="com.sp.model.domain.Voucher">
+        select * from voucher
+                 where id = #{id};
+    </select>
+
+    <select id="getIdByPayValue" resultType="java.lang.Integer">
+        <![CDATA[
+            select id
+            from voucher
+            where pay_value <= #{payValue}
+            order by pay_value desc
+            limit 1
+        ]]>
+    </select>
+
+
+</mapper>
