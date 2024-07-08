@@ -136,6 +136,21 @@ const _sfc_main = {
     getUserProfile() {
       {
         console.log("未登录");
+        common_vendor.wx$1.login({
+          success: (res) => {
+            console.log(res.code + "111111111");
+            let appid = "wx33475484a15eed9b";
+            let secret = "8fae391a617824d3a03493c83ee1abe5";
+            let url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appid + "&secret=" + secret + "&js_code=" + res.code + "&grant_type=authorization_code";
+            common_vendor.index.request({
+              url,
+              method: "GET",
+              success: (res2) => {
+                console.log(res2.data.openid);
+              }
+            });
+          }
+        });
         common_vendor.wx$1.getUserProfile({
           desc: "测试",
           success: (res) => {
@@ -190,5 +205,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     m: common_vendor.n($data.yuyueClass)
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/4thSummerPockets/uniapp-consumer-ui/pages/index/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/lesson4/new/SummerPockets/uniapp-consumer-ui/pages/index/index.vue"]]);
 wx.createPage(MiniProgramPage);
