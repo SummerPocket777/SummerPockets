@@ -1,14 +1,9 @@
 package com.sp.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sp.core.common.BaseResponse;
 import com.sp.core.common.ResultUtils;
 
-import com.sp.core.enums.ErrorCode;
-import com.sp.model.domain.SysBusiness;
-import com.sp.model.vo.SysBusinessVO;
 import com.sp.service.SysBusinessService;
 import com.sp.to.LoginTO;
 import com.sp.to.UserTO;
@@ -20,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("admin/user")

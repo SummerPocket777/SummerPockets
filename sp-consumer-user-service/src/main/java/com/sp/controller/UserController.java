@@ -57,7 +57,7 @@ public class UserController {
     @RequestMapping("info")
     public BaseResponse<UserTO> info(@RequestParam("token") String token) {
 
-        Object o = redisTemplate.opsForValue().get("shop:info:"+token);
+        Object o = redisTemplate.opsForValue().get("shop:userinfo:" +token);
         if (o==null){
             return ResultUtils.success(null,"数据库暂无信息");
         }
