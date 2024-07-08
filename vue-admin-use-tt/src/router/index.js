@@ -166,17 +166,7 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/question',
-    component: Layout,
-    redirect: '/question',
-    children: [{
-      path: 'question',
-      name: 'Question',
-      component: () => import('@/views/question/question'),
-      meta: { title: '工单管理', icon: 'el-icon-s-opportunity' }
-    }]
-  },
+
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
