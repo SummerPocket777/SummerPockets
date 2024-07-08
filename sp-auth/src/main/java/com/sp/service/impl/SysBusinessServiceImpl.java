@@ -23,6 +23,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -142,6 +143,9 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
         // 会话登录：参数填写要登录的账号id，建议的数据类型：long | int | String， 不可以传入复杂类型，如：User、Admin 等等
         StpUtil.login(safetyUser.getId());
         StpUtil.getTokenSession().set("user", safetyUser);
+
+//      存用户对象 存七天
+        redisCacheUtil.setCacheObject("shop:userinfo:",StpUtil.getTokenValue(),7, TimeUnit.DAYS);
         return StpUtil.getTokenValue();
     }
 

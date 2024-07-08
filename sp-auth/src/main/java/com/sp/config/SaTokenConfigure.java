@@ -1,12 +1,16 @@
 package com.sp.config;
 
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.exception.SameTokenInvalidException;
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.same.SaSameUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
+import com.sp.core.common.ResultUtils;
+import com.sp.core.enums.ErrorCode;
+import com.sp.core.exception.BusinessException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -65,10 +69,18 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                 .setAuth(obj -> {
                     // 校验 Same-Token 身份凭证     —— 以下两句代码可简化为：SaSameUtil.checkCurrentRequestToken();
                     String token = SaHolder.getRequest().getHeader(SaSameUtil.SAME_TOKEN);
-                    SaSameUtil.checkToken(token);
+
+//                    try {
+                        SaSameUtil.checkToken(token);
+//                    } catch (SameTokenInvalidException e) {
+//
+//                       throw new BusinessException(ErrorCode.NO_AUTH);
+//                    }
                 })
                 .setError(e -> {
-                    return SaResult.error(e.getMessage());
+//                   throw new BusinessException(ErrorCode.SYSTEM_ERROR,e.getMessage());
+                    return new SaResult(40101, e.getMessage(), null);
+//                    return ResultUtils.error(ErrorCode.SYSTEM_ERROR,"不能直接访问服务");
                 });
     }
 }

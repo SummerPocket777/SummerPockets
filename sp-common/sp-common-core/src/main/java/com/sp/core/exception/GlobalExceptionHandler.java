@@ -1,5 +1,6 @@
 package com.sp.core.exception;
 
+import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.SameTokenInvalidException;
 import com.sp.core.common.BaseResponse;
 import com.sp.core.common.ResultUtils;
@@ -49,6 +50,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SameTokenInvalidException.class)
     public BaseResponse sameTokenInvalidException(SameTokenInvalidException e) {
         log.error("BusinessException: ", e); // 打印完整的堆栈信息
+        return ResultUtils.error(ErrorCode.SYSTEM_ERROR, e.getMessage(), "");
+    }
+
+    @ExceptionHandler(NotLoginException.class)
+    public BaseResponse notLoginExceptionHandler(NotLoginException e) {
+        log.error("NotLoginException: ", e);
         return ResultUtils.error(ErrorCode.SYSTEM_ERROR, e.getMessage(), "");
     }
 }
