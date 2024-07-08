@@ -1,7 +1,7 @@
 <template>
 	<view class="content" style="background-image: url(../../static/index-back.jpg);">
 	<!-- 小程序基础库需配置为 2.22.1 -->
-		<button  size="mini" open-type="getUserInfo" @tap="getUserProfile">预约</button>  
+		<button  size="mini" open-type="getUserInfo" @tap="getUserProfile">预约</button>
 		<view :class="yuyueClass">
 			<view class="yuyue-title">
 				<text>预约</text>
@@ -186,10 +186,29 @@
 				this.yuyueClass = "yuyue-box1"
 			},
 			getUserProfile(){
+				
 				if(false){
 					console.log("一登陆")
 				}else{
 					console.log("未登录")
+					wx.login({
+						success: (res) => {
+							console.log(res.code+"111111111")
+							//小程序appid
+							    let appid = 'wx33475484a15eed9b'; //换成自己的
+							    //小程序secret
+							    let secret = '8fae391a617824d3a03493c83ee1abe5'; //换成自己的
+							    //wx接口路径
+							    let url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid + '&secret=' + secret + '&js_code=' + res.code + '&grant_type=authorization_code';
+							    uni.request({
+							    	url:url,
+									method:'GET',
+									success: (res) => {
+										console.log(res.data.openid)
+									}
+							    })
+						}
+					})
 					wx.getUserProfile({
 						desc:'测试',
 						success: (res) => {
