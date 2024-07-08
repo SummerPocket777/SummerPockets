@@ -27,7 +27,7 @@ public class UserController {
     private SysBusinessMapper sysBusinessMapper;
 
     @RequestMapping("login")
-    public BaseResponse<LoginTO> login(@RequestBody LoginVO loginVO) {
+    public BaseResponse<String> login(@RequestBody LoginVO loginVO) {
         System.out.println(loginVO);
         QueryWrapper<SysBusiness> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account",loginVO.getUsername()).eq("password",loginVO.getPassword());
@@ -47,20 +47,17 @@ public class UserController {
 
         user.setAvatar(sysBusiness.getLogoUrl());
 
-        redisTemplate.opsForValue().set("consumer"+"123456",user);
+        redisTemplate.opsForValue().set("shop:info:"+"123456",user);
 
 
-        LoginTO loginTO = new LoginTO();
-        loginTO.setToken("123456");
-        return ResultUtils.success(loginTO);
+
+        return ResultUtils.success("123456");
     }
     //此处通过token获得用户的详细信息
     @RequestMapping("info")
     public BaseResponse<UserTO> info(@RequestParam("token") String token) {
 
-        System.out.println(token);
-
-        Object o = redisTemplate.opsForValue().get("consumer123456");
+        Object o = redisTemplate.opsForValue().get("shop:info:"+token);
         if (o==null){
             return ResultUtils.success(null,"数据库暂无信息");
         }

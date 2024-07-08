@@ -65,6 +65,6 @@
 //        DataBuffer wrap = response.bufferFactory().wrap(jsonString.getBytes());
 //
 //
-//        return response.writeWith(Mono.just(wrap));
+//        return chain.filter(exchange);
 //    }
 //}

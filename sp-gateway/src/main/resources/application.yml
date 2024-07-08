@@ -4,6 +4,7 @@ security:
       - "/auth/public/**"
       - "/auth/dologin"
       - "/api/register"
+      - "/user/login"
 sa-token:
   # token 名称（同时也是 cookie 名称）
   token-name: satoken

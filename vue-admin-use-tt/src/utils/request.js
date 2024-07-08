@@ -6,7 +6,7 @@ import { getToken } from '@/utils/auth'
 // 创建axios实例
 const service = axios.create({
   baseURL: '/api', // url = base url + request url
-  timeout: 5000 // 超时时间
+  timeout: 50000000 // 超时时间
 })
 
 // 请求拦截
