@@ -25,7 +25,7 @@ spring:
     #端口号
     port: 6379
     #连接超时时间（毫秒）
-    timeout: 10000
+    timeout: 200000
     #使用的redis库
     database: 0
     jedis:

@@ -44,7 +44,7 @@ public class SysBusiness implements Serializable {
     /**
      * 店铺负责人手机号
      */
-    private Integer phone;
+    private  String phone;
 
     /**
      * 商家邮箱

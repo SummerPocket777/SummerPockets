@@ -10,10 +10,13 @@ import com.sp.core.constants.StatusConstant;
 import com.sp.core.enums.ErrorCode;
 import com.sp.core.exception.BusinessException;
 import com.sp.mapper.SysBusinessMapper;
+
+
 import com.sp.model.domain.SysBusiness;
 import com.sp.model.vo.BusinessLoginVO;
 import com.sp.model.vo.BusinessRegisterVO;
 import com.sp.model.vo.SysBusinessVO;
+import com.sp.model.vo.UserTO;
 import com.sp.service.SysBusinessService;
 import com.sp.utils.RedisCacheUtil;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +25,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -139,13 +143,20 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
         //2 查询数据库
         SysBusiness userInDatabase = getUserInDatabase(vo.getUsername(),vo.getPassword());
         // 3. 用户脱敏
-        SysBusiness safetyUser = getSafetyBusiness(userInDatabase);
+//        SysBusiness safetyUser = getSafetyBusiness(userInDatabase);
         // 会话登录：参数填写要登录的账号id，建议的数据类型：long | int | String， 不可以传入复杂类型，如：User、Admin 等等
-        StpUtil.login(safetyUser.getId());
-        StpUtil.getTokenSession().set("user", safetyUser);
+        StpUtil.login(userInDatabase.getId());
+        StpUtil.getTokenSession().set("user", userInDatabase);
+
+        UserTO user = new UserTO();
+        user.setName(userInDatabase.getBusinessName());
+        ArrayList<String> role = new ArrayList<>();
+        role.add("admin");
+        user.setRoles(role);
+        user.setAvatar(userInDatabase.getLogoUrl());
 
 //      存用户对象 存七天
-        redisCacheUtil.setCacheObject("shop:userinfo:",StpUtil.getTokenValue(),7, TimeUnit.DAYS);
+        redisCacheUtil.setCacheObject("shop:userinfo:"+StpUtil.getTokenValue(),user,7, TimeUnit.DAYS);
         return StpUtil.getTokenValue();
     }
 
