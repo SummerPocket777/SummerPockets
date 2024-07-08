@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export function login(data) {
   console.log(data)
   return request({
-    url: '/consumer-user/consumer/user/login',
+    url: '/auth/user/doLogin',
     method: 'post',
     data
   })

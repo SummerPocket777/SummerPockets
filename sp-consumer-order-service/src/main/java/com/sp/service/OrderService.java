@@ -7,4 +7,6 @@ import org.springframework.stereotype.Component;
 public interface OrderService {
 
     OrderDetail findOrdersByOrderId(Long id);
+
+    OrderDetail getOrderByShopId(Long shopId);
 }
