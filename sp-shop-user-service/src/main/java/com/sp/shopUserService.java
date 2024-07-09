@@ -8,13 +8,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Hello world!
  *
  */
-@SpringBootApplication
 @MapperScan("com.sp.mapper")
-public class consumerUserService
+@SpringBootApplication
+public class shopUserService
 {
     public static void main( String[] args )
     {
 
-        SpringApplication.run(consumerUserService.class, args);
+        SpringApplication.run(shopUserService.class, args);
     }
 }

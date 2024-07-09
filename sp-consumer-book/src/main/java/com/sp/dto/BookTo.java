@@ -1,4 +1,4 @@
-package com.sp.to;
+package com.sp.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

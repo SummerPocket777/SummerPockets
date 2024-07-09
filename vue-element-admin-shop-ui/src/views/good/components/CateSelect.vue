@@ -33,12 +33,14 @@ export default {
 
     // goods模块下的分类选项的属性
     ...mapState('goods', ['cates'])
+
   },
   created() {
     this.getCates()
   },
   methods: {
     ...mapActions('goods', ['getCates'])
+
   }
 
 }

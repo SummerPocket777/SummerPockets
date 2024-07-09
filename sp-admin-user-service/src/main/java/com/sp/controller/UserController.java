@@ -5,8 +5,8 @@ import com.sp.core.common.BaseResponse;
 import com.sp.core.common.ResultUtils;
 
 import com.sp.service.SysBusinessService;
-import com.sp.to.LoginTO;
-import com.sp.to.UserTO;
+import com.sp.dto.LoginTO;
+import com.sp.dto.UserTO;
 
 import com.sp.vo.LoginVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,7 @@ public class UserController {
     @Autowired
     RedisTemplate<String,Object> redisTemplate;
 
-    @Resource
-    private SysBusinessService sysBusinessService;
+
     @RequestMapping("login")
     //登录操作，通过登录获得token
     public BaseResponse<LoginTO> login(@RequestBody LoginVO vo) {
