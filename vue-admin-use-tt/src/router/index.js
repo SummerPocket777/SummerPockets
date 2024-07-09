@@ -63,22 +63,44 @@ export const constantRoutes = [
   },
 
   {
-    path: '/example',
+    path: '/dish',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: '案例', icon: 'el-icon-s-help' },
+    redirect: '/dish/list',
+    name: 'Dish',
+    meta: { title: '菜品管理', icon: 'el-icon-dish' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: '表格', icon: 'table' }
+        path: 'list',
+        name: 'DishList',
+        component: () => import('@/views/dish/list'),
+        meta: { title: '菜单列表', icon: 'el-icon-tickets' }
+      },
+      {
+        path: 'add',
+        name: 'DishAdd',
+        component: () => import('@/views/dish/add'),
+        meta: { title: '菜品添加', icon: 'el-icon-plus' }
+      },
+    ]
+  },
+
+  {
+    path: '/kitchen',
+    component: Layout,
+    redirect: '/kitchen/book',
+    name: 'kitchen',
+    meta: { title: '后厨面板', icon: 'el-icon-fork-spoon' },
+    children: [
+      {
+        path: 'book',
+        name: 'Book',
+        component: () => import('@/views/kitchen/book'),
+        meta: { title: '上菜信息', icon: 'table' }
       },
       {
         path: 'tree',
         name: 'Tree',
-        component: () => import('@/views/tree/index'),
+        component: () => import('@/views/kitchen/order'),
         meta: { title: '树状表格', icon: 'tree' }
       }
     ]
