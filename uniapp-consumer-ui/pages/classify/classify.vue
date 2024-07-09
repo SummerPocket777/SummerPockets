@@ -112,7 +112,7 @@
 
 <script>
 import data from "./data";
-import Big from 'big.js';
+// import Big from 'big.js';
 
 export default {
 	data() {
