@@ -1,6 +1,6 @@
 spring:
   application:
-    name: sp-consumer-user-service
+    name: sp-shop-user-service
   cloud:
     nacos:
       server-addr: 42.193.140.71:8848

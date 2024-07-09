@@ -31,8 +31,8 @@ public class UserController {
 
 
     @RequestMapping("logout")
-    public BaseResponse<String> logout(@RequestParam("token") String token) {
-        userService.logout(token);
+    public BaseResponse<String> logout() {
+//        userService.logout(token);
         return ResultUtils.success("退出成功");
     }
 

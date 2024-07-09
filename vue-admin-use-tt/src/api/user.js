@@ -11,7 +11,7 @@ export function login(data) {
 
 export function getInfo(token) {
   return request({
-    url: '/consumer-user/consumer/user/info',
+    url: '/shop-user/shop/user/info',
     method: 'get',
     params: { token }
   })
@@ -19,7 +19,7 @@ export function getInfo(token) {
 
 export function logout() {
   return request({
-    url: '/consumer-user/consumer/user/logout',
+    url: '/shop-user/shop/user/logout',
     method: 'post'
   })
 }
