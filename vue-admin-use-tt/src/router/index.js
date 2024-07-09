@@ -44,7 +44,7 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    name:'reg',
+    name: 'reg',
     path: '/reg',
     component: () => import('@/views/login/register'),
     hidden: true
@@ -93,20 +93,20 @@ export const constantRoutes = [
   {
     path: '/kitchen',
     component: Layout,
-    redirect: '/kitchen/book',
+    redirect: '/kitchen/order',
     name: 'kitchen',
     meta: { title: '后厨面板', icon: 'el-icon-fork-spoon' },
     children: [
       {
-        path: 'book',
-        name: 'Book',
-        component: () => import('@/views/kitchen/book'),
+        path: 'order',
+        name: 'Order',
+        component: () => import('@/views/kitchen/order'),
         meta: { title: '上菜信息', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/kitchen/order'),
+        path: 'book',
+        name: 'Book',
+        component: () => import('@/views/kitchen/book'),
         meta: { title: '预约信息', icon: 'tree' }
       }
     ]
