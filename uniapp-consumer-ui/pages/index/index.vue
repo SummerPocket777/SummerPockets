@@ -34,6 +34,10 @@
 </template>
 
 <script>
+	
+	import { mapState,mapStores,mapActions } from 'pinia'
+	import { useCounterStore } from '@/store/counter.js'
+	import {article} from '@/api/yuyuerequest.js'
 	export default {
 		data() {
 			return {
@@ -51,13 +55,20 @@
 		},
 		onLoad() {
 			this.setToday()
-			
+			this.increment();
+			console.log(this.userNames)
+			console.log(this.count)
 		},
 		onReady() {
 			
 			
 		},
+		computed:{
+			...mapStores(useCounterStore),
+			...mapState(useCounterStore,['count','double'])
+		},
 		methods: {
+			...mapActions(useCounterStore,['increment']),
 			setToday() {
 			      const now = new Date();
 			      const year = now.getFullYear();
@@ -133,39 +144,45 @@
 						icon:'none'
 					})
 				}else{
-					uni.request({
-						url:'http://127.0.0.1:9999/book/add',
-						method:'POST',
-						data:{
+					article.insertYuyue({
 							"bookNumber": this.yuyueInfo.peopleNumber,
 							"bookDate": this.yuyueInfo.datetimesingle,
 							"bookName": this.yuyueInfo.userName,
 							"bookPhone": this.yuyueInfo.userPhone
-						},
-						success: (res) => {
-							if(res.data.code == 20000){
-								uni.showToast({
-									title:'预约成功',
-									icon:'success'
+						})
+					// uni.request({
+					// 	url:'http://127.0.0.1:9999/book/add',
+					// 	method:'POST',
+					// 	data:{
+					// 		"bookNumber": this.yuyueInfo.peopleNumber,
+					// 		"bookDate": this.yuyueInfo.datetimesingle,
+					// 		"bookName": this.yuyueInfo.userName,
+					// 		"bookPhone": this.yuyueInfo.userPhone
+					// 	},
+					// // 	success: (res) => {
+					// 		if(res.data.code == 20000){
+					// 			uni.showToast({
+					// 				title:'预约成功',
+					// 				icon:'success'
 									
-								})
-							}else{
-								uni.showToast({
-									title:'网络请求失败',
-									icon:'loading'
+					// 			})
+					// 		}else{
+					// 			uni.showToast({
+					// 				title:'网络请求失败',
+					// 				icon:'loading'
 									
-								})
-							}
+					// 			})
+					// 		}
 							
-						},
-						fail: (err) => {
-							uni.showToast({
-								title:'网络请求失败',
-								icon:'loading'
+					// 	},
+					// 	fail: (err) => {
+					// 		uni.showToast({
+					// 			title:'网络请求失败',
+					// 			icon:'loading'
 								
-							})
-						}
-					})
+					// 		})
+					// 	}
+					// })
 					
 				}
 				this.yuyueInfo = {

@@ -25,10 +25,12 @@ export function createApp() {
   const pinia = createPinia()
   //将插件添加到 pinia 实例上
   pinia.use(piniaPluginPersistedstate)
-   app.use(uviewPlus)
    app.use(pinia) //将Pinia实例注册到Vue应用中
+   app.use(uviewPlus)
+   
   return {
-    app
+    app,
+	pinia
   }
 }
 // #endif
