@@ -101,8 +101,78 @@ export const constantRoutes = [
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/kitchen/order'),
-        meta: { title: '树状表格', icon: 'tree' }
+        meta: { title: '预约信息', icon: 'tree' }
       }
+    ]
+  },
+  {
+    path: '/chart',
+    component: Layout,
+    redirect: '/chart/dish-flow',
+    name: 'chart',
+    meta: { title: '统计信息', icon: 'el-icon-fork-spoon' },
+    children: [
+      {
+        path: 'dish-flow',
+        name: 'DishFlow',
+        component: () => import('@/views/chart/dish-flow'),
+        meta: { title: '菜品统计', icon: 'table' }
+      },
+      {
+        path: 'shop-flow',
+        name: 'ShopFlow',
+        component: () => import('@/views/chart/shop-flow'),
+        meta: { title: '门店统计', icon: 'tree' }
+      }
+    ]
+  },
+  {
+    path: '/user-config',
+    component: Layout,
+    redirect: '/user-config/user-center',
+    name: 'user',
+    meta: { title: '用户管理', icon: 'el-icon-fork-spoon' },
+    children: [
+      {
+        path: 'user-center',
+        name: 'UserCenter',
+        component: () => import('@/views/user/user-center'),
+        meta: { title: '个人中心', icon: 'table' }
+      },
+      {
+        path: 'shop-config',
+        name: 'ShopConfig',
+        component: () => import('@/views/user/shop-config'),
+        meta: { title: '门店管理', icon: 'tree' }
+      },
+      {
+        path: 'consumer-list',
+        name: 'ConsumerList',
+        component: () => import('@/views/user/consumer-list'),
+        meta: { title: '顾客列表', icon: 'tree' }
+      }
+    ]
+  },
+  {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/buy',
+    name: 'user',
+    meta: { title: '权限管理', icon: 'el-icon-fork-spoon' },
+    children: [
+      {
+        path: 'buy',
+        name: 'Buy',
+        component: () => import('@/views/permission/buy'),
+        meta: { title: '权限购买', icon: 'table' }
+      },
+      {
+        path: 'config',
+        name: 'Buy',
+        component: () => import('@/views/permission/buy'),
+        meta: { title: '权限购买', icon: 'table' }
+      }
+
     ]
   },
 
