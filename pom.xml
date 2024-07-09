@@ -17,11 +17,11 @@
         <module>sp-shop-menu-service</module>
         <module>sp-shop-order-service</module>
         <module>sp-shop-user-service</module>
-        <module>sp-auth</module>
+        <module>sp-auth-service</module>
         <module>sp-pay</module>
-        <module>sp-voucher</module>
+        <module>sp-consumer-voucher-service</module>
         <module>sp-admin-user-service</module>
-        <module>sp-consumer-book</module>
+        <module>sp-consumer-book-service</module>
     </modules>
 
     <properties>
