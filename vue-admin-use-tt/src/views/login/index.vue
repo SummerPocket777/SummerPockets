@@ -42,6 +42,40 @@
       </el-form-item>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px; margin-left: 0; margin-top: -10px;" @click="$router.push('/reg')">注册</el-button>
+
+
+      <!-- <el-dialog title="注册" :visible.sync="dialogFormVisible">
+    <el-form :model="form">
+    <el-form-item style="font-size: large;" label="账号" :label-width="formLabelWidth">
+      <el-input class="dialog-input"  v-model="form.name" autocomplete="off"></el-input>
+    </el-form-item>
+    <el-form-item label="密码" :label-width="formLabelWidth">
+      <el-input v-model="form.pwd" autocomplete="off"></el-input>
+    </el-form-item>
+    <el-form-item label="手机号" :label-width="formLabelWidth">
+      <el-input v-model="form.phone" autocomplete="off"></el-input>
+    </el-form-item>
+    <el-form-item label="验证码" :label-width="formLabelWidth">
+      <el-input style="width: 50px;" v-model="form.code" autocomplete="off"></el-input>
+    </el-form-item>
+    <el-form-item label="校验码" :label-width="formLabelWidth">
+      <el-input v-model="form.Jcode" autocomplete="off"></el-input>
+    </el-form-item> -->
+
+    <!-- <el-form-item label="活动区域" :label-width="formLabelWidth">
+      <el-select v-model="form.region" placeholder="请选择活动区域">
+        <el-option label="区域一" value="shanghai"></el-option>
+        <el-option label="区域二" value="beijing"></el-option>
+      </el-select>
+    </el-form-item> -->
+  <!-- </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="dialogFormVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+  </div>
+</el-dialog> -->
+
     </el-form>
   </div>
 </template>
@@ -77,8 +111,26 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
-    }
+      redirect: undefined,
+        dialogFormVisible: false,
+        form: {
+          name: '',
+          pwd: '',
+          phone: '',
+          code: '',
+          Jcode: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+        formLabelWidth: '100px'
+    };
+
+
   },
   watch: {
     $route: {
@@ -114,12 +166,12 @@ export default {
           return false
         }
       })
-    }
+    },
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss"  >
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
@@ -134,6 +186,9 @@ $cursor: #fff;
 }
 
 /* reset element-ui css */
+.reg{
+  margin-left: 20px;
+}
 .login-container {
   .el-input {
     display: inline-block;
@@ -162,7 +217,11 @@ $cursor: #fff;
     border-radius: 5px;
     color: #454545;
   }
+
+
 }
+
+
 </style>
 
 <style lang="scss" scoped>

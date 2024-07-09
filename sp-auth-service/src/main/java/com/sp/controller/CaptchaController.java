@@ -30,7 +30,7 @@ public class CaptchaController {
     @GetMapping("/getCode")
     public void getCaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // 定义图形验证码的长和宽
-        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100, 50);
 
         // 获取当前会话的 sessionId
         String sessionId = request.getSession().getId();
