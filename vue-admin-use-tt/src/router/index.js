@@ -160,6 +160,21 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/voucher',
+    component: Layout,
+    redirect: '/voucher/voucher-config',
+    name: 'Voucher',
+    meta: { title: '优惠劵管理', icon: 'el-icon-fork-spoon' },
+    children: [
+      {
+        path: 'voucher-config',
+        name: 'VoucherConfig',
+        component: () => import('@/views/voucher/voucher-config'),
+        meta: { title: '优惠劵管理', icon: 'table' }
+      },
+    ]
+  },
+  {
     path: '/permission',
     component: Layout,
     redirect: '/permission/buy',
@@ -174,9 +189,31 @@ export const constantRoutes = [
       },
       {
         path: 'config',
-        name: 'Buy',
-        component: () => import('@/views/permission/buy'),
-        meta: { title: '权限购买', icon: 'table' }
+        name: 'Config',
+        component: () => import('@/views/permission/config'),
+        meta: { title: '权限管理', icon: 'table' }
+      }
+
+    ]
+  },
+  {
+    path: '/chat',
+    component: Layout,
+    redirect: '/chat/admin-chat',
+    name: 'user',
+    meta: { title: '问题反馈', icon: 'el-icon-fork-spoon' },
+    children: [
+      {
+        path: 'admin-chat',
+        name: 'AdminChat',
+        component: () => import('@/views/chat/admin-chat'),
+        meta: { title: '客服服务', icon: 'table' }
+      },
+      {
+        path: 'shop-chat',
+        name: 'ShopChat',
+        component: () => import('@/views/chat/shop-chat'),
+        meta: { title: '人工客服', icon: 'table' }
       }
 
     ]
