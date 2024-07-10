@@ -37,7 +37,6 @@
 	
 	import { mapState,mapStores,mapActions } from 'pinia'
 	import { useCounterStore } from '@/store/counter.js'
-	import {article} from '@/api/yuyuerequest.js'
 	export default {
 		data() {
 			return {
@@ -68,7 +67,7 @@
 			...mapState(useCounterStore,['count','double'])
 		},
 		methods: {
-			...mapActions(useCounterStore,['increment']),
+			...mapActions(useCounterStore,['insertYuyue','increment']),
 			setToday() {
 			      const now = new Date();
 			      const year = now.getFullYear();
@@ -144,7 +143,7 @@
 						icon:'none'
 					})
 				}else{
-					article.insertYuyue({
+					this.insertYuyue({
 							"bookNumber": this.yuyueInfo.peopleNumber,
 							"bookDate": this.yuyueInfo.datetimesingle,
 							"bookName": this.yuyueInfo.userName,

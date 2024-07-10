@@ -1,7 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const store_counter = require("../../store/counter.js");
-const api_yuyuerequest = require("../../api/yuyuerequest.js");
 const _sfc_main = {
   data() {
     return {
@@ -29,7 +28,7 @@ const _sfc_main = {
     ...common_vendor.mapState(store_counter.useCounterStore, ["count", "double"])
   },
   methods: {
-    ...common_vendor.mapActions(store_counter.useCounterStore, ["increment"]),
+    ...common_vendor.mapActions(store_counter.useCounterStore, ["insertYuyue", "increment"]),
     setToday() {
       const now = /* @__PURE__ */ new Date();
       const year = now.getFullYear();
@@ -96,7 +95,7 @@ const _sfc_main = {
           icon: "none"
         });
       } else {
-        api_yuyuerequest.article.insertYuyue({
+        this.insertYuyue({
           "bookNumber": this.yuyueInfo.peopleNumber,
           "bookDate": this.yuyueInfo.datetimesingle,
           "bookName": this.yuyueInfo.userName,

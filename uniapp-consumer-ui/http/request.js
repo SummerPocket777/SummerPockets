@@ -26,7 +26,7 @@ const request = (options) => {
 			url: config.baseUrl + url,
 			data: data,
 			success: ({data}) => {
-				if (data.code == 200) {
+				if (data.code == 20000) {
 					uni.hideLoading()
 				     resolve(data)
 				} else {
