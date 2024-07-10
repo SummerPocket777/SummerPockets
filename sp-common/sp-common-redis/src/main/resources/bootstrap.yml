@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: sp-auth-service
+  cloud:
+    nacos:
+      server-addr: 42.193.140.71:8848
+      username: nacos
+      password: summerrice
+      #注册中心
+      discovery:
+        namespace: 345991e3-afea-4b55-a801-1897440f28f0
+      #配置中心
+      config:
+#        配置mybatis-plus
+        namespace: 8df17812-8f13-4624-a16b-d95105438f2d
+        file-extension: yml
+        #        默认命名规则是 服务名-环境.文件后缀
+        name: sp_mybatis_plus_config
+        #        共享配置
+#        shared-configs:
+#          - data-id: jd-user-service-dev
+#            group: DEFAULT_GROUP
+#            refresh: true
+        #            拓展配置
+        extension-configs:
+          - data-id: sp_redis_config
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: sp_sa_token_config
+            group: DEFAULT_GROUP
+            refresh: true
+  config:
+    import: nacos:42.193.140.71:8848 # 添加这一行
+
+

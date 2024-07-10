@@ -11,9 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * [Sa-Token 权限认证] 拦截器
  *
@@ -35,12 +32,12 @@ public class AuthFilter {
             .addExclude("/favicon.ico", "/actuator/**")
             // 鉴权方法：每次访问进入
             .setAuth(obj -> {
+                System.err.println(ignoreWhite.getWhites());
                 // 登录校验 -- 拦截所有路由
                 SaRouter.match("/**")
                     .notMatch(ignoreWhite.getWhites())
 //                    .notMatch(whites)
                     .check(r -> {
-                        System.err.println(ignoreWhite.getWhites());
                         // 检查是否登录 是否有token
                         StpUtil.checkLogin();
 

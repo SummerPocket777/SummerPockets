@@ -77,8 +77,13 @@ public class TokenController {
      * @return {@link SaResult }
      */
     @GetMapping("isLogin")
-    public SaResult isLogin() {
-        return SaResult.ok("是否登录：" + StpUtil.isLogin());
+    public BaseResponse isLogin() {
+        boolean login = StpUtil.isLogin();
+        if (login){
+            return ResultUtils.success();
+        }else {
+            return ResultUtils.error(ErrorCode.NOT_LOGIN);
+        }
     }
 
     /**
@@ -87,8 +92,9 @@ public class TokenController {
      * @return {@link SaResult }
      */
     @GetMapping("tokenInfo")
-    public SaResult tokenInfo() {
-        return SaResult.data(StpUtil.getTokenInfo());
+    public BaseResponse tokenInfo() {
+
+        return ResultUtils.success(StpUtil.getTokenInfo());
     }
 
     /**
@@ -97,9 +103,9 @@ public class TokenController {
      * @return {@link SaResult }
      */
     @GetMapping("logout")
-    public SaResult logout() {
+    public BaseResponse logout() {
         StpUtil.logout();
-        return SaResult.ok();
+        return ResultUtils.success();
     }
 
     /**

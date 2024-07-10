@@ -222,22 +222,22 @@
 					console.log("未登录")
 					wx.login({
 						success: (res) => {
-							console.log(res.code + "111111111")
+							console.log("res.code",res.code)
 							//小程序appid
-							let appid = 'wx33475484a15eed9b'; //换成自己的
+							let appid = 'wx4cb76cbc95da958e'; //换成自己的
 							//小程序secret
-							let secret = '8fae391a617824d3a03493c83ee1abe5'; //换成自己的
+							let secret = 'b3a9c4a2e4909ee20f99bf542dc07e3e'; //换成自己的
 							//wx接口路径
-							let url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid +
-								'&secret=' + secret + '&js_code=' + res.code +
-								'&grant_type=authorization_code';
-							uni.request({
-								url: url,
-								method: 'GET',
-								success: (res) => {
-									console.log(res.data.openid)
-								}
-							})
+							// let url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid +
+							// 	'&secret=' + secret + '&js_code=' + res.code +
+							// 	'&grant_type=authorization_code';
+							// uni.request({
+							// 	url: url,
+							// 	method: 'GET',
+							// 	success: (res) => {
+							// 		console.log("openid",res.data.openid)
+							// 	}
+							// })
 						}
 					})
 					wx.getUserProfile({

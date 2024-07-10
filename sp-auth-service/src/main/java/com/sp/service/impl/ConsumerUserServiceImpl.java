@@ -55,7 +55,7 @@ public class ConsumerUserServiceImpl extends ServiceImpl<WXConsumerUserServiceMa
 
         //2 判断openid是否为空，如果为空表示登录失败，抛出业务异常
         if (openid==null){
-            throw new BusinessException(ErrorCode.NULL_ERROR,"登录失败");
+            throw new BusinessException(ErrorCode.WX_LOGIN_FAILED);
         }
 
         //3 判断当前用户是否为新用户
