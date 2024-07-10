@@ -1,19 +1,21 @@
 <template>
 	<view class="content" style="background-image: url(../../static/index-back.jpg);">
-	<!-- 小程序基础库需配置为 2.22.1 -->
-		<button  size="mini" open-type="getUserInfo" @tap="getUserProfile">预约</button>
+		<!-- 小程序基础库需配置为 2.22.1 -->
+		<button size="mini" open-type="getUserInfo" @tap="getUserProfile">预约</button>
 		<view :class="yuyueClass">
 			<view class="yuyue-title">
 				<text>预约</text>
 			</view>
-			
+
 			<view class="yuyue-view">
 				<text style="width: 150rpx;padding-top: 13rpx;">用餐人数</text>
-				<input class="yuyue-input" v-model="yuyueInfo.peopleNumber" placeholder="请输入用餐人数" type="number" maxlength="2"/>
+				<input class="yuyue-input" v-model="yuyueInfo.peopleNumber" placeholder="请输入用餐人数" type="number"
+					maxlength="2" />
 			</view>
 			<view class="yuyue-view">
 				<text style="width: 150rpx;padding-top: 13rpx;">预计时间</text>
-				<uni-datetime-picker type="datetime" :clear-icon="false" :start="today" v-model="yuyueInfo.datetimesingle" @change="handleChange" >
+				<uni-datetime-picker type="datetime" :clear-icon="false" :start="today"
+					v-model="yuyueInfo.datetimesingle" @change="handleChange">
 				</uni-datetime-picker>
 			</view>
 			<view class="yuyue-view">
@@ -22,11 +24,12 @@
 			</view>
 			<view class="yuyue-view">
 				<text style="width: 150rpx;text-align: center;letter-spacing: 40rpx;padding-top: 13rpx;">电话</text>
-				<input class="yuyue-input" v-model="yuyueInfo.userPhone" placeholder="请输入电话" type="number" maxlength="11"/>
+				<input class="yuyue-input" v-model="yuyueInfo.userPhone" placeholder="请输入电话" type="number"
+					maxlength="11" />
 			</view>
 			<view class="yuyue-sure">
 				<button @click="yuyueCancel">取消</button>
-				<button type="primary" @click="yuyueSure">确认预约</button>		
+				<button type="primary" @click="yuyueSure">确认预约</button>
 			</view>
 
 		</view>
@@ -34,22 +37,27 @@
 </template>
 
 <script>
-	
-	import { mapState,mapStores,mapActions } from 'pinia'
-	import { useCounterStore } from '@/store/counter.js'
+	import {
+		mapState,
+		mapStores,
+		mapActions
+	} from 'pinia'
+	import {
+		useCounterStore
+	} from '@/store/yuyue.js'
 	export default {
 		data() {
 			return {
-				loading:false,
+				loading: false,
 				yuyueClass: 'yuyue-box1',
-				yuyueInfo:{
-					peopleNumber:'',
-					userName:'',
-					userPhone:'',
-					datetimesingle:''
+				yuyueInfo: {
+					peopleNumber: '',
+					userName: '',
+					userPhone: '',
+					datetimesingle: ''
 				},
 				today: ''
-				
+
 			}
 		},
 		onLoad() {
@@ -59,96 +67,101 @@
 			console.log(this.count)
 		},
 		onReady() {
-			
-			
+
+
 		},
-		computed:{
+		computed: {
 			...mapStores(useCounterStore),
-			...mapState(useCounterStore,['count','double'])
+			...mapState(useCounterStore, ['count', 'double'])
 		},
 		methods: {
-			...mapActions(useCounterStore,['insertYuyue','increment']),
+			...mapActions(useCounterStore, ['insertYuyue', 'increment']),
 			setToday() {
-			      const now = new Date();
-			      const year = now.getFullYear();
-			      const month = String(now.getMonth() + 1).padStart(2, '0');
-			      const date = String(now.getDate()).padStart(2, '0');
-			      const hours = String(now.getHours()).padStart(2, '0');
-			      const minutes = String(now.getMinutes()).padStart(2, '0');
-			      this.today = `${year}-${month}-${date} ${hours}:${minutes}`;
-			    },
-			clike(){
-				console.log(this.yuyueClass);
-				
-								// 在这里可以进行点击按钮后的逻辑处理
-								this.loading = true; // 模拟点击后设置 loading 为 true
-				
-								// 模拟异步操作，比如请求后端接口
-								setTimeout(() => {
-									// 异步操作完成后，重置 loading 为 false
-									this.loading = false;
-									this.yuyueClass = "yuyue-box"
-								}, 2000);
-								
+				const now = new Date();
+				const year = now.getFullYear();
+				const month = String(now.getMonth() + 1).padStart(2, '0');
+				const date = String(now.getDate()).padStart(2, '0');
+				const hours = String(now.getHours()).padStart(2, '0');
+				const minutes = String(now.getMinutes()).padStart(2, '0');
+				this.today = `${year}-${month}-${date} ${hours}:${minutes}`;
 			},
-			handleChange(e){
+			clike() {
+				console.log(this.yuyueClass);
+
+				// 在这里可以进行点击按钮后的逻辑处理
+				this.loading = true; // 模拟点击后设置 loading 为 true
+
+				// 模拟异步操作，比如请求后端接口
+				setTimeout(() => {
+					// 异步操作完成后，重置 loading 为 false
+					this.loading = false;
+					this.yuyueClass = "yuyue-box"
+				}, 2000);
+
+			},
+			handleChange(e) {
 				console.log("日期" + e)
 			},
-			yuyueSure(e){
+			yuyueSure(e) {
 				console.log(this.yuyueInfo)
 				const selectedDateTime = new Date(this.yuyueInfo.datetimesingle).getTime();
 				const currentDateTime = new Date().getTime();
 				const sevenDaysLaterDateTime = currentDateTime + (7 * 24 * 60 * 60 * 1000); // 7天后的时间戳
-				if(this.yuyueInfo.datetimesingle == ""){
+				if (this.yuyueInfo.datetimesingle == "") {
 					uni.showToast({
-						title:'请选择日期',
-						icon:'error',		
+						title: '请选择日期',
+						icon: 'error',
 					})
-				}else if(this.yuyueInfo.userPhone == ""){
+				} else if (this.yuyueInfo.userPhone == "") {
 					uni.showToast({
-						title:'请输入电话',
-						icon:'error',
-						
+						title: '请输入电话',
+						icon: 'error',
+
 					})
-				}else if(this.yuyueInfo.userName == ""){
+				} else if (this.yuyueInfo.userName == "") {
 					uni.showToast({
-						title:'请输入姓名',
-						icon:'error',
+						title: '请输入姓名',
+						icon: 'error',
 					})
-				}else if(this.yuyueInfo.userName.length > 10){
+				} else if (this.yuyueInfo.userName.length > 10) {
 					uni.showToast({
-						title:'请输入正确的昵称',
-						icon:'error',
-					})					
-				}else if(this.yuyueInfo.peopleNumber == ""){
-					uni.showToast({
-						title:'请选择人数',
-						icon:'error',
-						
+						title: '请输入正确的昵称',
+						icon: 'error',
 					})
-				}else if(this.yuyueInfo.userPhone.length <11){
+				} else if (this.yuyueInfo.peopleNumber == "") {
 					uni.showToast({
-						title:'请输入正确的电话号码',
-						icon:'none',
-						
-					})	
-				}else if(selectedDateTime < currentDateTime){
-					uni.showToast({
-						title:'选择有误',
-						icon:'none'
+						title: '请选择人数',
+						icon: 'error',
+
 					})
-				}else if(selectedDateTime > sevenDaysLaterDateTime){
+				} else if (this.yuyueInfo.userPhone.length < 11) {
 					uni.showToast({
-						title:'请选择7天内的日期',
-						icon:'none'
+						title: '请输入正确的电话号码',
+						icon: 'none',
+
 					})
-				}else{
+				} else if (selectedDateTime < currentDateTime) {
+					uni.showToast({
+						title: '选择有误',
+						icon: 'none'
+					})
+				} else if (selectedDateTime > sevenDaysLaterDateTime) {
+					uni.showToast({
+						title: '请选择7天内的日期',
+						icon: 'none'
+					})
+				} else {
 					this.insertYuyue({
-							"bookNumber": this.yuyueInfo.peopleNumber,
-							"bookDate": this.yuyueInfo.datetimesingle,
-							"bookName": this.yuyueInfo.userName,
-							"bookPhone": this.yuyueInfo.userPhone
-						})
+						"bookNumber": this.yuyueInfo.peopleNumber,
+						"bookDate": this.yuyueInfo.datetimesingle,
+						"bookName": this.yuyueInfo.userName,
+						"bookPhone": this.yuyueInfo.userPhone
+					})
+					.then(res => {
+						console.log("预约结果", res);
+					}).catch(err => {
+						console.error("预约失败", err);
+					});
 					// uni.request({
 					// 	url:'http://127.0.0.1:9999/book/add',
 					// 	method:'POST',
@@ -163,70 +176,72 @@
 					// 			uni.showToast({
 					// 				title:'预约成功',
 					// 				icon:'success'
-									
+
 					// 			})
 					// 		}else{
 					// 			uni.showToast({
 					// 				title:'网络请求失败',
 					// 				icon:'loading'
-									
+
 					// 			})
 					// 		}
-							
+
 					// 	},
 					// 	fail: (err) => {
 					// 		uni.showToast({
 					// 			title:'网络请求失败',
 					// 			icon:'loading'
-								
+
 					// 		})
 					// 	}
 					// })
-					
+
 				}
 				this.yuyueInfo = {
-					peopleNumber:'',
-					userName:'',
-					userPhone:'',
-					datetimesingle:''
+					peopleNumber: '',
+					userName: '',
+					userPhone: '',
+					datetimesingle: ''
 				}
 				this.yuyueClass = "yuyue-box1"
 			},
-			yuyueCancel(){
+			yuyueCancel() {
 				this.yuyueInfo = {
-					peopleNumber:'',
-					userName:'',
-					userPhone:'',
-					datetimesingle:''
+					peopleNumber: '',
+					userName: '',
+					userPhone: '',
+					datetimesingle: ''
 				}
 				this.yuyueClass = "yuyue-box1"
 			},
-			getUserProfile(){
-				
-				if(false){
+			getUserProfile() {
+
+				if (false) {
 					console.log("一登陆")
-				}else{
+				} else {
 					console.log("未登录")
 					wx.login({
 						success: (res) => {
-							console.log(res.code+"111111111")
+							console.log(res.code + "111111111")
 							//小程序appid
-							    let appid = 'wx33475484a15eed9b'; //换成自己的
-							    //小程序secret
-							    let secret = '8fae391a617824d3a03493c83ee1abe5'; //换成自己的
-							    //wx接口路径
-							    let url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid + '&secret=' + secret + '&js_code=' + res.code + '&grant_type=authorization_code';
-							    uni.request({
-							    	url:url,
-									method:'GET',
-									success: (res) => {
-										console.log(res.data.openid)
-									}
-							    })
+							let appid = 'wx33475484a15eed9b'; //换成自己的
+							//小程序secret
+							let secret = '8fae391a617824d3a03493c83ee1abe5'; //换成自己的
+							//wx接口路径
+							let url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid +
+								'&secret=' + secret + '&js_code=' + res.code +
+								'&grant_type=authorization_code';
+							uni.request({
+								url: url,
+								method: 'GET',
+								success: (res) => {
+									console.log(res.data.openid)
+								}
+							})
 						}
 					})
 					wx.getUserProfile({
-						desc:'测试',
+						desc: '测试',
 						success: (res) => {
 							console.log("进来了")
 							console.log(res)
@@ -240,14 +255,14 @@
 							console.log(err)
 							//拒绝授权
 							wx.showToast({
-								title:'拒绝授权',
-								icon:'error',
-								duration:2000
+								title: '拒绝授权',
+								icon: 'error',
+								duration: 2000
 							})
 						}
 					})
 				}
-				
+
 			}
 		}
 	}
@@ -263,7 +278,7 @@
 		height: 100vh;
 		overflow: hidden;
 		position: relative;
-		
+
 		background-size: cover;
 		background-position: center;
 	}
@@ -286,7 +301,8 @@
 		font-size: 36rpx;
 		color: #8f8f94;
 	}
-	.yuyue-box{
+
+	.yuyue-box {
 		background-color: whitesmoke;
 		width: 600rpx;
 		height: 650rpx;
@@ -294,7 +310,8 @@
 		position: fixed;
 		top: 200rpx;
 	}
-	.yuyue-box1{
+
+	.yuyue-box1 {
 		background-color: whitesmoke;
 		width: 600rpx;
 		height: 500rpx;
@@ -302,7 +319,8 @@
 		top: 200rpx;
 		display: none;
 	}
-	.yuyue-view{
+
+	.yuyue-view {
 		padding-top: 10rpx;
 		display: flex;
 		height: 80rpx;
@@ -310,14 +328,16 @@
 		padding-left: 20rpx;
 		padding-right: 15px;
 	}
-	.yuyue-title{
+
+	.yuyue-title {
 		letter-spacing: 10rpx;
 		display: flex;
 		height: 100rpx;
 		align-items: center;
 		justify-content: center;
 	}
-	.yuyue-input{
+
+	.yuyue-input {
 		width: 387rpx;
 		padding-top: 5rpx;
 		height: 60rpx;
@@ -326,16 +346,15 @@
 		padding-left: 10rpx;
 		background-color: white;
 	}
-	.yuyue-sure{
+
+	.yuyue-sure {
 		display: flex;
 		position: absolute;
 		bottom: 0;
-		width: 100%;		
+		width: 100%;
 	}
-	.yuyue-sure button{
+
+	.yuyue-sure button {
 		width: 350rpx;
 	}
-
-
-
 </style>

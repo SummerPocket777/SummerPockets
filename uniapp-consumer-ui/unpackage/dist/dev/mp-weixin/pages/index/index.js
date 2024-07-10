@@ -1,6 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const store_counter = require("../../store/counter.js");
+const store_yuyue = require("../../store/yuyue.js");
 const _sfc_main = {
   data() {
     return {
@@ -24,11 +24,11 @@ const _sfc_main = {
   onReady() {
   },
   computed: {
-    ...common_vendor.mapStores(store_counter.useCounterStore),
-    ...common_vendor.mapState(store_counter.useCounterStore, ["count", "double"])
+    ...common_vendor.mapStores(store_yuyue.useCounterStore),
+    ...common_vendor.mapState(store_yuyue.useCounterStore, ["count", "double"])
   },
   methods: {
-    ...common_vendor.mapActions(store_counter.useCounterStore, ["insertYuyue", "increment"]),
+    ...common_vendor.mapActions(store_yuyue.useCounterStore, ["insertYuyue", "increment"]),
     setToday() {
       const now = /* @__PURE__ */ new Date();
       const year = now.getFullYear();
@@ -100,6 +100,10 @@ const _sfc_main = {
           "bookDate": this.yuyueInfo.datetimesingle,
           "bookName": this.yuyueInfo.userName,
           "bookPhone": this.yuyueInfo.userPhone
+        }).then((res) => {
+          console.log("预约结果", res);
+        }).catch((err) => {
+          console.error("预约失败", err);
         });
       }
       this.yuyueInfo = {
@@ -191,5 +195,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     m: common_vendor.n($data.yuyueClass)
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/lesson4/new/SummerPockets/uniapp-consumer-ui/pages/index/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "G:/cykjWorkSpacrce/SummerPockets/uniapp-consumer-ui/pages/index/index.vue"]]);
 wx.createPage(MiniProgramPage);
