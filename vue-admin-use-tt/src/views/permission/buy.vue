@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="body">
     <div class="cards">
     <el-card class="box-card">
       <div class="title">基础版</div>
@@ -47,12 +47,19 @@ export default {
 </script>
 
 <style scoped>
+.body{
+  width: 100%;
+  height: 95vh;
+  background: url("../../assets/images/buyBg.jpg");
+}
 .text-item{
   margin: 18px;
   font-size: 18px;
 }
   .cards{
     display: flex;
+    padding-top:200px;
+    padding-left:200px
   }
   .ishop{
     margin-right: 10px;
@@ -98,5 +105,8 @@ export default {
   .box-card {
     width: 520px;
     height: 500px;
+    border-radius: 30px;
+    margin: 100px;
+    background-color: rgba(255, 255, 255, 0.8); /* 蓝色并且透明度为 50% */
   }
 </style>
