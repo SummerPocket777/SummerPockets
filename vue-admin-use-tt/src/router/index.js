@@ -101,13 +101,13 @@ export const constantRoutes = [
         path: 'order',
         name: 'Order',
         component: () => import('@/views/kitchen/order'),
-        meta: { title: '上菜信息', icon: 'table' }
+        meta: { title: '上菜信息', icon: 'el-icon-dish' }
       },
       {
         path: 'book',
         name: 'Book',
         component: () => import('@/views/kitchen/book'),
-        meta: { title: '预约信息', icon: 'tree' }
+        meta: { title: '预约信息', icon: 'table' }
       }
     ]
   },
@@ -116,7 +116,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/chart/dish-flow',
     name: 'chart',
-    meta: { title: '统计信息', icon: 'el-icon-fork-spoon' },
+    meta: { title: '统计信息', icon: 'el-icon-s-data' },
     children: [
       {
         path: 'dish-flow',
@@ -137,25 +137,25 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/user-config/user-center',
     name: 'user',
-    meta: { title: '用户管理', icon: 'el-icon-fork-spoon' },
+    meta: { title: '用户管理', icon: 'el-icon-user' },
     children: [
       {
         path: 'user-center',
         name: 'UserCenter',
         component: () => import('@/views/user/user-center'),
-        meta: { title: '个人中心', icon: 'table' }
+        meta: { title: '个人中心', icon: 'el-icon-user-solid' }
       },
       {
         path: 'shop-config',
         name: 'ShopConfig',
         component: () => import('@/views/user/shop-config'),
-        meta: { title: '门店管理', icon: 'tree' }
+        meta: { title: '门店管理', icon: 'el-icon-s-shop' }
       },
       {
         path: 'consumer-list',
         name: 'ConsumerList',
         component: () => import('@/views/user/consumer-list'),
-        meta: { title: '顾客列表', icon: 'tree' }
+        meta: { title: '顾客列表', icon: 'el-icon-s-custom' }
       }
     ]
   },
@@ -164,13 +164,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/voucher/voucher-config',
     name: 'Voucher',
-    meta: { title: '优惠劵管理', icon: 'el-icon-fork-spoon' },
+    meta: { title: '优惠劵管理', icon: 'el-icon-s-ticket' },
     children: [
       {
         path: 'voucher-config',
         name: 'VoucherConfig',
         component: () => import('@/views/voucher/voucher-config'),
-        meta: { title: '优惠劵管理', icon: 'table' }
+        meta: { title: '优惠劵管理', icon: 'el-icon-s-ticket' }
       },
     ]
   },
@@ -179,19 +179,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/permission/buy',
     name: 'user',
-    meta: { title: '权限管理', icon: 'el-icon-fork-spoon' },
+    meta: { title: '权限管理', icon: 'el-icon-s-flag' },
     children: [
       {
         path: 'buy',
         name: 'Buy',
         component: () => import('@/views/permission/buy'),
-        meta: { title: '权限购买', icon: 'table' }
+        meta: { title: '权限购买', icon: 'el-icon-shopping-cart-2' }
       },
       {
         path: 'config',
         name: 'Config',
         component: () => import('@/views/permission/config'),
-        meta: { title: '权限管理', icon: 'table' }
+        meta: { title: '权限管理', icon: 'el-icon-s-check' }
       }
 
     ]
@@ -201,108 +201,23 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/chat/admin-chat',
     name: 'user',
-    meta: { title: '问题反馈', icon: 'el-icon-fork-spoon' },
+    meta: { title: '问题反馈', icon: 'el-icon-service' },
     children: [
       {
         path: 'admin-chat',
         name: 'AdminChat',
         component: () => import('@/views/chat/admin-chat'),
-        meta: { title: '客服服务', icon: 'table' }
+        meta: { title: '客服服务', icon: 'el-icon-service' }
       },
       {
         path: 'shop-chat',
         name: 'ShopChat',
         component: () => import('@/views/chat/shop-chat'),
-        meta: { title: '人工客服', icon: 'table' }
+        meta: { title: '人工客服', icon: 'el-icon-service' }
       }
 
     ]
   },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
-
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
