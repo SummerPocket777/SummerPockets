@@ -2,6 +2,7 @@ package com.sp.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sp.model.PageResult;
 import com.sp.model.domain.SysBusiness;
 import com.sp.model.vo.SysBusinessVO;
 
@@ -17,4 +18,12 @@ public interface SysBusinessService extends IService<SysBusiness> {
     long addBusiness(SysBusiness sysBusiness);
 
     boolean updateBusiness(SysBusinessVO sysBusiness);
+
+    /**
+     * 分页查询
+     *
+     * @param sysBusinessVO 系统业务
+     * @return {@link PageResult }<{@link SysBusiness }>
+     */
+    PageResult<SysBusiness> pageQuery(SysBusinessVO sysBusinessVO);
 }

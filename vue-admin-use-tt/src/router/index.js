@@ -43,6 +43,12 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
+  {
+    name: 'reg',
+    path: '/reg',
+    component: () => import('@/views/login/register'),
+    hidden: true
+  },
 
   {
     path: '/404',
@@ -63,111 +69,155 @@ export const constantRoutes = [
   },
 
   {
-    path: '/example',
+    path: '/dish',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: '案例', icon: 'el-icon-s-help' },
+    redirect: '/dish/list',
+    name: 'Dish',
+    meta: { title: '菜品管理', icon: 'el-icon-dish' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: '表格', icon: 'table' }
+        path: 'list',
+        name: 'DishList',
+        component: () => import('@/views/dish/list'),
+        meta: { title: '菜单列表', icon: 'el-icon-tickets' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: '树状表格', icon: 'tree' }
-      }
+        path: 'add',
+        name: 'DishAdd',
+        component: () => import('@/views/dish/add'),
+        meta: { title: '菜品添加', icon: 'el-icon-plus' }
+      },
     ]
   },
 
   {
-    path: '/form',
+    path: '/kitchen',
     component: Layout,
+    redirect: '/kitchen/order',
+    name: 'kitchen',
+    meta: { title: '后厨面板', icon: 'el-icon-fork-spoon' },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        path: 'order',
+        name: 'Order',
+        component: () => import('@/views/kitchen/order'),
+        meta: { title: '上菜信息', icon: 'el-icon-dish' }
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
+        path: 'book',
+        name: 'Book',
+        component: () => import('@/views/kitchen/book'),
+        meta: { title: '预约信息', icon: 'table' }
       }
     ]
   },
-
   {
-    path: 'external-link',
+    path: '/chart',
     component: Layout,
+    redirect: '/chart/dish-flow',
+    name: 'chart',
+    meta: { title: '统计信息', icon: 'el-icon-s-data' },
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: 'dish-flow',
+        name: 'DishFlow',
+        component: () => import('@/views/chart/dish-flow'),
+        meta: { title: '菜品统计', icon: 'table' }
+      },
+      {
+        path: 'shop-flow',
+        name: 'ShopFlow',
+        component: () => import('@/views/chart/shop-flow'),
+        meta: { title: '门店统计', icon: 'tree' }
       }
     ]
   },
+  {
+    path: '/user-config',
+    component: Layout,
+    redirect: '/user-config/user-center',
+    name: 'user',
+    meta: { title: '用户管理', icon: 'el-icon-user' },
+    children: [
+      {
+        path: 'user-center',
+        name: 'UserCenter',
+        component: () => import('@/views/user/user-center'),
+        meta: { title: '个人中心', icon: 'el-icon-user-solid' }
+      },
+      {
+        path: 'shop-config',
+        name: 'ShopConfig',
+        component: () => import('@/views/user/shop-config'),
+        meta: { title: '门店管理', icon: 'el-icon-s-shop' }
+      },
+      {
+        path: 'consumer-list',
+        name: 'ConsumerList',
+        component: () => import('@/views/user/consumer-list'),
+        meta: { title: '顾客列表', icon: 'el-icon-s-custom' }
+      }
+    ]
+  },
+  {
+    path: '/voucher',
+    component: Layout,
+    redirect: '/voucher/voucher-config',
+    name: 'Voucher',
+    meta: { title: '优惠劵管理', icon: 'el-icon-s-ticket' },
+    children: [
+      {
+        path: 'voucher-config',
+        name: 'VoucherConfig',
+        component: () => import('@/views/voucher/voucher-config'),
+        meta: { title: '优惠劵管理', icon: 'el-icon-s-ticket' }
+      },
+    ]
+  },
+  {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/buy',
+    name: 'user',
+    meta: { title: '权限管理', icon: 'el-icon-s-flag' },
+    children: [
+      {
+        path: 'buy',
+        name: 'Buy',
+        component: () => import('@/views/permission/buy'),
+        meta: { title: '权限购买', icon: 'el-icon-shopping-cart-2' }
+      },
+      {
+        path: 'config',
+        name: 'Config',
+        component: () => import('@/views/permission/config'),
+        meta: { title: '权限管理', icon: 'el-icon-s-check' }
+      }
 
+    ]
+  },
+  {
+    path: '/chat',
+    component: Layout,
+    redirect: '/chat/admin-chat',
+    name: 'user',
+    meta: { title: '问题反馈', icon: 'el-icon-service' },
+    children: [
+      {
+        path: 'admin-chat',
+        name: 'AdminChat',
+        component: () => import('@/views/chat/admin-chat'),
+        meta: { title: '客服服务', icon: 'el-icon-service' }
+      },
+      {
+        path: 'shop-chat',
+        name: 'ShopChat',
+        component: () => import('@/views/chat/shop-chat'),
+        meta: { title: '人工客服', icon: 'el-icon-service' }
+      }
 
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

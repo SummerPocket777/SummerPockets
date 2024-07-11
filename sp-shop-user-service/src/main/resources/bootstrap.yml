@@ -18,11 +18,11 @@ spring:
         name: sp_mybatis_plus_config
 #        配置数据库配置
   redis:
-    password: 123456
+    password: redis_root
     #redis服务器连接地址
-    host: 42.193.140.71
+    host: 112.111.242.49
     #端口号
-    port: 6379
+    port: 13021
     #连接超时时间（毫秒）
     timeout: 10000
     #使用的redis库

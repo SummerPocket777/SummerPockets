@@ -1,10 +1,14 @@
 package com.sp.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sp.core.enums.ErrorCode;
 import com.sp.core.exception.BusinessException;
 import com.sp.mapper.SysBusinessMapper;
+import com.sp.model.PageResult;
+import com.sp.model.domain.Setmeal;
 import com.sp.model.domain.SysBusiness;
 import com.sp.model.vo.SysBusinessVO;
 import com.sp.service.SysBusinessService;
@@ -12,7 +16,9 @@ import com.sp.service.SysBusinessService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
 * @author Administrator
@@ -22,6 +28,8 @@ import java.util.Date;
 @Service
 public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBusiness>
     implements SysBusinessService{
+    @Resource
+    private SysBusinessMapper sysBusinessMapper;
 
     /**
      * 获得安全店铺 后面可以用权限进行区分显示
@@ -102,6 +110,60 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
         oldBusiness.setUpdateTime(new Date());
         return this.updateById(oldBusiness);
     }
+
+    /**
+     * 分页查询
+     *
+     * @param sysBusinessVO 系统业务
+     * @return {@link PageResult }<{@link SysBusiness }>
+     */
+    @Override
+    public PageResult<SysBusiness> pageQuery(SysBusinessVO sysBusinessVO) {
+        if (sysBusinessVO == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Long PageNo = sysBusinessVO.getPageNo();
+        Long pageSize = sysBusinessVO.getPageSize();
+
+        // 打印分页参数
+        System.out.println("PageNo: " + PageNo);
+        System.out.println("PageSize: " + pageSize);
+
+        // 设置分页参数
+        Page<SysBusiness> page = new Page<>(PageNo, pageSize);
+        QueryWrapper<SysBusiness> queryWrapper = new QueryWrapper<>();
+
+        // 打印查询条件
+        System.out.println("QueryWrapper: " + queryWrapper);
+
+        sysBusinessMapper.selectPage(page, queryWrapper);
+
+        // 获取分页数据
+        List<SysBusiness> list = page.getRecords();
+
+        // 打印查询结果
+        System.out.println("Query Result: " + list);
+
+        //测试查询全部数据并且打印出来
+        List<SysBusiness> allList = sysBusinessMapper.selectList(null);
+        System.out.println("All List: " + allList);
+
+        PageResult<SysBusiness> pageResult = new PageResult<>();
+        pageResult.setPageNo(page.getCurrent());
+        pageResult.setPageSize(page.getSize());
+        pageResult.setTotalRow(page.getTotal());
+        pageResult.setPageTotalCount(page.getPages());
+        pageResult.setItems(list);
+        if (page.getTotal() == 0) {
+            pageResult.setHasNext(false);
+            pageResult.setHasPrevious(false);
+        } else {
+            pageResult.setHasNext(page.hasNext());
+            pageResult.setHasPrevious(page.hasPrevious());
+        }
+        return pageResult;
+    }
+
 }
 
 

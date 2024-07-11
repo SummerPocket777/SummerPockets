@@ -61,30 +61,47 @@ public class FileUtils {
     }
 
     /**
+     * 获取图像文件的字节流。
+     *
+     * @param imageFile 图像文件，用于读取其内容转换为字节流。
+     * @return 图像文件的字节流，如果读取失败则返回null。
+     */
+    /**
      * 获取图像流
      *
      * @param imageFile 图像文件
      * @return {@link byte[]}
      */
     public static byte[] getImageStream(File imageFile) {
+        // 初始化字节数组缓冲区，用于存储读取的图像文件内容。
         byte[] buffer = null;
+        // 尝试打开文件输入流，以准备读取图像文件。
         FileInputStream fis;
         try {
+            // 创建一个 ByteArrayOutputStream，用于动态聚合从文件读取的字节。
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             fis = new FileInputStream(imageFile);
+            // 创建一个固定大小的字节数组，用于临时存储从文件读取的字节。
             byte[] b = new byte[DEFAULT_BUFFER_SIZE];
             int n;
+            // 循环读取文件中的字节，直到读取结束。
             while ((n = fis.read(b)) != FILE_END) {
-                bos.write(b, 0, n);
+                // 将读取的字节写入 ByteArrayOutputStream。
+                bos.write(b, 0, n);  //
             }
+            // 关闭文件输入流。
             fis.close();
+            // 关闭 ByteArrayOutputStream，并将聚合的字节转换为字节数组。
             bos.close();
-            buffer = bos.toByteArray();
+            buffer = bos.toByteArray();   //从 ByteArrayOutputStream 获取数据
         } catch (IOException e) {
+            // 如果在读取文件过程中发生IO异常，记录错误日志。
             log.error("exception message", e);
         }
+        // 返回读取的图像文件的字节流，如果读取失败则返回null。
         return buffer;
     }
+
 
     /**
      * 文件上传方法。

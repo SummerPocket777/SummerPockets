@@ -18,12 +18,12 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.sp</groupId>
-            <artifactId>sp-common-redis</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.sp</groupId>-->
+<!--            <artifactId>sp-common-redis</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.sp</groupId>
             <artifactId>sp-common-core</artifactId>
@@ -37,12 +37,6 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
         <!--        网关依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -106,12 +100,12 @@
             <artifactId>commons-pool2</artifactId>
         </dependency>
 
-
         <!--        配置注解处理器-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+
     </dependencies>
 </project>

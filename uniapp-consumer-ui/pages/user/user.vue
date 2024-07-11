@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="top">
-			<image class="user-img" :src="userImage"></image>
+			<image class="user-img" :src="userImage" @tap="chooseImage"></image>
 			<text class="user-name">{{userName}}</text>
 		</view>
 		<view class="container">
@@ -34,7 +34,8 @@
 		data() {
 			return {
 				userName:"用户名称",
-				userImage:''
+				userImage:'',
+				imageUrl:''
 			}
 		},
 		onLoad() {
@@ -54,6 +55,36 @@
 					
 				})
 				console.log("点击量")
+			},
+			chooseImage(){
+				uni.chooseImage({
+					count:6,
+					sizeType:['original','compressed'],
+					sourceType:['album'],  // 从相册选择
+					success:(res)=>{
+						console.log(JSON.stringify(res.tempFilePaths))
+						console.log(res.tempFilePaths[0])
+						this.userImage = res.tempFilePaths[0]
+						uni.uploadFile({
+							url:'http://127.0.0.1:8101/fileupload/file/upload',
+							filePath:this.userImage,
+							name:'file',
+							success:(res) =>{
+								// console.log("res: ",res)
+								console.log("fileInfo: ",res.data)
+								var fileInfo = JSON.parse(res.data)
+								console.log("解析后:",fileInfo)
+								if(fileInfo.data != null){
+									this.imageUrl = fileInfo.data
+								    console.log("imageURL:",this.imageUrl)
+								}
+								
+							}
+						})
+					}
+					
+				})
+				
 			}
 			
 		},
