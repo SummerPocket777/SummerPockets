@@ -38,9 +38,9 @@ const isSet = (val) => toTypeString(val) === "[object Set]";
 const isFunction = (val) => typeof val === "function";
 const isString = (val) => typeof val === "string";
 const isSymbol = (val) => typeof val === "symbol";
-const isObject$1 = (val) => val !== null && typeof val === "object";
+const isObject$2 = (val) => val !== null && typeof val === "object";
 const isPromise = (val) => {
-  return (isObject$1(val) || isFunction(val)) && isFunction(val.then) && isFunction(val.catch);
+  return (isObject$2(val) || isFunction(val)) && isFunction(val.then) && isFunction(val.catch);
 };
 const objectToString = Object.prototype.toString;
 const toTypeString = (value) => objectToString.call(value);
@@ -112,7 +112,7 @@ function normalizeStyle(value) {
       }
     }
     return res;
-  } else if (isString(value) || isObject$1(value)) {
+  } else if (isString(value) || isObject$2(value)) {
     return value;
   }
 }
@@ -140,7 +140,7 @@ function normalizeClass(value) {
         res += normalized + " ";
       }
     }
-  } else if (isObject$1(value)) {
+  } else if (isObject$2(value)) {
     for (const name in value) {
       if (value[name]) {
         res += name + " ";
@@ -150,7 +150,7 @@ function normalizeClass(value) {
   return res.trim();
 }
 const toDisplayString = (val) => {
-  return isString(val) ? val : val == null ? "" : isArray(val) || isObject$1(val) && (val.toString === objectToString || !isFunction(val.toString)) ? JSON.stringify(val, replacer, 2) : String(val);
+  return isString(val) ? val : val == null ? "" : isArray(val) || isObject$2(val) && (val.toString === objectToString || !isFunction(val.toString)) ? JSON.stringify(val, replacer, 2) : String(val);
 };
 const replacer = (_key, val) => {
   if (val && val.__v_isRef) {
@@ -171,7 +171,7 @@ const replacer = (_key, val) => {
     };
   } else if (isSymbol(val)) {
     return stringifySymbol(val);
-  } else if (isObject$1(val) && !isArray(val) && !isPlainObject(val)) {
+  } else if (isObject$2(val) && !isArray(val) && !isPlainObject(val)) {
     return String(val);
   }
   return val;
@@ -410,7 +410,7 @@ E.prototype = {
   }
 };
 var E$1 = E;
-const isObject = (val) => val !== null && typeof val === "object";
+const isObject$1 = (val) => val !== null && typeof val === "object";
 const defaultDelimiters = ["{", "}"];
 class BaseFormatter {
   constructor() {
@@ -422,7 +422,7 @@ class BaseFormatter {
     }
     let tokens = this._caches[message];
     if (!tokens) {
-      tokens = parse$1(message, delimiters);
+      tokens = parse(message, delimiters);
       this._caches[message] = tokens;
     }
     return compile$1(tokens, values);
@@ -430,7 +430,7 @@ class BaseFormatter {
 }
 const RE_TOKEN_LIST_VALUE = /^(?:\d)+/;
 const RE_TOKEN_NAMED_VALUE = /^(?:\w)+/;
-function parse$1(format, [startDelimiter, endDelimiter]) {
+function parse(format, [startDelimiter, endDelimiter]) {
   const tokens = [];
   let position = 0;
   let text = "";
@@ -460,7 +460,7 @@ function parse$1(format, [startDelimiter, endDelimiter]) {
 function compile$1(tokens, values) {
   const compiled = [];
   let index2 = 0;
-  const mode = Array.isArray(values) ? "list" : isObject(values) ? "named" : "unknown";
+  const mode = Array.isArray(values) ? "list" : isObject$1(values) ? "named" : "unknown";
   if (mode === "unknown") {
     return compiled;
   }
@@ -768,7 +768,7 @@ function assertType$1(value, type) {
       valid = value instanceof type;
     }
   } else if (expectedType === "Object") {
-    valid = isObject$1(value);
+    valid = isObject$2(value);
   } else if (expectedType === "Array") {
     valid = isArray(value);
   } else {
@@ -2428,6 +2428,9 @@ class EffectScope {
     }
   }
 }
+function effectScope(detached) {
+  return new EffectScope(detached);
+}
 function recordEffectScope(effect2, scope = activeEffectScope) {
   if (scope && scope.active) {
     scope.effects.push(effect2);
@@ -2766,7 +2769,7 @@ class BaseReactiveHandler2 {
     if (isRef(res)) {
       return targetIsArray && isIntegerKey(key) ? res : res.value;
     }
-    if (isObject$1(res)) {
+    if (isObject$2(res)) {
       return isReadonly2 ? readonly(res) : reactive(res);
     }
     return res;
@@ -2860,7 +2863,7 @@ const shallowReactiveHandlers = /* @__PURE__ */ new MutableReactiveHandler2(
 const shallowReadonlyHandlers = /* @__PURE__ */ new ReadonlyReactiveHandler2(true);
 const toShallow = (value) => value;
 const getProto = (v) => Reflect.getPrototypeOf(v);
-function get(target, key, isReadonly2 = false, isShallow2 = false) {
+function get$1(target, key, isReadonly2 = false, isShallow2 = false) {
   target = target["__v_raw"];
   const rawTarget = toRaw(target);
   const rawKey = toRaw(key);
@@ -3012,7 +3015,7 @@ function createReadonlyMethod(type) {
 function createInstrumentations() {
   const mutableInstrumentations2 = {
     get(key) {
-      return get(this, key);
+      return get$1(this, key);
     },
     get size() {
       return size(this);
@@ -3026,7 +3029,7 @@ function createInstrumentations() {
   };
   const shallowInstrumentations2 = {
     get(key) {
-      return get(this, key, false, true);
+      return get$1(this, key, false, true);
     },
     get size() {
       return size(this);
@@ -3040,7 +3043,7 @@ function createInstrumentations() {
   };
   const readonlyInstrumentations2 = {
     get(key) {
-      return get(this, key, true);
+      return get$1(this, key, true);
     },
     get size() {
       return size(this, true);
@@ -3056,7 +3059,7 @@ function createInstrumentations() {
   };
   const shallowReadonlyInstrumentations2 = {
     get(key) {
-      return get(this, key, true, true);
+      return get$1(this, key, true, true);
     },
     get size() {
       return size(this, true);
@@ -3198,7 +3201,7 @@ function shallowReadonly(target) {
   );
 }
 function createReactiveObject(target, isReadonly2, baseHandlers, collectionHandlers, proxyMap) {
-  if (!isObject$1(target)) {
+  if (!isObject$2(target)) {
     {
       warn$2(`value cannot be made reactive: ${String(target)}`);
     }
@@ -3247,8 +3250,8 @@ function markRaw(value) {
   }
   return value;
 }
-const toReactive = (value) => isObject$1(value) ? reactive(value) : value;
-const toReadonly = (value) => isObject$1(value) ? readonly(value) : value;
+const toReactive = (value) => isObject$2(value) ? reactive(value) : value;
+const toReadonly = (value) => isObject$2(value) ? readonly(value) : value;
 const COMPUTED_SIDE_EFFECT_WARN = `Computed is still dirty after getter evaluation, likely because a computed is mutating its own dependency in its getter. State mutations in computed getters should be avoided.  Check the docs for more details: https://vuejs.org/guide/essentials/computed.html#getters-should-be-side-effect-free`;
 class ComputedRefImpl {
   constructor(getter, _setter, isReadonly2, isSSR) {
@@ -4002,7 +4005,7 @@ function normalizeEmitsOptions(comp, appContext, asMixin = false) {
     }
   }
   if (!raw && !hasExtends) {
-    if (isObject$1(comp)) {
+    if (isObject$2(comp)) {
       cache.set(comp, null);
     }
     return null;
@@ -4012,7 +4015,7 @@ function normalizeEmitsOptions(comp, appContext, asMixin = false) {
   } else {
     extend(normalized, raw);
   }
-  if (isObject$1(comp)) {
+  if (isObject$2(comp)) {
     cache.set(comp, normalized);
   }
   return normalized;
@@ -4273,7 +4276,7 @@ function createPathGetter(ctx, path) {
   };
 }
 function traverse(value, depth, currentDepth = 0, seen) {
-  if (!isObject$1(value) || value["__v_skip"]) {
+  if (!isObject$2(value) || value["__v_skip"]) {
     return value;
   }
   if (depth && depth > 0) {
@@ -4336,7 +4339,7 @@ function createAppAPI(render, hydrate) {
     if (!isFunction(rootComponent)) {
       rootComponent = extend({}, rootComponent);
     }
-    if (rootProps != null && !isObject$1(rootProps)) {
+    if (rootProps != null && !isObject$2(rootProps)) {
       warn$1(`root props passed to app.mount() must be an object.`);
       rootProps = null;
     }
@@ -4898,7 +4901,7 @@ function applyOptions$1(instance) {
         `data() returned a Promise - note data() cannot be async; If you intend to perform data fetching before component renders, use async setup() + <Suspense>.`
       );
     }
-    if (!isObject$1(data)) {
+    if (!isObject$2(data)) {
       warn$1(`data() should return an object.`);
     } else {
       instance.data = reactive(data);
@@ -5016,7 +5019,7 @@ function resolveInjections(injectOptions, ctx, checkDuplicateProperties = NOOP) 
   for (const key in injectOptions) {
     const opt = injectOptions[key];
     let injected;
-    if (isObject$1(opt)) {
+    if (isObject$2(opt)) {
       if ("default" in opt) {
         injected = inject(
           opt.from || key,
@@ -5062,7 +5065,7 @@ function createWatcher(raw, ctx, publicThis, key) {
     }
   } else if (isFunction(raw)) {
     watch(getter, raw.bind(publicThis));
-  } else if (isObject$1(raw)) {
+  } else if (isObject$2(raw)) {
     if (isArray(raw)) {
       raw.forEach((r2) => createWatcher(r2, ctx, publicThis, key));
     } else {
@@ -5102,7 +5105,7 @@ function resolveMergedOptions(instance) {
     }
     mergeOptions(resolved, base, optionMergeStrategies);
   }
-  if (isObject$1(base)) {
+  if (isObject$2(base)) {
     cache.set(base, resolved);
   }
   return resolved;
@@ -5450,7 +5453,7 @@ function normalizePropsOptions(comp, appContext, asMixin = false) {
     }
   }
   if (!raw && !hasExtends) {
-    if (isObject$1(comp)) {
+    if (isObject$2(comp)) {
       cache.set(comp, EMPTY_ARR);
     }
     return EMPTY_ARR;
@@ -5466,7 +5469,7 @@ function normalizePropsOptions(comp, appContext, asMixin = false) {
       }
     }
   } else if (raw) {
-    if (!isObject$1(raw)) {
+    if (!isObject$2(raw)) {
       warn$1(`invalid props options`, raw);
     }
     for (const key in raw) {
@@ -5493,7 +5496,7 @@ function normalizePropsOptions(comp, appContext, asMixin = false) {
     }
   }
   const res = [normalized, needCastKeys];
-  if (isObject$1(comp)) {
+  if (isObject$2(comp)) {
     cache.set(comp, res);
   }
   return res;
@@ -5585,7 +5588,7 @@ function assertType(value, type) {
       valid = value instanceof type;
     }
   } else if (expectedType === "Object") {
-    valid = isObject$1(value);
+    valid = isObject$2(value);
   } else if (expectedType === "Array") {
     valid = isArray(value);
   } else if (expectedType === "null") {
@@ -5889,7 +5892,7 @@ function handleSetupResult(instance, setupResult, isSSR) {
     {
       instance.render = setupResult;
     }
-  } else if (isObject$1(setupResult)) {
+  } else if (isObject$2(setupResult)) {
     if (isVNode(setupResult)) {
       warn$1(
         `setup() should not return VNodes directly - return a render function instead.`
@@ -6354,7 +6357,7 @@ function setRef$1(instance, isUnmount = false) {
   }
 }
 function toSkip(value) {
-  if (isObject$1(value)) {
+  if (isObject$2(value)) {
     markRaw(value);
   }
   return value;
@@ -6753,7 +6756,7 @@ function initHooks$1(options, instance, publicThis) {
 function applyOptions$2(options, instance, publicThis) {
   initHooks$1(options, instance, publicThis);
 }
-function set(target, key, val) {
+function set$2(target, key, val) {
   return target[key] = val;
 }
 function $callMethod(method, ...args) {
@@ -6860,7 +6863,7 @@ function initApp(app) {
     uniIdMixin(globalProperties);
   }
   {
-    globalProperties.$set = set;
+    globalProperties.$set = set$2;
     globalProperties.$applyOptions = applyOptions$2;
     globalProperties.$callMethod = $callMethod;
   }
@@ -7019,7 +7022,7 @@ function vFor(source, renderItem) {
     for (let i = 0; i < source; i++) {
       ret[i] = renderItem(i + 1, i, i);
     }
-  } else if (isObject$1(source)) {
+  } else if (isObject$2(source)) {
     if (source[Symbol.iterator]) {
       ret = Array.from(source, (item, i) => renderItem(item, i, i));
     } else {
@@ -7039,9 +7042,9 @@ function stringifyStyle(value) {
   if (isString(value)) {
     return value;
   }
-  return stringify$1(normalizeStyle(value));
+  return stringify(normalizeStyle(value));
 }
-function stringify$1(styles) {
+function stringify(styles) {
   let ret = "";
   if (!styles || isString(styles)) {
     return ret;
@@ -7668,7 +7671,7 @@ function parseComponent(vueOptions, { parse: parse2, mocks: mocks2, isPage: isPa
   };
   if (isArray(vueOptions.mixins)) {
     vueOptions.mixins.forEach((item) => {
-      if (isObject$1(item.options)) {
+      if (isObject$2(item.options)) {
         extend(options, item.options);
       }
     });
@@ -7894,516 +7897,235 @@ const createSubpackageApp = initCreateSubpackageApp();
   wx.createPluginApp = global.createPluginApp = createPluginApp;
   wx.createSubpackageApp = global.createSubpackageApp = createSubpackageApp;
 }
-var DP = 20, RM = 1, MAX_DP = 1e6, MAX_POWER = 1e6, NE = -7, PE = 21, STRICT = false, NAME = "[big.js] ", INVALID = NAME + "Invalid ", INVALID_DP = INVALID + "decimal places", INVALID_RM = INVALID + "rounding mode", DIV_BY_ZERO = NAME + "Division by zero", P = {}, UNDEFINED = void 0, NUMERIC = /^-?(\d+(\.\d*)?|\.\d+)(e[+-]?\d+)?$/i;
-function _Big_() {
-  function Big2(n2) {
-    var x = this;
-    if (!(x instanceof Big2))
-      return n2 === UNDEFINED ? _Big_() : new Big2(n2);
-    if (n2 instanceof Big2) {
-      x.s = n2.s;
-      x.e = n2.e;
-      x.c = n2.c.slice();
-    } else {
-      if (typeof n2 !== "string") {
-        if (Big2.strict === true && typeof n2 !== "bigint") {
-          throw TypeError(INVALID + "value");
+var isVue2 = false;
+/*!
+ * pinia v2.1.7
+ * (c) 2023 Eduardo San Martin Morote
+ * @license MIT
+ */
+const piniaSymbol = Symbol("pinia");
+var MutationType;
+(function(MutationType2) {
+  MutationType2["direct"] = "direct";
+  MutationType2["patchObject"] = "patch object";
+  MutationType2["patchFunction"] = "patch function";
+})(MutationType || (MutationType = {}));
+const IS_CLIENT = typeof window !== "undefined";
+const USE_DEVTOOLS = IS_CLIENT;
+const componentStateTypes = [];
+const getStoreType = (id) => "🍍 " + id;
+function addStoreToDevtools(app, store) {
+  if (!componentStateTypes.includes(getStoreType(store.$id))) {
+    componentStateTypes.push(getStoreType(store.$id));
+  }
+}
+function patchActionForGrouping(store, actionNames, wrapWithProxy) {
+  const actions = actionNames.reduce((storeActions, actionName) => {
+    storeActions[actionName] = toRaw(store)[actionName];
+    return storeActions;
+  }, {});
+  for (const actionName in actions) {
+    store[actionName] = function() {
+      const trackedStore = wrapWithProxy ? new Proxy(store, {
+        get(...args) {
+          return Reflect.get(...args);
+        },
+        set(...args) {
+          return Reflect.set(...args);
         }
-        n2 = n2 === 0 && 1 / n2 < 0 ? "-0" : String(n2);
+      }) : store;
+      const retValue = actions[actionName].apply(trackedStore, arguments);
+      return retValue;
+    };
+  }
+}
+function devtoolsPlugin({ app, store, options }) {
+  if (store.$id.startsWith("__hot:")) {
+    return;
+  }
+  store._isOptionsAPI = !!options.state;
+  patchActionForGrouping(store, Object.keys(options.actions), store._isOptionsAPI);
+  const originalHotUpdate = store._hotUpdate;
+  toRaw(store)._hotUpdate = function(newStore) {
+    originalHotUpdate.apply(this, arguments);
+    patchActionForGrouping(store, Object.keys(newStore._hmrPayload.actions), !!store._isOptionsAPI);
+  };
+  addStoreToDevtools(
+    app,
+    // FIXME: is there a way to allow the assignment from Store<Id, S, G, A> to StoreGeneric?
+    store
+  );
+}
+function createPinia() {
+  const scope = effectScope(true);
+  const state = scope.run(() => ref({}));
+  let _p = [];
+  let toBeInstalled = [];
+  const pinia = markRaw({
+    install(app) {
+      {
+        pinia._a = app;
+        app.provide(piniaSymbol, pinia);
+        app.config.globalProperties.$pinia = pinia;
+        toBeInstalled.forEach((plugin2) => _p.push(plugin2));
+        toBeInstalled = [];
       }
-      parse(x, n2);
-    }
-    x.constructor = Big2;
-  }
-  Big2.prototype = P;
-  Big2.DP = DP;
-  Big2.RM = RM;
-  Big2.NE = NE;
-  Big2.PE = PE;
-  Big2.strict = STRICT;
-  Big2.roundDown = 0;
-  Big2.roundHalfUp = 1;
-  Big2.roundHalfEven = 2;
-  Big2.roundUp = 3;
-  return Big2;
-}
-function parse(x, n2) {
-  var e2, i, nl;
-  if (!NUMERIC.test(n2)) {
-    throw Error(INVALID + "number");
-  }
-  x.s = n2.charAt(0) == "-" ? (n2 = n2.slice(1), -1) : 1;
-  if ((e2 = n2.indexOf(".")) > -1)
-    n2 = n2.replace(".", "");
-  if ((i = n2.search(/e/i)) > 0) {
-    if (e2 < 0)
-      e2 = i;
-    e2 += +n2.slice(i + 1);
-    n2 = n2.substring(0, i);
-  } else if (e2 < 0) {
-    e2 = n2.length;
-  }
-  nl = n2.length;
-  for (i = 0; i < nl && n2.charAt(i) == "0"; )
-    ++i;
-  if (i == nl) {
-    x.c = [x.e = 0];
-  } else {
-    for (; nl > 0 && n2.charAt(--nl) == "0"; )
-      ;
-    x.e = e2 - i - 1;
-    x.c = [];
-    for (e2 = 0; i <= nl; )
-      x.c[e2++] = +n2.charAt(i++);
-  }
-  return x;
-}
-function round(x, sd, rm, more) {
-  var xc = x.c;
-  if (rm === UNDEFINED)
-    rm = x.constructor.RM;
-  if (rm !== 0 && rm !== 1 && rm !== 2 && rm !== 3) {
-    throw Error(INVALID_RM);
-  }
-  if (sd < 1) {
-    more = rm === 3 && (more || !!xc[0]) || sd === 0 && (rm === 1 && xc[0] >= 5 || rm === 2 && (xc[0] > 5 || xc[0] === 5 && (more || xc[1] !== UNDEFINED)));
-    xc.length = 1;
-    if (more) {
-      x.e = x.e - sd + 1;
-      xc[0] = 1;
-    } else {
-      xc[0] = x.e = 0;
-    }
-  } else if (sd < xc.length) {
-    more = rm === 1 && xc[sd] >= 5 || rm === 2 && (xc[sd] > 5 || xc[sd] === 5 && (more || xc[sd + 1] !== UNDEFINED || xc[sd - 1] & 1)) || rm === 3 && (more || !!xc[0]);
-    xc.length = sd;
-    if (more) {
-      for (; ++xc[--sd] > 9; ) {
-        xc[sd] = 0;
-        if (sd === 0) {
-          ++x.e;
-          xc.unshift(1);
-          break;
-        }
-      }
-    }
-    for (sd = xc.length; !xc[--sd]; )
-      xc.pop();
-  }
-  return x;
-}
-function stringify(x, doExponential, isNonzero) {
-  var e2 = x.e, s2 = x.c.join(""), n2 = s2.length;
-  if (doExponential) {
-    s2 = s2.charAt(0) + (n2 > 1 ? "." + s2.slice(1) : "") + (e2 < 0 ? "e" : "e+") + e2;
-  } else if (e2 < 0) {
-    for (; ++e2; )
-      s2 = "0" + s2;
-    s2 = "0." + s2;
-  } else if (e2 > 0) {
-    if (++e2 > n2) {
-      for (e2 -= n2; e2--; )
-        s2 += "0";
-    } else if (e2 < n2) {
-      s2 = s2.slice(0, e2) + "." + s2.slice(e2);
-    }
-  } else if (n2 > 1) {
-    s2 = s2.charAt(0) + "." + s2.slice(1);
-  }
-  return x.s < 0 && isNonzero ? "-" + s2 : s2;
-}
-P.abs = function() {
-  var x = new this.constructor(this);
-  x.s = 1;
-  return x;
-};
-P.cmp = function(y) {
-  var isneg, x = this, xc = x.c, yc = (y = new x.constructor(y)).c, i = x.s, j = y.s, k = x.e, l = y.e;
-  if (!xc[0] || !yc[0])
-    return !xc[0] ? !yc[0] ? 0 : -j : i;
-  if (i != j)
-    return i;
-  isneg = i < 0;
-  if (k != l)
-    return k > l ^ isneg ? 1 : -1;
-  j = (k = xc.length) < (l = yc.length) ? k : l;
-  for (i = -1; ++i < j; ) {
-    if (xc[i] != yc[i])
-      return xc[i] > yc[i] ^ isneg ? 1 : -1;
-  }
-  return k == l ? 0 : k > l ^ isneg ? 1 : -1;
-};
-P.div = function(y) {
-  var x = this, Big2 = x.constructor, a = x.c, b = (y = new Big2(y)).c, k = x.s == y.s ? 1 : -1, dp = Big2.DP;
-  if (dp !== ~~dp || dp < 0 || dp > MAX_DP) {
-    throw Error(INVALID_DP);
-  }
-  if (!b[0]) {
-    throw Error(DIV_BY_ZERO);
-  }
-  if (!a[0]) {
-    y.s = k;
-    y.c = [y.e = 0];
-    return y;
-  }
-  var bl, bt, n2, cmp, ri, bz = b.slice(), ai = bl = b.length, al = a.length, r = a.slice(0, bl), rl = r.length, q = y, qc = q.c = [], qi = 0, p2 = dp + (q.e = x.e - y.e) + 1;
-  q.s = k;
-  k = p2 < 0 ? 0 : p2;
-  bz.unshift(0);
-  for (; rl++ < bl; )
-    r.push(0);
-  do {
-    for (n2 = 0; n2 < 10; n2++) {
-      if (bl != (rl = r.length)) {
-        cmp = bl > rl ? 1 : -1;
+    },
+    use(plugin2) {
+      if (!this._a && !isVue2) {
+        toBeInstalled.push(plugin2);
       } else {
-        for (ri = -1, cmp = 0; ++ri < bl; ) {
-          if (b[ri] != r[ri]) {
-            cmp = b[ri] > r[ri] ? 1 : -1;
-            break;
-          }
-        }
+        _p.push(plugin2);
       }
-      if (cmp < 0) {
-        for (bt = rl == bl ? b : bz; rl; ) {
-          if (r[--rl] < bt[rl]) {
-            ri = rl;
-            for (; ri && !r[--ri]; )
-              r[ri] = 9;
-            --r[ri];
-            r[rl] += 10;
-          }
-          r[rl] -= bt[rl];
-        }
-        for (; !r[0]; )
-          r.shift();
-      } else {
-        break;
-      }
+      return this;
+    },
+    _p,
+    // it's actually undefined here
+    // @ts-expect-error
+    _a: null,
+    _e: scope,
+    _s: /* @__PURE__ */ new Map(),
+    state
+  });
+  if (USE_DEVTOOLS && typeof Proxy !== "undefined") {
+    pinia.use(devtoolsPlugin);
+  }
+  return pinia;
+}
+function isObject(v) {
+  return typeof v === "object" && v !== null;
+}
+function normalizeOptions(options, factoryOptions) {
+  options = isObject(options) ? options : /* @__PURE__ */ Object.create(null);
+  return new Proxy(options, {
+    get(target, key, receiver) {
+      if (key === "key")
+        return Reflect.get(target, key, receiver);
+      return Reflect.get(target, key, receiver) || Reflect.get(factoryOptions, key, receiver);
     }
-    qc[qi++] = cmp ? n2 : ++n2;
-    if (r[0] && cmp)
-      r[rl] = a[ai] || 0;
+  });
+}
+function get(state, path) {
+  return path.reduce((obj, p2) => {
+    return obj == null ? void 0 : obj[p2];
+  }, state);
+}
+function set(state, path, val) {
+  return path.slice(0, -1).reduce((obj, p2) => {
+    if (/^(__proto__)$/.test(p2))
+      return {};
     else
-      r = [a[ai]];
-  } while ((ai++ < al || r[0] !== UNDEFINED) && k--);
-  if (!qc[0] && qi != 1) {
-    qc.shift();
-    q.e--;
-    p2--;
-  }
-  if (qi > p2)
-    round(q, p2, Big2.RM, r[0] !== UNDEFINED);
-  return q;
-};
-P.eq = function(y) {
-  return this.cmp(y) === 0;
-};
-P.gt = function(y) {
-  return this.cmp(y) > 0;
-};
-P.gte = function(y) {
-  return this.cmp(y) > -1;
-};
-P.lt = function(y) {
-  return this.cmp(y) < 0;
-};
-P.lte = function(y) {
-  return this.cmp(y) < 1;
-};
-P.minus = P.sub = function(y) {
-  var i, j, t2, xlty, x = this, Big2 = x.constructor, a = x.s, b = (y = new Big2(y)).s;
-  if (a != b) {
-    y.s = -b;
-    return x.plus(y);
-  }
-  var xc = x.c.slice(), xe = x.e, yc = y.c, ye = y.e;
-  if (!xc[0] || !yc[0]) {
-    if (yc[0]) {
-      y.s = -b;
-    } else if (xc[0]) {
-      y = new Big2(x);
-    } else {
-      y.s = 1;
+      return obj[p2] = obj[p2] || {};
+  }, state)[path[path.length - 1]] = val, state;
+}
+function pick(baseState, paths) {
+  return paths.reduce((substate, path) => {
+    const pathArray = path.split(".");
+    return set(substate, pathArray, get(baseState, pathArray));
+  }, {});
+}
+function parsePersistence(factoryOptions, store) {
+  return (o2) => {
+    var _a;
+    try {
+      const {
+        storage = localStorage,
+        beforeRestore = void 0,
+        afterRestore = void 0,
+        serializer = {
+          serialize: JSON.stringify,
+          deserialize: JSON.parse
+        },
+        key = store.$id,
+        paths = null,
+        debug = false
+      } = o2;
+      return {
+        storage,
+        beforeRestore,
+        afterRestore,
+        serializer,
+        key: ((_a = factoryOptions.key) != null ? _a : (k) => k)(typeof key == "string" ? key : key(store.$id)),
+        paths,
+        debug
+      };
+    } catch (e2) {
+      if (o2.debug)
+        console.error("[pinia-plugin-persistedstate]", e2);
+      return null;
     }
-    return y;
+  };
+}
+function hydrateStore(store, { storage, serializer, key, debug }) {
+  try {
+    const fromStorage = storage == null ? void 0 : storage.getItem(key);
+    if (fromStorage)
+      store.$patch(serializer == null ? void 0 : serializer.deserialize(fromStorage));
+  } catch (e2) {
+    if (debug)
+      console.error("[pinia-plugin-persistedstate]", e2);
   }
-  if (a = xe - ye) {
-    if (xlty = a < 0) {
-      a = -a;
-      t2 = xc;
-    } else {
-      ye = xe;
-      t2 = yc;
+}
+function persistState(state, { storage, serializer, key, paths, debug }) {
+  try {
+    const toStore = Array.isArray(paths) ? pick(state, paths) : state;
+    storage.setItem(key, serializer.serialize(toStore));
+  } catch (e2) {
+    if (debug)
+      console.error("[pinia-plugin-persistedstate]", e2);
+  }
+}
+function createPersistedState(factoryOptions = {}) {
+  return (context) => {
+    const { auto = false } = factoryOptions;
+    const {
+      options: { persist = auto },
+      store,
+      pinia
+    } = context;
+    if (!persist)
+      return;
+    if (!(store.$id in pinia.state.value)) {
+      const original_store = pinia._s.get(store.$id.replace("__hot:", ""));
+      if (original_store)
+        Promise.resolve().then(() => original_store.$persist());
+      return;
     }
-    t2.reverse();
-    for (b = a; b--; )
-      t2.push(0);
-    t2.reverse();
-  } else {
-    j = ((xlty = xc.length < yc.length) ? xc : yc).length;
-    for (a = b = 0; b < j; b++) {
-      if (xc[b] != yc[b]) {
-        xlty = xc[b] < yc[b];
-        break;
-      }
-    }
-  }
-  if (xlty) {
-    t2 = xc;
-    xc = yc;
-    yc = t2;
-    y.s = -y.s;
-  }
-  if ((b = (j = yc.length) - (i = xc.length)) > 0)
-    for (; b--; )
-      xc[i++] = 0;
-  for (b = i; j > a; ) {
-    if (xc[--j] < yc[j]) {
-      for (i = j; i && !xc[--i]; )
-        xc[i] = 9;
-      --xc[i];
-      xc[j] += 10;
-    }
-    xc[j] -= yc[j];
-  }
-  for (; xc[--b] === 0; )
-    xc.pop();
-  for (; xc[0] === 0; ) {
-    xc.shift();
-    --ye;
-  }
-  if (!xc[0]) {
-    y.s = 1;
-    xc = [ye = 0];
-  }
-  y.c = xc;
-  y.e = ye;
-  return y;
-};
-P.mod = function(y) {
-  var ygtx, x = this, Big2 = x.constructor, a = x.s, b = (y = new Big2(y)).s;
-  if (!y.c[0]) {
-    throw Error(DIV_BY_ZERO);
-  }
-  x.s = y.s = 1;
-  ygtx = y.cmp(x) == 1;
-  x.s = a;
-  y.s = b;
-  if (ygtx)
-    return new Big2(x);
-  a = Big2.DP;
-  b = Big2.RM;
-  Big2.DP = Big2.RM = 0;
-  x = x.div(y);
-  Big2.DP = a;
-  Big2.RM = b;
-  return this.minus(x.times(y));
-};
-P.neg = function() {
-  var x = new this.constructor(this);
-  x.s = -x.s;
-  return x;
-};
-P.plus = P.add = function(y) {
-  var e2, k, t2, x = this, Big2 = x.constructor;
-  y = new Big2(y);
-  if (x.s != y.s) {
-    y.s = -y.s;
-    return x.minus(y);
-  }
-  var xe = x.e, xc = x.c, ye = y.e, yc = y.c;
-  if (!xc[0] || !yc[0]) {
-    if (!yc[0]) {
-      if (xc[0]) {
-        y = new Big2(x);
-      } else {
-        y.s = x.s;
-      }
-    }
-    return y;
-  }
-  xc = xc.slice();
-  if (e2 = xe - ye) {
-    if (e2 > 0) {
-      ye = xe;
-      t2 = yc;
-    } else {
-      e2 = -e2;
-      t2 = xc;
-    }
-    t2.reverse();
-    for (; e2--; )
-      t2.push(0);
-    t2.reverse();
-  }
-  if (xc.length - yc.length < 0) {
-    t2 = yc;
-    yc = xc;
-    xc = t2;
-  }
-  e2 = yc.length;
-  for (k = 0; e2; xc[e2] %= 10)
-    k = (xc[--e2] = xc[e2] + yc[e2] + k) / 10 | 0;
-  if (k) {
-    xc.unshift(k);
-    ++ye;
-  }
-  for (e2 = xc.length; xc[--e2] === 0; )
-    xc.pop();
-  y.c = xc;
-  y.e = ye;
-  return y;
-};
-P.pow = function(n2) {
-  var x = this, one = new x.constructor("1"), y = one, isneg = n2 < 0;
-  if (n2 !== ~~n2 || n2 < -MAX_POWER || n2 > MAX_POWER) {
-    throw Error(INVALID + "exponent");
-  }
-  if (isneg)
-    n2 = -n2;
-  for (; ; ) {
-    if (n2 & 1)
-      y = y.times(x);
-    n2 >>= 1;
-    if (!n2)
-      break;
-    x = x.times(x);
-  }
-  return isneg ? one.div(y) : y;
-};
-P.prec = function(sd, rm) {
-  if (sd !== ~~sd || sd < 1 || sd > MAX_DP) {
-    throw Error(INVALID + "precision");
-  }
-  return round(new this.constructor(this), sd, rm);
-};
-P.round = function(dp, rm) {
-  if (dp === UNDEFINED)
-    dp = 0;
-  else if (dp !== ~~dp || dp < -MAX_DP || dp > MAX_DP) {
-    throw Error(INVALID_DP);
-  }
-  return round(new this.constructor(this), dp + this.e + 1, rm);
-};
-P.sqrt = function() {
-  var r, c, t2, x = this, Big2 = x.constructor, s2 = x.s, e2 = x.e, half = new Big2("0.5");
-  if (!x.c[0])
-    return new Big2(x);
-  if (s2 < 0) {
-    throw Error(NAME + "No square root");
-  }
-  s2 = Math.sqrt(x + "");
-  if (s2 === 0 || s2 === 1 / 0) {
-    c = x.c.join("");
-    if (!(c.length + e2 & 1))
-      c += "0";
-    s2 = Math.sqrt(c);
-    e2 = ((e2 + 1) / 2 | 0) - (e2 < 0 || e2 & 1);
-    r = new Big2((s2 == 1 / 0 ? "5e" : (s2 = s2.toExponential()).slice(0, s2.indexOf("e") + 1)) + e2);
-  } else {
-    r = new Big2(s2 + "");
-  }
-  e2 = r.e + (Big2.DP += 4);
-  do {
-    t2 = r;
-    r = half.times(t2.plus(x.div(t2)));
-  } while (t2.c.slice(0, e2).join("") !== r.c.slice(0, e2).join(""));
-  return round(r, (Big2.DP -= 4) + r.e + 1, Big2.RM);
-};
-P.times = P.mul = function(y) {
-  var c, x = this, Big2 = x.constructor, xc = x.c, yc = (y = new Big2(y)).c, a = xc.length, b = yc.length, i = x.e, j = y.e;
-  y.s = x.s == y.s ? 1 : -1;
-  if (!xc[0] || !yc[0]) {
-    y.c = [y.e = 0];
-    return y;
-  }
-  y.e = i + j;
-  if (a < b) {
-    c = xc;
-    xc = yc;
-    yc = c;
-    j = a;
-    a = b;
-    b = j;
-  }
-  for (c = new Array(j = a + b); j--; )
-    c[j] = 0;
-  for (i = b; i--; ) {
-    b = 0;
-    for (j = a + i; j > i; ) {
-      b = c[j] + yc[i] * xc[j - i - 1] + b;
-      c[j--] = b % 10;
-      b = b / 10 | 0;
-    }
-    c[j] = b;
-  }
-  if (b)
-    ++y.e;
-  else
-    c.shift();
-  for (i = c.length; !c[--i]; )
-    c.pop();
-  y.c = c;
-  return y;
-};
-P.toExponential = function(dp, rm) {
-  var x = this, n2 = x.c[0];
-  if (dp !== UNDEFINED) {
-    if (dp !== ~~dp || dp < 0 || dp > MAX_DP) {
-      throw Error(INVALID_DP);
-    }
-    x = round(new x.constructor(x), ++dp, rm);
-    for (; x.c.length < dp; )
-      x.c.push(0);
-  }
-  return stringify(x, true, !!n2);
-};
-P.toFixed = function(dp, rm) {
-  var x = this, n2 = x.c[0];
-  if (dp !== UNDEFINED) {
-    if (dp !== ~~dp || dp < 0 || dp > MAX_DP) {
-      throw Error(INVALID_DP);
-    }
-    x = round(new x.constructor(x), dp + x.e + 1, rm);
-    for (dp = dp + x.e + 1; x.c.length < dp; )
-      x.c.push(0);
-  }
-  return stringify(x, false, !!n2);
-};
-P[Symbol.for("nodejs.util.inspect.custom")] = P.toJSON = P.toString = function() {
-  var x = this, Big2 = x.constructor;
-  return stringify(x, x.e <= Big2.NE || x.e >= Big2.PE, !!x.c[0]);
-};
-P.toNumber = function() {
-  var n2 = Number(stringify(this, true, true));
-  if (this.constructor.strict === true && !this.eq(n2.toString())) {
-    throw Error(NAME + "Imprecise conversion");
-  }
-  return n2;
-};
-P.toPrecision = function(sd, rm) {
-  var x = this, Big2 = x.constructor, n2 = x.c[0];
-  if (sd !== UNDEFINED) {
-    if (sd !== ~~sd || sd < 1 || sd > MAX_DP) {
-      throw Error(INVALID + "precision");
-    }
-    x = round(new Big2(x), sd, rm);
-    for (; x.c.length < sd; )
-      x.c.push(0);
-  }
-  return stringify(x, sd <= x.e || x.e <= Big2.NE || x.e >= Big2.PE, !!n2);
-};
-P.valueOf = function() {
-  var x = this, Big2 = x.constructor;
-  if (Big2.strict === true) {
-    throw Error(NAME + "valueOf disallowed");
-  }
-  return stringify(x, x.e <= Big2.NE || x.e >= Big2.PE, true);
-};
-var Big = _Big_();
-exports.Big = Big;
+    const persistences = (Array.isArray(persist) ? persist.map((p2) => normalizeOptions(p2, factoryOptions)) : [normalizeOptions(persist, factoryOptions)]).map(parsePersistence(factoryOptions, store)).filter(Boolean);
+    store.$persist = () => {
+      persistences.forEach((persistence) => {
+        persistState(store.$state, persistence);
+      });
+    };
+    store.$hydrate = ({ runHooks = true } = {}) => {
+      persistences.forEach((persistence) => {
+        const { beforeRestore, afterRestore } = persistence;
+        if (runHooks)
+          beforeRestore == null ? void 0 : beforeRestore(context);
+        hydrateStore(store, persistence);
+        if (runHooks)
+          afterRestore == null ? void 0 : afterRestore(context);
+      });
+    };
+    persistences.forEach((persistence) => {
+      const { beforeRestore, afterRestore } = persistence;
+      beforeRestore == null ? void 0 : beforeRestore(context);
+      hydrateStore(store, persistence);
+      afterRestore == null ? void 0 : afterRestore(context);
+      store.$subscribe(
+        (_mutation, state) => {
+          persistState(state, persistence);
+        },
+        {
+          detached: true
+        }
+      );
+    });
+  };
+}
+var src_default = createPersistedState();
 exports._export_sfc = _export_sfc;
+exports.createPinia = createPinia;
 exports.createSSRApp = createSSRApp;
 exports.e = e;
 exports.f = f;
@@ -8416,5 +8138,6 @@ exports.p = p;
 exports.resolveComponent = resolveComponent;
 exports.s = s;
 exports.sr = sr;
+exports.src_default = src_default;
 exports.t = t;
 exports.wx$1 = wx$1;

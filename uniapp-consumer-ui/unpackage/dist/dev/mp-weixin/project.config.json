@@ -18,8 +18,8 @@
     }
   },
   "compileType": "miniprogram",
-  "libVersion": "2.22.1",
-  "appid": "wx33475484a15eed9b",
+  "libVersion": "3.4.9",
+  "appid": "wxbf5730972a916f8a",
   "projectname": "sp-consumer-ui",
   "condition": {},
   "editorSetting": {
