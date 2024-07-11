@@ -4,6 +4,7 @@ import getters from './getters'
 import app from './modules/app'
 import settings from './modules/settings'
 import user from './modules/user'
+import dish from './modules/dish'
 import permission from './modules/permission'
 import tagsView from './modules/tagsView'
 
@@ -14,6 +15,7 @@ const store = new Vuex.Store({
     app,
     settings,
     user,
+    dish,
     permission,
     tagsView
   },

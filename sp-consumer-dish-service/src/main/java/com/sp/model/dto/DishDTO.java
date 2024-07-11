@@ -1,22 +1,24 @@
-package com.sp.model.domain;
+package com.sp.model.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.sp.model.domain.DishFlavor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-/**
- * 菜品
- * @TableName dish
- */
-@TableName(value ="dish")
 @Data
-public class Dish implements Serializable {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class DishDTO implements Serializable {
     /**
      * 主键
      */
@@ -78,8 +80,12 @@ public class Dish implements Serializable {
      */
     private Integer isHot;
 
-    private Long businessId;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    /**
+     * 商店id
+     */
+    private Long shopId;
+    /**
+     * 口味
+     */
+    private List<DishFlavor> flavors = new ArrayList<>();
 }
