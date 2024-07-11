@@ -38,7 +38,7 @@ public class Orders implements Serializable {
      * 下单用户
      */
     private Long userId;
-    private Long shopId;
+    private Long businessId;
 
     /**
      * 桌号

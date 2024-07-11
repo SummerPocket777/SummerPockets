@@ -45,7 +45,7 @@ public class CategoryServiceImpl extends ServiceImpl<CateMapper, Category> imple
     // 将数据库中的数据加载到redis
     public List<Category> loadAllCateToRedis(Long shopId) {
         QueryWrapper<Category> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("shop_id", shopId);
+        queryWrapper.eq("business_id", shopId);
         List<Category> allCate = cateMapper.selectList(queryWrapper);
         //设置24小时过期时间
         redisTemplate.opsForValue().set("cate", allCate,24, TimeUnit.HOURS);

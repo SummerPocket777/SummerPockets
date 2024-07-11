@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
     public List<Orders> listOrders(Long userId, Long shopId) {
         QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id",userId);
-        queryWrapper.eq("shop_id",shopId);
+        queryWrapper.eq("business_id",shopId);
         List<Orders> orders = orderMapper.selectList(queryWrapper);
         for(Orders item : orders){
             List<OrderDetail> orderDetails = listOrderDetail(item.getId());
