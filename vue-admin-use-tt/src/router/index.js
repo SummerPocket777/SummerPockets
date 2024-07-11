@@ -49,6 +49,30 @@ export const constantRoutes = [
     component: () => import('@/views/login/register'),
     hidden: true
   },
+  {
+    path: '/desk',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Desk',
+        component: () => import('@/views/deskManagement/index'),
+        meta: { title: '桌台管理', icon: 'el-icon-dish' }
+      }
+    ]
+  },
+  {
+    path: '/dish',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Dish',
+        component: () => import('@/views/dishManagement/index'),
+        meta: { title: '菜品管理', icon: 'el-icon-food' }
+      }
+    ]
+  },
 
   {
     path: '/404',

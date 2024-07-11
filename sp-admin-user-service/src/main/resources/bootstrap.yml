@@ -13,6 +13,7 @@ spring:
       config:
 #        配置mybatis-plus
         namespace: 8df17812-8f13-4624-a16b-d95105438f2d
+#        namespace: 85d42473-223e-49bd-aaa7-1add016fae10
         shared-configs:
           - data-id: sp_mybatis_plus_config.yml
             refresh: true

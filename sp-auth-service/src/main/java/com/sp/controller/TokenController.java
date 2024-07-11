@@ -45,10 +45,10 @@ public class TokenController {
         }
         String userAccount = vo.getUsername();
         String userPassword = vo.getPassword();
-        if (StringUtils.isEmpty(userAccount)||StringUtils.isEmpty(userPassword)) {
+        if (StringUtils.isEmpty(userAccount) || StringUtils.isEmpty(userPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        String token= sysBusinessService.login(vo);
+        String token = sysBusinessService.login(vo);
 
         return ResultUtils.success(token);
     }

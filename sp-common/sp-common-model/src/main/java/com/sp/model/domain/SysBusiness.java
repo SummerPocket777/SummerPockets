@@ -54,7 +54,7 @@ public class SysBusiness implements Serializable {
     /**
      * 商家头像url
      */
-    private String logoUrl;
+    private String avatar;
 
     /**
      * 商家店铺启用状态 0未启用 1已经启用

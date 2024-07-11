@@ -69,13 +69,13 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
             safeBusiness.setPhone(phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4));
         }
 
-        // 如果email需要部分隐藏，例如显示前三个字符，后面用星号代替
+        // 如果email需要部分隐藏，例如显示前三个字符，后面用星号*代替
         String email = business.getEmail();
         if (email != null && email.length() > 3) {
             safeBusiness.setEmail(email.substring(0, 3) + "****" + email.substring(email.indexOf('@')));
         }
 
-        safeBusiness.setLogoUrl(business.getLogoUrl());
+        safeBusiness.setAvatar(business.getAvatar());
         safeBusiness.setStatus(business.getStatus());
         safeBusiness.setCreateTime(business.getCreateTime());
         safeBusiness.setUpdateTime(business.getUpdateTime());
@@ -153,7 +153,7 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
         ArrayList<String> role = new ArrayList<>();
         role.add("admin");
         user.setRoles(role);
-        user.setAvatar(userInDatabase.getLogoUrl());
+        user.setAvatar(userInDatabase.getAvatar());
 
 //      存用户对象 存七天
         redisCacheUtil.setCacheObject("shop:userinfo:"+StpUtil.getTokenValue(),user,7, TimeUnit.DAYS);
@@ -249,9 +249,9 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
         // 2. 加密
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + password).getBytes());
         // 查询用户是否存在
-        LambdaQueryWrapper<SysBusiness> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        userLambdaQueryWrapper.eq(SysBusiness::getAccount, userAccount);
-        SysBusiness userInDatabase = this.getOne(userLambdaQueryWrapper);
+        QueryWrapper<SysBusiness> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("account",userAccount);
+        SysBusiness userInDatabase = this.getOne(userQueryWrapper);
         if (userInDatabase == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在");
         }
