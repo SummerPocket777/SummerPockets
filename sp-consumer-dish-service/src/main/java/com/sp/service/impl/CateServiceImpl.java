@@ -1,6 +1,7 @@
 package com.sp.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sp.mapper.CateMapper;
 import com.sp.model.domain.Category;
 import com.sp.service.CateService;
@@ -20,8 +21,10 @@ public class CateServiceImpl implements CateService {
 
     @Override
     // 将数据库中的数据加载到redis
-    public List<Category> loadAllCateToRedis() {
-        List<Category> allCate = cateMapper.getAllCate();
+    public List<Category> loadAllCateToRedis(Long shopId) {
+        QueryWrapper<Category> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("shop_id", shopId);
+        List<Category> allCate = cateMapper.selectList(queryWrapper);
         //设置24小时过期时间
         redisTemplate.opsForValue().set("cate", allCate,24, TimeUnit.HOURS);
         return allCate;
@@ -29,14 +32,14 @@ public class CateServiceImpl implements CateService {
 
     @Override
     // 从redis中获取数据,如果redis数据库中有数据，则返回，如果没有数据，则加载数据至redis，然后返回
-    public List<Category> getAllCate() {
+    public List<Category> getAllCate(Long shopId) {
         if(redisTemplate.opsForValue().get("cate")!=null){
             Object o = redisTemplate.opsForValue().get("cate");
             String json = String.valueOf(o);
             return JSON.parseArray(json, Category.class);
         }
         // redis数据库中没有数据,则加载数据至redis，然后返回
-        return loadAllCateToRedis();
+        return loadAllCateToRedis(shopId);
     }
 
 
