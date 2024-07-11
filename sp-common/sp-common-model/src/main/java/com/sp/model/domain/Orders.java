@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+
 import lombok.Data;
 
 /**
@@ -36,6 +38,7 @@ public class Orders implements Serializable {
      * 下单用户
      */
     private Long userId;
+    private Long shopId;
 
     /**
      * 桌号
@@ -126,6 +129,8 @@ public class Orders implements Serializable {
      * 餐具数量状态  1按餐量提供  0选择具体数量
      */
     private Integer tablewareStatus;
+
+    private List<OrderDetail> orderDetailList;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.math.BigDecimal;
+
+
 import lombok.Data;
 
 /**
@@ -55,6 +57,9 @@ public class OrderDetail implements Serializable {
      * 金额
      */
     private BigDecimal amount;
+
+
+    private Dish dish;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

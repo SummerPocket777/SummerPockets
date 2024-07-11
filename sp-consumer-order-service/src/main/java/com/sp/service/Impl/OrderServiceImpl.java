@@ -1,58 +1,61 @@
 package com.sp.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.sp.core.enums.ErrorCode;
-import com.sp.core.exception.BusinessException;
+
+import com.sp.mapper.DishMapper;
 import com.sp.mapper.OrderDetailMapper;
 import com.sp.mapper.OrderMapper;
+import com.sp.model.domain.Dish;
 import com.sp.model.domain.OrderDetail;
 import com.sp.model.domain.Orders;
 import com.sp.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderMapper orderMapper;
-
     @Autowired
     private OrderDetailMapper orderDetailMapper;
+    @Autowired
+    private DishMapper dishMapper;
+
 
     @Override
-    public Orders findOrdersByOrderId(Long id) {
-        if(id==null || id <=0 ){
-           throw new BusinessException(ErrorCode.PARAMS_ERROR,"订单id不能为空");
-        }
-        Orders orders = orderMapper.selectById(id);
-        if(orders==null){
-            throw new BusinessException(ErrorCode.NULL_ERROR,"返回的订单为空");
+    //根据商家id和用户id来查询用户订单
+    public List<Orders> listOrders(Long userId, Long shopId) {
+        QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id",userId);
+        queryWrapper.eq("shop_id",shopId);
+        List<Orders> orders = orderMapper.selectList(queryWrapper);
+        for(Orders item : orders){
+            List<OrderDetail> orderDetails = listOrderDetail(item.getId());
+            item.setOrderDetailList(orderDetails);
         }
         return orders;
     }
 
     @Override
-    public OrderDetail getOrderByShopId(Long shopId) {
-
-        if(shopId==null || shopId <=0 ){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"商铺id不能为空");
-        }
+    //根据订单id查询订单详情列表
+    public List<OrderDetail> listOrderDetail(Long orderId) {
         QueryWrapper<OrderDetail> queryWrapper = new QueryWrapper<>();
-
-        return null;
-    }
-
-    @Override
-    public OrderDetail getOrderDetailById(Long id) {
-        if (id==null || id<=0){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"订单详情id不能为空");
+        queryWrapper.eq("order_id",orderId);
+        List<OrderDetail> orderDetails = orderDetailMapper.selectList(queryWrapper);
+        //装载菜品信息
+        for (OrderDetail orderDetail : orderDetails){
+            orderDetail.setDish(loadDishById(orderDetail.getDishId()));
         }
-        OrderDetail orderDetail = orderDetailMapper.selectById(id);
-       if (orderDetail==null){
-           throw new BusinessException(ErrorCode.NULL_ERROR,"返回的订单详情为空");
-       }
-        return orderDetail;
+        return orderDetails;
     }
 
+
+    //TODO 此处可以优化高并发处理
+    //用于装载菜品信息
+    public Dish loadDishById(Long dishId) {
+        return dishMapper.selectById(dishId);
+    }
 }

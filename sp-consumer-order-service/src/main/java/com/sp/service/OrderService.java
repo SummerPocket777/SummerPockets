@@ -1,19 +1,21 @@
 package com.sp.service;
 
-
-import com.mysql.cj.x.protobuf.MysqlxCrud;
+import com.sp.model.domain.Dish;
 import com.sp.model.domain.OrderDetail;
 import com.sp.model.domain.Orders;
-import org.springframework.stereotype.Component;
+import java.util.List;
 
-@Component
+
 public interface OrderService {
 
-    Orders findOrdersByOrderId(Long id);
 
-    OrderDetail getOrderByShopId(Long shopId);
 
-    OrderDetail getOrderDetailById(Long id);
+    List<Orders> listOrders(Long userId,Long shopId);
+
+    List<OrderDetail> listOrderDetail(Long orderId);
+
+    Dish loadDishById(Long dishId);
+
 
 
 }

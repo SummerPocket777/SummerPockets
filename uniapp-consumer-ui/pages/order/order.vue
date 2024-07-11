@@ -88,7 +88,7 @@
 	    <view class="title">订单详情</view>
 
 		<uni-list>
-			<uni-list-item v-for="(item,index) in orderList" style="display: flex; width: 90%;">
+			<uni-list-item v-for="(item,index) in orderList" style="display: flex; ">
 				<view >{{item.dishName}}</view>
 				<view style="margin-left: auto;">数量 X {{item.num}}价格：{{item.price}}</view>
 
