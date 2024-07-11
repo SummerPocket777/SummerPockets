@@ -1,32 +1,40 @@
 <template>
 	<view>
 		<view class="myyuyue-box" @click="gotomyyuyueInfo">
-			<text class="y-where">{{myyuyueInfo.myyuyueWhere}}</text>
-			<text class="y-when">{{myyuyueInfo.myyuyueWhen}}</text>
+			<text class="y-where">{{myyuyueInfo.businessName}}</text>
+			<text class="y-when">{{myyuyueInfo.bookDate}}</text>
 			<text class="y-how">{{myyuyueInfo.myyuyueHow}}</text>
 		</view>
 	</view>
 </template>
 
 <script>
+// 	import {
+// 			mapState,
+// 			mapStores,
+// 			mapActions
+// 		} from 'pinia'
+// 		import {
+// 			useCounterStore
+// 		} from '@/store/yuyue.js'
+// import { useUserStore } from '../../store/user'
+		
 	export default {
 		data() {
 			return {
 				myyuyueInfo:{
-					myyuyueWhere:'胖哥俩',
-					myyuyueWhen:'2024-07-01',
+					businessName:'胖哥俩',
+					bookDate:'2024-07-01',
 					myyuyueHow:'预约中'
 				}
 			}
 		},
-		methods: {
-			gotomyyuyueInfo(){
-				uni.navigateTo({
-					url:'/pages/yuyue/yuyueInfo'
-				})
-				
-			}
-		}
+		// computed: {
+		// 	...mapStores(useCounterStore,useUserStore),
+		// },
+		// methods: {
+		// 	...mapActions(useCounterStor,['showYuyueStore']),
+		// }
 	}
 </script>
 

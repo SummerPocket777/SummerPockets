@@ -16,5 +16,11 @@ export const useCounterStore = defineStore('counter', {
 		insertYuyue(data) {
 			return new handlePromise(article.insertYuyue, data);
 		},
+		showYuyueStore(data){
+			return new handlePromise(article.showYuyueStore,data);
+		}
+		showYuyueInfo(data){
+			return new handlePromise(article.showYuyueInfo,data);
+		}
 	}
 });

@@ -14,4 +14,5 @@ import java.io.Serializable;
 public class BookTo implements Serializable {
     private String bookDate;
     private String businessName;
+//    private String is_status;
 }
