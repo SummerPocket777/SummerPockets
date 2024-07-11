@@ -1,7 +1,9 @@
 <template>
 	<view class="order" >
+
 		<u-swiper keyName="image" :list="swiperList" class="swiper"
 			indicator indicatorMode="line" circular ></u-swiper>
+		<u-button text="test" :customStyle="btn2" @click="openOrder()"></u-button>
 		<view class="list" >
 			<view class="item" v-for="(item,index) in List" :key="item">
 				<view class="title">
@@ -44,6 +46,7 @@
 				</view>
 			</view>
 		</view>
+
 		<!-- 没有订单信息时显示 -->
 		<u-empty v-if="List.length < 1" mode="order">
 		</u-empty>
@@ -78,6 +81,25 @@
         </u-button>
       </view>
     </u-popup>
+	<!-- 订单选择弹窗 -->
+	<u-popup :show="orderShow" :closeable="true" :round="8" mode="center" @close="closeOrder">
+	  <view class="popup">
+	    <!-- 弹窗标题 -->
+	    <view class="title">订单详情</view>
+
+		<uni-list>
+			<uni-list-item v-for="(item,index) in orderList" style="display: flex; width: 90%;">
+				<view >{{item.dishName}}</view>
+				<view style="margin-left: auto;">数量 X {{item.num}}价格：{{item.price}}</view>
+
+			</uni-list-item>
+		</uni-list>
+	    <!-- 确定按钮，用于确认支付方式选择 -->
+	    <u-button @click="payment" :customStyle="btn4" text="确定"
+	              color="linear-gradient(to bottom, #FFB176, #FF7942)">
+	    </u-button>
+	  </view>
+	</u-popup>
 
 
 
@@ -85,12 +107,27 @@
 </template>
 
 <script>
-	export default {
+
+	export default {		
 		data() {
 			return {
+				
+				orderList:[
+					{
+						dishName:'鸡腿',
+						num:'1',
+						price:'5.0'
+					},
+					{
+						dishName:'口水鸡',
+						num:'1',
+						price:'5.0'
+					}
+				],
 				radioValue: 'wx_lite',
         // 控制类型显示状态，默认隐藏 
 				typeShow: false,
+				orderShow:false,
 				// 轮播图图片地址
 				swiperList: [
             'https://env-00jxgrtsee4i.normal.cloudstatic.cn/微信图片_20240701165424.jpg?expire_at=1719827771&er_sign=4a5bf17c70117b2f577525966764d5db',
@@ -180,8 +217,14 @@
 			closePayment(){
 				this.typeShow = false
 			},
+			closeOrder(){
+				this.orderShow = false
+			},
 			open(){
 				this.typeShow = true
+			},
+			openOrder(){
+				this.orderShow = true
 			},
 			clickRadio(val){
 				this.radioValue = val

@@ -4,20 +4,8 @@
     <el-row>
       <el-col :span="24">
         <el-input style="width: 135px" placeholder="请输入内容" />
-        <el-select v-model="value" placeholder="请选择">
-          <el-option
-            v-for="item in cates"
-            :key="item.id"
-            :label="item.cate_zh"
-            :value="item.cate"
-          />
-        </el-select>
-        <el-date-picker
-          type="daterange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        />
+
+
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
         <el-button type="primary" icon="el-icon-edit">添加</el-button>
         <el-button type="primary" icon="el-icon-download">导出</el-button>
@@ -38,40 +26,40 @@
           <div :class=" row ">{{ $index + 1 }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="name" label="商品" align="center" width="180">
+      <el-table-column prop="name" label="店铺名" align="center" width="180">
         <!-- slot-scope="scope"  scope.row  scope.$index -->
         <!-- 作用域插槽：重很重 -->
         <template slot-scope="{ row, $index }">
-          <img :src="row.img" style="width: 60px" alt="">
+
           <div :class=" $index ">{{ row.name }}</div>
         </template>
       </el-table-column>
 
-      <el-table-column prop="price" label="价格" align="center">
-        <template slot-scope="{ row, $index }">
-          <div :class=" $index ">{{ `￥${row.price.toFixed(2)}` }}</div>
+      <el-table-column prop="price" label="logo" align="center">
+        <template slot-scope="{ row }">
+          <img :src="row.img" style="width: 60px" alt="">
         </template>
       </el-table-column>
 
-      <el-table-column prop="cate" label="品类" align="center">
+      <el-table-column prop="phone" label="联系方式" align="center">
         <template slot-scope="{ row, $index }">
           <div :class=" $index ">{{ row.cate }}</div>
         </template>
       </el-table-column>
 
-      <el-table-column prop="hot" label="是否热销" align="center">
+      <el-table-column prop="hot" label="地址信息" align="center">
         <template slot-scope="{ row, $index }">
-          <div :class=" $index ">{{ row.hot ? "是" : "否" }}</div>
+          <div :class=" $index ">{{ row.address }}</div>
         </template>
       </el-table-column>
 
-      <el-table-column prop="create_time" label="发布时间" align="center">
+      <el-table-column prop="create_time" label="创建时间" align="center">
         <template slot-scope="{ row, $index }">
           <div :class=" $index ">{{ row.create_time }}</div>
         </template>
       </el-table-column>
 
-      <el-table-column prop="check_status" label="商品状态" align="center">
+      <el-table-column prop="check_status" label="门店状态" align="center">
         <template slot-scope="{ row, $index }">
           <div :class=" $index ">{{ row.check_status ? "已上架" : "待审核" }}</div>
         </template>
@@ -111,19 +99,16 @@ export default {
   props: [],
   data() {
     return {
-      cates: [
-        { id: 1, cate_zh: '电器', cate: 'dianqi' },
-        { id: 2, cate_zh: '生活', cate: 'shenghuo' }
-      ],
+
       list: [
         {
           id: 1,
           create_time: '2016-05-02',
-          name: '猪脚饭',
+          name: '猪脚饭店',
           address: '111',
           img: 'https://img10.360buyimg.com/mobilecms/s360x360_jfs/t1/132363/40/2790/109217/5ef04734E44252d8a/c9f28f327259059e.jpg!q70.dpg.webp',
           price: 19.9,
-          cate: '套餐饭',
+          phone: '133333333333',
           hot: true,
           published: false,
           check_status: false
@@ -131,11 +116,11 @@ export default {
         {
           id: 2,
           create_time: '2016-05-02',
-          name: '鸡腿饭',
+          name: '鸡腿饭店',
           address: '222',
           img: 'https://img10.360buyimg.com/mobilecms/s360x360_jfs/t1/132363/40/2790/109217/5ef04734E44252d8a/c9f28f327259059e.jpg!q70.dpg.webp',
           price: 19.9,
-          cate: '套餐饭',
+          phone: '17777777777',
           hot: false,
           published: true,
           check_status: true
