@@ -6,11 +6,10 @@
 
     <resultMap id="BaseResultMap" type="com.sp.model.domain.SysRole">
             <result property="id" column="id" jdbcType="BIGINT"/>
-            <result property="sysRoleId" column="sys_role_id" jdbcType="BIGINT"/>
-            <result property="sysRoleName" column="sys_role_name" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,sys_role_id,sys_role_name
+        id,name
     </sql>
 </mapper>

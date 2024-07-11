@@ -67,27 +67,29 @@ export const constantRoutes = [
       meta: { title: '首页', icon: 'dashboard', affix: true }
     }]
   },
-  {
-    path: '/setmeal',
-    component: Layout,
-    redirect: '/setmeal/list',
-    name: 'Setmeal',
-    meta: { title: '套餐管理', icon: 'el-icon-dish' },
-    children: [
-      {
-        path: 'list',
-        name: 'DishList',
-        component: () => import('@/views/setmeal/list'),
-        meta: { title: '套餐列表', icon: 'el-icon-tickets' }
-      },
-      {
-        path: 'add',
-        name: 'DishAdd',
-        component: () => import('@/views/setmeal/add'),
-        meta: { title: '套餐添加', icon: 'el-icon-plus' }
-      },
-    ]
-  },
+
+  // {
+  //   path: '/setmeal',
+  //   component: Layout,
+  //   redirect: '/setmeal/list',
+  //   name: 'Setmeal',
+  //   meta: { title: '套餐管理', icon: 'el-icon-dish' },
+  //   children: [
+  //     {
+  //       path: 'setmeal-list',
+  //       name: 'SetmealList',
+  //       component: () => import('@/views/setmeal/list'),
+  //       meta: { title: '套餐列表', icon: 'el-icon-tickets' }
+  //     },
+  //     {
+  //       path: 'setmeal-add',
+  //       name: 'SetmealAdd',
+  //       component: () => import('@/views/setmeal/add'),
+  //       meta: { title: '套餐添加', icon: 'el-icon-plus' }
+  //     },
+  //   ]
+  // },
+
   // {
   //   path: '/dish',
   //   component: Layout,
