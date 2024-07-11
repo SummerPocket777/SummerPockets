@@ -75,11 +75,12 @@
 				"navigationBarTitleText" : "预约总览"
 			}
 		},
+
 		{
-			"path" : "pages/classify/classify",
+			"path" : "pages/food/food",
 			"style" : 
 			{
-				"navigationBarTitleText" : "我要点单2"
+				"navigationBarTitleText" : "food"
 			}
 		},
 		{
@@ -88,7 +89,8 @@
 			{
 				"navigationBarTitleText" : "预约详细信息"
 			}
-		},
+		}
+			,
 		{
 			"path" : "pages/shop/map",
 			"style" : 
@@ -122,8 +124,8 @@
 				"selectedIconPath": "static/icon/点单 (1).png"
 			},
 			{
-				"text": "点单",
-				"pagePath": "pages/classify/classify",
+				"text": "food",
+				"pagePath": "pages/food/food",
 				"iconPath": "static/icon/点单.png",
 				"selectedIconPath": "static/icon/点单 (1).png"
 			},

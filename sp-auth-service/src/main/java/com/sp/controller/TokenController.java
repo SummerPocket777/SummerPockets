@@ -15,6 +15,7 @@ import com.sp.model.vo.VXUserLoginVO;
 import com.sp.service.ConsumerUserService;
 import com.sp.service.SysBusinessService;
 import com.sp.utils.RedisCacheUtil;
+import com.sp.utils.VXUserStpUtil;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,13 +79,14 @@ public class TokenController {
      */
     @GetMapping("isLogin")
     public BaseResponse isLogin() {
-        boolean login = StpUtil.isLogin();
-        if (login){
+        boolean isLogin = StpUtil.isLogin() || VXUserStpUtil.isLogin();
+        if (isLogin) {
             return ResultUtils.success();
-        }else {
+        } else {
             return ResultUtils.error(ErrorCode.NOT_LOGIN);
         }
     }
+
 
     /**
      * 查询 Token 信息
