@@ -8578,21 +8578,6 @@ This will fail in production if not fixed.`);
     return reduced;
   }, {});
 }
-function mapState(useStore, keysOrMapper) {
-  return Array.isArray(keysOrMapper) ? keysOrMapper.reduce((reduced, key) => {
-    reduced[key] = function() {
-      return useStore(this.$pinia)[key];
-    };
-    return reduced;
-  }, {}) : Object.keys(keysOrMapper).reduce((reduced, key) => {
-    reduced[key] = function() {
-      const store = useStore(this.$pinia);
-      const storeKey = keysOrMapper[key];
-      return typeof storeKey === "function" ? storeKey.call(this, store) : store[storeKey];
-    };
-    return reduced;
-  }, {});
-}
 function mapActions(useStore, keysOrMapper) {
   return Array.isArray(keysOrMapper) ? keysOrMapper.reduce((reduced, key) => {
     reduced[key] = function(...args) {
@@ -8747,7 +8732,6 @@ exports.f = f;
 exports.index = index;
 exports.initVueI18n = initVueI18n;
 exports.mapActions = mapActions;
-exports.mapState = mapState;
 exports.mapStores = mapStores;
 exports.n = n;
 exports.nextTick$1 = nextTick$1;

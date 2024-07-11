@@ -2,6 +2,7 @@
 	<view class="content" style="background-image: url(../../static/index-back.jpg);">
 		<!-- 小程序基础库需配置为 2.22.1 -->
 		<button size="mini" open-type="getUserInfo" @tap="getUserProfile">预约</button>
+		<button @click="testtes">是否登录</button>
 		<view :class="yuyueClass">
 			<view class="yuyue-title">
 				<text>预约</text>
@@ -45,6 +46,8 @@
 	import {
 		useCounterStore
 	} from '@/store/yuyue.js'
+import  {useUserStore}  from '@/store/user.js'
+
 	export default {
 		data() {
 			return {
@@ -56,26 +59,30 @@
 					userPhone: '',
 					datetimesingle: ''
 				},
-				today: ''
+				today: '',
+				userInfo:{
+					code:''
+				}
 
 			}
 		},
 		onLoad() {
 			this.setToday()
-			this.increment();
-			console.log(this.userNames)
-			console.log(this.count)
+		},
+		onShow() {
+			this.setToday()
 		},
 		onReady() {
 
 
 		},
 		computed: {
-			...mapStores(useCounterStore),
-			...mapState(useCounterStore, ['count', 'double'])
+			...mapStores(useCounterStore,useUserStore),
+			// ...mapState(useCounterStore, ['count', 'double'])
 		},
 		methods: {
-			...mapActions(useCounterStore, ['insertYuyue', 'increment']),
+			...mapActions(useCounterStore, ['insertYuyue']),
+			...mapActions(useUserStore, ['login','islogin']),
 			setToday() {
 				const now = new Date();
 				const year = now.getFullYear();
@@ -84,20 +91,6 @@
 				const hours = String(now.getHours()).padStart(2, '0');
 				const minutes = String(now.getMinutes()).padStart(2, '0');
 				this.today = `${year}-${month}-${date} ${hours}:${minutes}`;
-			},
-			clike() {
-				console.log(this.yuyueClass);
-
-				// 在这里可以进行点击按钮后的逻辑处理
-				this.loading = true; // 模拟点击后设置 loading 为 true
-
-				// 模拟异步操作，比如请求后端接口
-				setTimeout(() => {
-					// 异步操作完成后，重置 loading 为 false
-					this.loading = false;
-					this.yuyueClass = "yuyue-box"
-				}, 2000);
-
 			},
 			handleChange(e) {
 				console.log("日期" + e)
@@ -159,42 +152,27 @@
 					})
 					.then(res => {
 						console.log("预约结果", res);
+						if(res.data.code == 20000){
+							uni.showToast({
+								title:'预约成功',
+								icon:'success'
+						
+							})
+						}else{
+							uni.showToast({
+								title:'网络请求失败',
+								icon:'loading'
+						
+							})
+						}
 					}).catch(err => {
 						console.error("预约失败", err);
+						uni.showToast({
+							title:'网络请求失败',
+							icon:'loading'
+						
+						})
 					});
-					// uni.request({
-					// 	url:'http://127.0.0.1:9999/book/add',
-					// 	method:'POST',
-					// 	data:{
-					// 		"bookNumber": this.yuyueInfo.peopleNumber,
-					// 		"bookDate": this.yuyueInfo.datetimesingle,
-					// 		"bookName": this.yuyueInfo.userName,
-					// 		"bookPhone": this.yuyueInfo.userPhone
-					// 	},
-					// // 	success: (res) => {
-					// 		if(res.data.code == 20000){
-					// 			uni.showToast({
-					// 				title:'预约成功',
-					// 				icon:'success'
-
-					// 			})
-					// 		}else{
-					// 			uni.showToast({
-					// 				title:'网络请求失败',
-					// 				icon:'loading'
-
-					// 			})
-					// 		}
-
-					// 	},
-					// 	fail: (err) => {
-					// 		uni.showToast({
-					// 			title:'网络请求失败',
-					// 			icon:'loading'
-
-					// 		})
-					// 	}
-					// })
 
 				}
 				this.yuyueInfo = {
@@ -223,21 +201,15 @@
 					wx.login({
 						success: (res) => {
 							console.log("res.code",res.code)
-							//小程序appid
-							let appid = 'wx4cb76cbc95da958e'; //换成自己的
-							//小程序secret
-							let secret = 'b3a9c4a2e4909ee20f99bf542dc07e3e'; //换成自己的
-							//wx接口路径
-							// let url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appid +
-							// 	'&secret=' + secret + '&js_code=' + res.code +
-							// 	'&grant_type=authorization_code';
-							// uni.request({
-							// 	url: url,
-							// 	method: 'GET',
-							// 	success: (res) => {
-							// 		console.log("openid",res.data.openid)
-							// 	}
-							// })
+							console.log("this ",this)
+							this.userInfo.code = res.code
+							this.login(this.userInfo)
+							.then(res =>{
+								console.log("登录结果",res)
+							}).catch(err =>{
+								console.error("登录失败",err)
+							})
+						
 						}
 					})
 					wx.getUserProfile({
@@ -249,7 +221,7 @@
 							console.log(res.userInfo.avatarUrl)
 							getApp().globalData.userName = res.userInfo.nickName
 							getApp().globalData.userImage = res.userInfo.avatarUrl
-							this.clike()
+							this.yuyueClass = "yuyue-box"
 						},
 						fail: (err) => {
 							console.log(err)
@@ -263,6 +235,9 @@
 					})
 				}
 
+			},
+			testtes(){
+				this.userStore.islogin()
 			}
 		}
 	}

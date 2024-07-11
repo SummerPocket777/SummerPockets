@@ -20,6 +20,7 @@ const request = (options) => {
 		title: '加载中...',
 	});
 	return new Promise((resolve, reject) => {
+		console.log("request url", config.baseUrl + url);
 		uni.request({
 			header: header,
 			method: method,

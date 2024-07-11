@@ -11,16 +11,16 @@
     "minified": false,
     "newFeature": true,
     "bigPackageSizeSupport": true,
-    "ignoreUploadUnusedFiles": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
-    }
+    },
+    "ignoreUploadUnusedFiles": true
   },
   "compileType": "miniprogram",
-  "libVersion": "",
-  "appid": "wx4cb76cbc95da958e",
+  "libVersion": "2.22.1",
+  "appid": "wx33475484a15eed9b",
   "projectname": "sp-consumer-ui",
   "condition": {},
   "editorSetting": {
