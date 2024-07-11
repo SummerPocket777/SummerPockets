@@ -61,6 +61,8 @@ public class Category implements Serializable {
      */
     private Long updateUser;
 
+    private Long shopId;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

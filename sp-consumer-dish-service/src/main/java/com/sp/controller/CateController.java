@@ -8,6 +8,7 @@ import com.sp.service.impl.CateServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -17,9 +18,10 @@ import java.util.List;
 public class CateController {
     @Autowired
     private CateServiceImpl cateService;
+    // 获取所有菜品分类
     @GetMapping("getAllCate")
-    public BaseResponse<List<Category>>  getAllCate(){
-        return ResultUtils.success(cateService.getAllCate());
+    public BaseResponse<List<Category>>  getAllCate(@RequestParam("shopId") Long shopId){
+        return ResultUtils.success(cateService.getAllCate(shopId));
     }
 
 
