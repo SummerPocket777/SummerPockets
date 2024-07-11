@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sp.mapper.SysMenuMapper">
+
+    <resultMap id="BaseResultMap" type="com.sp.model.domain.SysMenu">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
+            <result property="menuPath" column="menu_path" jdbcType="VARCHAR"/>
+            <result property="menuComponent" column="menu_component" jdbcType="VARCHAR"/>
+            <result property="menuMeta" column="menu_meta" jdbcType="OTHER" typeHandler="com.sp.handler.MetaTypeHandler"/>
+            <result property="menuRedirect" column="menu_redirect" jdbcType="VARCHAR"/>
+            <result property="menuParentId" column="menu_parent_id" jdbcType="INTEGER"/>
+            <result property="menuIcon" column="menu_icon" jdbcType="VARCHAR"/>
+            <result property="menuStatus" column="menu_status" jdbcType="INTEGER"/>
+            <result property="menuIsHidden" column="menu_is_hidden" jdbcType="INTEGER"/>
+            <result property="menuSort" column="menu_sort" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
+            <collection property="children" column="id"
+                        select="com.sp.mapper.SysMenuMapper.getSubMenuList" />
+    </resultMap>
+
+<!--    <resultMap id="menuMap" type="com.sp.model.domain.SysMenu">-->
+<!--        <id column="id" property="id" />-->
+<!--        <result column="menu_name" property="menuName" />-->
+<!--        <result column="menu_path" property="menuPath" />-->
+<!--        <result column="menu_component" property="menuComponent" />-->
+<!--        <result column="menu_meta" property="menuMeta" typeHandler="com.sp.handler.MetaTypeHandler" />-->
+<!--        <result column="menu_redirect" property="menuRedirect" />-->
+<!--        <result column="menu_parent_id" property="menuParentId" />-->
+<!--        <collection property="children" column="id"-->
+<!--                    select="com.sp.mapper.SysMenuMapper.getSubMenuList" />-->
+<!--    </resultMap>-->
+
+    <sql id="Base_Column_List">
+        id,menu_name,menu_path,
+        menu_component,menu_meta,menu_redirect,
+        menu_parent_id,menu_icon,menu_status,
+        menu_is_hidden,menu_sort,create_time,
+        update_time,is_delete
+    </sql>
+
+
+
+    <select id="getMenuTree" resultMap="BaseResultMap">
+        select * from sys_menu where menu_parent_id = 0
+    </select>
+
+    <select id="getSubMenuList" resultMap="BaseResultMap" parameterType="int">
+        select * from sys_menu where menu_parent_id = #{id}
+    </select>
+
+</mapper>

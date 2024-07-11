@@ -1,12 +1,15 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import store from '..'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    roles: [],
+    menus: []
   }
 }
 
@@ -24,6 +27,12 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_ROLE: (state, roles) => {
+    state.roles = roles
+  },
+  SET_MENU: (state, menus) => {
+    state.menus = menus
   }
 }
 
@@ -51,13 +60,15 @@ const actions = {
         const { data } = response
 
         if (!data) {
-          return reject('Verification failed, please Login again.')
+          return reject('验证失败，请重新登录')
         }
 
-        const { name, avatar } = data
+        const { name, avatar, roles } = data.user
 
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
+        commit('SET_NAME', name)  // 设置用户名
+        commit('SET_AVATAR', avatar)  // 设置头像
+        commit('SET_ROLE', roles)  // 设置角色列表
+        commit('SET_MENU', data.menuTree)  // 设置菜单树
         resolve(data)
       }).catch(error => {
         reject(error)

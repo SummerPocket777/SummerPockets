@@ -8,34 +8,48 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login','/reg'] // no redirect whitelist
+const whiteList = ['/login','/reg'] // 白名单
 
+/**
+ * 路由守卫
+ */
 router.beforeEach(async(to, from, next) => {
-  // start progress bar
+  // 开启加载样式
   NProgress.start()
 
-  // set page title
+  // 设置浏览器选项卡名称 --- 浏览器标签
   document.title = getPageTitle(to.meta.title)
 
-  // determine whether the user has logged in
+  // 获取token --- 登录时
   const hasToken = getToken()
 
   if (hasToken) {
-    if (to.path === '/login') {
-      // if is logged in, redirect to the home page
+    if (to.path === '/login') {  // 是否登录过
+      // 直接跳转到首页
       next({ path: '/' })
-      NProgress.done()
+      NProgress.done()  // 关闭加载样式
     } else {
+      // 获取用户信息
       const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
-        next()
+      if (hasGetUserInfo) {  // 是否含有用户信息
+        next()  // 直接放行
       } else {
         try {
-          // get user info
+          // 获取用户信息
           await store.dispatch('user/getInfo')
 
-          next()
+          // 获取角色列表
+          const roles = store.getters.roles
+
+          // 通过角色列表获取路由列表
+          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+
+          // 添加到路由列表中
+          router.addRoutes(accessRoutes)
+
+          next({ ...to, replace: true })
         } catch (error) {
+          console.log(error);
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
           Message.error(error || 'Has Error')

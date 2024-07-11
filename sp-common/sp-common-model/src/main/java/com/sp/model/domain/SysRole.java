@@ -17,17 +17,12 @@ public class SysRole implements Serializable {
     /**
      * 系统角色表id
      */
-    private Long id;
-
-    /**
-     * 系统角色id
-     */
-    private Long sysRoleId;
+    private int id;
 
     /**
      * 系统角色名
      */
-    private String sysRoleName;
+    private String name;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import com.sp.handler.MetaTypeHandler;
 import lombok.Data;
 
 /**
@@ -35,6 +38,23 @@ public class SysMenu implements Serializable {
      * 系统菜单路径
      */
     private String menuPath;
+
+    /**
+     * 路由的基础配置
+     */
+    @TableField(typeHandler = MetaTypeHandler.class)
+    private MenuMeta menuMeta;
+
+    /**
+     * 重定向地址
+     */
+    private String menuRedirect;
+
+    /**
+     * 子路由
+     */
+    @TableField(exist = false)
+    private List<SysMenu> children;
 
     /**
      * 菜单图标
