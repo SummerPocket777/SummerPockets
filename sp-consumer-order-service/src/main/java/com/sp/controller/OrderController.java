@@ -16,7 +16,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
     @RequestMapping("/getOrdersList")
-    private BaseResponse<List<Orders>> getOrderByUserIdAndShopId(@RequestParam Long userId, @RequestParam Long shopId){
+    private BaseResponse<List<Orders>> getOrderByUserIdAndShopId(@RequestParam("userId") Long userId, @RequestParam("shopId") Long shopId){
         List<Orders> orders = orderService.listOrders(userId, shopId);
         return ResultUtils.success(orders);
     }

@@ -21,7 +21,7 @@
 
       <el-table-column width="100px" label="Importance">
         <template slot-scope="{row}">
-          <svg-icon v-for="n in + row.importance" :key="n" icon-class="star" class="meta-item__icon" />
+          <svg-icon v-for="n in + row.importance" :key="n" icon-class="star" class="menuMeta-item__icon" />
         </template>
       </el-table-column>
 

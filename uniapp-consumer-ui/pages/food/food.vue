@@ -6,7 +6,7 @@
 			<view class="shop-top">
 				<view class="top-name">
 					<view class="top-img">
-						<u-image width="150rpx" height="150rpx" shape="square" radius="5px"></u-image>
+						<!-- <u-image width="150rpx" height="150rpx" shape="square" radius="5px"></u-image> -->
 					</view>
 					<view class="top-text">
 						<view class="text-first">
@@ -20,7 +20,7 @@
 				</view>
 				<view class="top-search">
 					<up-search placeholder="请输入菜品" input-align="center" action-text=""></up-search>
-					<u-image width="50rpx" height="50rpx" src="../../static/icon/定位.png" @tap="intoMap"></u-image>
+					<!-- <u-image width="50rpx" height="50rpx" src="../../static/icon/定位.png" @tap="intoMap"></u-image> -->
 				</view>
 			</view>
 		</view>
@@ -43,7 +43,7 @@
 								<view>{{item.title}}</view>
 							</view>
 							<view class="goods" v-for="(item2,index2) in item.list" :key="index2">
-								<image src="/static/logo.png" mode=""></image>
+								<!-- <image src="/static/logo.png" mode=""></image> -->
 								<view>
 									<view>第{{index2+1}}个商品标题</view>
 									<view class="describe">第{{index2+1}}个商品的描述内容</view>
@@ -70,7 +70,7 @@
 	</view>
 	<!-- 凸起图标 -->
 	<view class="car-img-back" v-if="isShowCar" @click="clickCar">
-		<image class="car-img" src="../../static/icon/定位.png" mode=""></image>
+		<!-- <image class="car-img" src="../../static/icon/定位.png" mode=""></image> -->
 		<!-- 角标 -->
 		<view class="car-num">
 			<text class="car-num-text">{{totalNum}}</text>
@@ -90,13 +90,13 @@
 						<view class="car-menu-price">¥{{item.price}}</view>
 						<view class="car-num-select">
 							<view @click="clickMinus(index)">
-								<image style="width: 48rpx;height: 48rpx;" src="../../../static/icon/png/jian.png">
-								</image>
+								<!-- <image style="width: 48rpx;height: 48rpx;" src="../../../static/icon/png/jian.png"> -->
+								<!-- </image> -->
 							</view>
 							<view style="margin: 0rpx 15rpx;font-size: 28rpx;"> {{item.num}} </view>
 							<view @click="clickAdd(index)">
-								<image style="width: 48rpx;height: 48rpx;" src="../../../static/icon/png/jia.png">
-								</image>
+								<!-- <image style="width: 48rpx;height: 48rpx;" src="../../../static/icon/png/jia.png"> -->
+								<!-- </image> -->
 							</view>
 						</view>
 					</view>

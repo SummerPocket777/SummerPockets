@@ -12,7 +12,9 @@ import com.sp.core.exception.BusinessException;
 import com.sp.mapper.SysBusinessMapper;
 
 
+import com.sp.mapper.SysRoleMapper;
 import com.sp.model.domain.SysBusiness;
+import com.sp.model.domain.SysRole;
 import com.sp.model.vo.BusinessLoginVO;
 import com.sp.model.vo.BusinessRegisterVO;
 import com.sp.model.vo.SysBusinessVO;
@@ -27,6 +29,7 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,6 +49,8 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
 
     @Resource
     private RedisCacheUtil redisCacheUtil;
+    @Resource
+    private SysRoleMapper sysRoleMapper;
 
     /**
      * 获得安全店铺 后面可以用权限进行区分显示
@@ -140,18 +145,28 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
         }
         //1 效验
         validateAccPwd(vo.getUsername(),vo.getPassword());
-        //2 查询数据库
+        //2 查询数据库 --- 得到登录人数据库信息
         SysBusiness userInDatabase = getUserInDatabase(vo.getUsername(),vo.getPassword());
         // 3. 用户脱敏
 //        SysBusiness safetyUser = getSafetyBusiness(userInDatabase);
-        // 会话登录：参数填写要登录的账号id，建议的数据类型：long | int | String， 不可以传入复杂类型，如：User、Admin 等等
+        // 4.会话登录：参数填写要登录的账号id，建议的数据类型：long | int | String， 不可以传入复杂类型，如：User、Admin 等等
         StpUtil.login(userInDatabase.getId());
         StpUtil.getTokenSession().set("user", userInDatabase);
 
+        // 5.处理登录人信息 --- 把登录人数据库信息赋值给UserTO
         UserTO user = new UserTO();
         user.setName(userInDatabase.getBusinessName());
+
+        // 6.获取登录人拥有的角色
+        //   ①获取查询条件
+        QueryWrapper<SysRole> sysRoleQueryWrapper = new QueryWrapper<>();
+        sysRoleQueryWrapper.eq("id", userInDatabase.getRoleId());
+        //   ②根据查询条件查数据库
+        SysRole sysRole = sysRoleMapper.selectOne(sysRoleQueryWrapper);
+
+        // 7.将其设为列表 --- 映射前端需要的数据
         ArrayList<String> role = new ArrayList<>();
-        role.add("admin");
+        role.add(sysRole.getName());
         user.setRoles(role);
         user.setAvatar(userInDatabase.getAvatar());
 

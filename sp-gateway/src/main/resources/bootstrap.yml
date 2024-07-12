@@ -11,11 +11,12 @@ spring:
       password: summerrice
       #注册中心
       discovery:
-        namespace: 345991e3-afea-4b55-a801-1897440f28f0
-#        namespace: 85d42473-223e-49bd-aaa7-1add016fae10
+        namespace: 5ebf00d4-66d0-4364-8049-6aaa5980073d
       #配置中心
       config:
         namespace: 8df17812-8f13-4624-a16b-d95105438f2d
+        #        默认命名规则是 服务名-环境.文件后缀
+        name: sp_gateway_config
         shared-configs:
           - data-id: sp_gateway_config.yml
             refresh: true

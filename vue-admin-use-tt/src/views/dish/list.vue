@@ -5,21 +5,11 @@
       <el-col :span="24">
         <el-input style="width: 135px" placeholder="请输入内容" />
         <el-select v-model="value" placeholder="请选择">
-          <el-option
-            v-for="item in cates"
-            :key="item.id"
-            :label="item.cate_zh"
-            :value="item.cate"
-          />
+          <el-option v-for="item in cates" :key="item.id" :label="item.cate_zh" :value="item.cate" />
         </el-select>
-        <el-date-picker
-          type="daterange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        />
+        <el-date-picker type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" />
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
-        <el-button type="primary" icon="el-icon-edit">添加</el-button>
+        <el-button type="primary" icon="el-icon-edit" @click="openForm()">添加</el-button>
         <el-button type="primary" icon="el-icon-download">导出</el-button>
 
       </el-col>
@@ -27,13 +17,7 @@
 
     <!-- 表格 -->
     <el-table :data="list" border style="width: 100%; margin-top: 20px">
-      <el-table-column
-        prop="id"
-        label="序号"
-        align="center"
-        sortable
-        width="180"
-      >
+      <el-table-column prop="id" label="序号" align="center" sortable width="180">
         <template slot-scope="{ row, $index }">
           <div :class=" row ">{{ $index + 1 }}</div>
         </template>
@@ -80,11 +64,7 @@
       <el-table-column label="操作" width="230" align="center">
         <template slot-scope="{ row }">
           <el-button type="primary" size="mini">编辑</el-button>
-          <el-button
-            v-if="row.published"
-            type="primary"
-            size="mini"
-          >详情</el-button>
+          <el-button v-if="row.published" type="primary" size="mini">详情</el-button>
           <el-button v-else type="success" size="mini">审核</el-button>
           <el-button size="mini" type="danger">删除</el-button>
         </template>
@@ -92,23 +72,20 @@
     </el-table>
 
     <!-- 分页 -->
-    <el-pagination
-      style="margin-top: 20px"
-      :current-page="page"
-      :page-sizes="[2, 5, 10, 20]"
-      :page-size="size"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="400"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+    <el-pagination style="margin-top: 20px" :current-page="page" :page-sizes="[2, 5, 10, 20]" :page-size="size"
+      layout="total, sizes, prev, pager, next, jumper" :total="400" @size-change="handleSizeChange"
+      @current-change="handleCurrentChange" />
+    <dialog-form ref="dialogForm"></dialog-form>
   </div>
+
 </template>
 
 <script>
+import dialogForm from './components/listForm.vue'
 export default {
   name: 'Good',
   props: [],
+  components: { dialogForm },
   data() {
     return {
       cates: [
@@ -146,6 +123,14 @@ export default {
     }
   },
   methods: {
+    openForm(id){
+      console.log(this.$refs.dialogForm)
+      if(id){
+        this.$refs.dialogForm.open(id)
+      }else{
+        this.$refs.dialogForm.open()
+      }           
+    },
     // 改变一页显示多少条数据触发
     handleSizeChange() {},
     // 点击页码触发

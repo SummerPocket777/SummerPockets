@@ -1,5 +1,5 @@
 import App from './App'
-// import uviewPlus from '@/uni_modules/uview-plus'
+import uviewPlus from '@/uni_modules/uview-plus'
 // #ifndef VUE3
 import Vue from 'vue'
 import './uni.promisify.adaptor'
@@ -26,7 +26,7 @@ export function createApp() {
   //将插件添加到 pinia 实例上
   pinia.use(piniaPluginPersistedstate)
    app.use(pinia) //将Pinia实例注册到Vue应用中
-   // app.use(uviewPlus)
+   app.use(uviewPlus)
    
   return {
     app,

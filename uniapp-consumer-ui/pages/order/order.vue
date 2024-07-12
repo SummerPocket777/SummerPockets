@@ -9,16 +9,16 @@
 				<view class="title">
 					<view class="name" >
 						<image src="@/static/shop.png"></image>
-						{{item.name}}
+						订单号：{{item.id}}
 					</view>
 					<view class="status" :style="{'color': item.status == 10 ? '#19be6b':'black'}">
-						{{status.get(item.status)}} <!-- 状态转换文字 -->
+						{{status.get(item.delivery_status)}} <!-- 状态转换文字 -->
 					</view>
 				</view>
 				<view class="content">
-					<view class="box">
+					<view class="box"  @click="openOrder(item.orderDetailList)">
 						<view> 
-							<view v-for="data in item.product">{{data}}</view>  <!-- 循环订单菜品 -->
+							<view v-for="data in item.orderDetailList">{{data.dish.name}}</view>  <!-- 循环订单菜品 -->
 						</view>
 						<view class="open">
 							查看更多···
@@ -26,10 +26,10 @@
 					</view>
 					<view class="time">
 						下单时间
-						{{item.time}}
+						{{item.orderTime}}
 					</view>
 					<view class="price">
-						合计&nbsp;&nbsp;¥{{item.price}}
+						合计&nbsp;&nbsp;¥{{item.amount}}
 					</view>
 				</view>
 				
@@ -89,8 +89,8 @@
 
 		<uni-list>
 			<uni-list-item v-for="(item,index) in orderList" style="display: flex; ">
-				<view >{{item.dishName}}</view>
-				<view style="margin-left: auto;">数量 X {{item.num}}价格：{{item.price}}</view>
+				<view >{{item.dish.name}}</view>
+				<view style="margin-left: auto;">数量 X {{item.number}}价格：{{item.amount}}</view>
 
 			</uni-list-item>
 		</uni-list>
@@ -107,22 +107,19 @@
 </template>
 
 <script>
+	import {
+			mapState,
+			mapStores,
+			mapActions
+		} from 'pinia'
+
+	import  {orderStore}  from '@/store/order.js'
 
 	export default {		
 		data() {
 			return {
 				
 				orderList:[
-					{
-						dishName:'鸡腿',
-						num:'1',
-						price:'5.0'
-					},
-					{
-						dishName:'口水鸡',
-						num:'1',
-						price:'5.0'
-					}
 				],
 				radioValue: 'wx_lite',
         // 控制类型显示状态，默认隐藏 
@@ -139,8 +136,8 @@
 				 ],
 				// 状态-信息
 				status: new Map([
-					[10, '进行中'],
-					[20, '已完成'],
+					[1, '进行中'],
+					[2, '已完成'],
 				]),
 				btn4: {
 					width: '600rpx',
@@ -207,9 +204,18 @@
 				],
 			};
 		},
-		onLoad() {
+		mounted() {
+			
+			//TODO 暂时使用shopid和userid作为假数据，后期需要传入
+				this.getOrderList({shopId:1,userId:1}).then(res=>{
+					this.List = res.data
+
+				})
+
 		},
 		methods: {
+			//导入请求函数
+			...mapActions(orderStore, ['getOrderList']),
 			// 确定
 			payment(){
 				console.log('类型',this.radioValue)
@@ -223,8 +229,9 @@
 			open(){
 				this.typeShow = true
 			},
-			openOrder(){
+			openOrder(data){
 				this.orderShow = true
+				this.orderList=data
 			},
 			clickRadio(val){
 				this.radioValue = val

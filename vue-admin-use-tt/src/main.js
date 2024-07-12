@@ -3,7 +3,7 @@ import Vue from 'vue'
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 
 import '@/styles/index.scss' // global css
@@ -11,6 +11,10 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
+
+// 引入高德地图依赖
+// import VueAMap from '@vuemap/vue-amap';
+// import '@vuemap/vue-amap/dist/style.css'
 
 import '@/icons' // icon
 import '@/permission' // permission control
@@ -27,6 +31,17 @@ if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
 }
+
+// 初始化vue-amap
+// Vue.use(VueAMap);
+// VueAMap.initAMapApiLoader({
+//   key: '67ec8f31660efface2be65ff016daaa4',
+//   plugin: [
+//     'AMap.Geolocation',  //定位空间，用来获取和展示用户主机所在的经纬度位置
+//     'AMap.CircleEditor ',
+//     "AMap.Geocoder"     //地图编码
+//   ]
+// });
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })

@@ -58,6 +58,7 @@ public class OrderDetail implements Serializable {
      */
     private BigDecimal amount;
 
+    @TableField(exist = false)
 
     private Dish dish;
 
