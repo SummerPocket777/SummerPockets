@@ -6,7 +6,7 @@
 			<view class="shop-top">
 				<view class="top-name">
 					<view class="top-img">
-						<!-- <u-image width="150rpx" height="150rpx" shape="square" radius="5px"></u-image> -->
+						<u-image width="150rpx" height="150rpx" shape="square" radius="5px"></u-image>
 					</view>
 					<view class="top-text">
 						<view class="text-first">
@@ -20,7 +20,7 @@
 				</view>
 				<view class="top-search">
 					<up-search placeholder="请输入菜品" input-align="center" action-text=""></up-search>
-					<!-- <u-image width="50rpx" height="50rpx" src="../../static/icon/定位.png" @tap="intoMap"></u-image> -->
+					<u-image width="50rpx" height="50rpx" src="../../static/icon/定位.png" @tap="intoMap"></u-image>
 				</view>
 			</view>
 		</view>
@@ -43,11 +43,11 @@
 								<view>{{item.title}}</view>
 							</view>
 							<view class="goods" v-for="(item2,index2) in item.list" :key="index2">
-								<!-- <image src="/static/logo.png" mode=""></image> -->
+								<image :src="item2.image" mode=""></image>
 								<view>
-									<view>第{{index2+1}}个商品标题</view>
-									<view class="describe">第{{index2+1}}个商品的描述内容</view>
-									<view class="money">第{{index2+1}}个商品的价格</view>
+									<view>{{item2.name}}</view>
+									<view class="describe">{{item2.description}}</view>
+									<view class="money">¥{{item2.price}}</view>
 								</view>
 								<view @click="addCar" :data-item="item2">加入购物车</view>
 							</view>
@@ -70,7 +70,7 @@
 	</view>
 	<!-- 凸起图标 -->
 	<view class="car-img-back" v-if="isShowCar" @click="clickCar">
-		<!-- <image class="car-img" src="../../static/icon/定位.png" mode=""></image> -->
+		<image class="car-img" src="../../static/icon/定位.png" mode=""></image>
 		<!-- 角标 -->
 		<view class="car-num">
 			<text class="car-num-text">{{totalNum}}</text>
@@ -81,7 +81,7 @@
 		<scroll-view scroll-y="true" style="height: 500rpx;">
 			<view class="car-box" v-for="(item, index) in carData" :key="index">
 				<view class="car-left-image" style="width: 23%;">
-					<image class="car-menu-image" :src="item.imgUrl" mode=""></image>
+					<image class="car-menu-image" :src="item.image" mode=""></image>
 				</view>
 				<view class="car-right-text" style="width: 73%;">
 					<view class="car-menu-name">{{item.name}}</view>
@@ -90,13 +90,13 @@
 						<view class="car-menu-price">¥{{item.price}}</view>
 						<view class="car-num-select">
 							<view @click="clickMinus(index)">
-								<!-- <image style="width: 48rpx;height: 48rpx;" src="../../../static/icon/png/jian.png"> -->
-								<!-- </image> -->
+								<image style="width: 48rpx;height: 48rpx;" src="../../static/icon/定位.png">
+								</image>
 							</view>
 							<view style="margin: 0rpx 15rpx;font-size: 28rpx;"> {{item.num}} </view>
 							<view @click="clickAdd(index)">
-								<!-- <image style="width: 48rpx;height: 48rpx;" src="../../../static/icon/png/jia.png"> -->
-								<!-- </image> -->
+								<image style="width: 48rpx;height: 48rpx;" src="../../static/icon/定位.png">
+								</image>
 							</view>
 						</view>
 					</view>
@@ -109,9 +109,13 @@
 </template>
 
 <script>
+	import {
+		dishStore
+	} from '@/store/dish.js';
 	export default {
 		data() {
 			return {
+				store: dishStore(),
 				scrollHeight: 400,
 				scrollTopSize: 0,
 				fillHeight: 0, // 填充高度，用于最后一项低于滚动区域时使用
@@ -162,67 +166,108 @@
 			},
 			/* 获取列表数据 */
 			getListData() {
-				// Promise 为 ES6 新增的API ，有疑问的请自行学习该方法的使用。
-				new Promise((resolve, reject) => {
-					/* 因无真实数据，当前方法模拟数据。正式项目中将此处替换为 数据请求即可 */
-					uni.showLoading();
-					
-					
-					
-					// 模拟数据
-					let mockData = () => {
-						let [left, main] = [
-							[],
-							[]
-						];
+				uni.showLoading();
 
-						let size =5;
-						for (let i = 0; i < size; i++) {
-							left.push(`${i+1}类商品`);
+				// 使用pinia发起请求获取真实数据
+				const data = {
+					businessId: 1
+				};
 
-							let list = [];
-							let r = Math.floor(Math.random() * 10);
-							r = r < 5 ? 5 : r;
-							for (let j = 0; j < r; j++) {
-								list.push(j);
+				// 发起请求
+				this.store.getDishList(data).then(res => {
+					// 处理返回的真实数据
+					const {
+						cateList,
+						dishDTOList,
+						setmealDTOList
+					} = res.data;
+
+					// 将数据转换成展示格式
+					const formatData = () => {
+						let left = [];
+						let main = [];
+
+						// 存储分类名称和是否有菜品/套餐的数据
+						let categoryMap = new Map();
+
+						// 创建分类数据
+						cateList.forEach(category => {
+							left.push(category.name);
+
+							// 创建菜品数据
+							let dishList = dishDTOList
+								.filter(dish => dish.categoryId === category.id)
+								.map(dish => ({
+									id: dish.id,
+									name: dish.name,
+									price: dish.price,
+									image: dish.image,
+									description: dish.description
+								}));
+
+							// 创建套餐数据
+							let setmealList = setmealDTOList
+								.filter(setmeal => setmeal.categoryId === category.id)
+								.map(setmeal => ({
+									id: setmeal.id,
+									name: setmeal.name,
+									price: setmeal.price,
+									image: setmeal.imageUrl,
+									description: setmeal.description
+								}));
+
+							// 只将有菜品或套餐的分类添加到 `main` 中
+							if (dishList.length > 0 || setmealList.length > 0) {
+								// 将分类名称和相关数据存储到 `categoryMap` 中
+								categoryMap.set(category.name, {
+									dishes: dishList,
+									setmeals: setmealList
+								});
 							}
-							main.push({
-								title: `第${i+1}类商品标题`,
-								list
-							})
-						}
+						});
+
+						// 根据 `categoryMap` 生成 `main` 数组
+						categoryMap.forEach((value, key) => {
+							if (value.dishes.length > 0) {
+								main.push({
+									title: key,
+									list: value.dishes
+								});
+							}
+							if (value.setmeals.length > 0) {
+								main.push({
+									title: key,
+									list: value.setmeals
+								});
+							}
+						});
+
+						// 过滤 `left` 数组，只保留在 `main` 中出现的分类
+						left = left.filter(name => categoryMap.has(name));
 
 						return {
 							left,
 							main
-						}
-					}
-					setTimeout(() => {
-						let res = mockData();
-						let {
-							left,
-							main
-						} = res;
-						// 将请求接口返回的数据传递给 Promise 对象的 then 函数。
-						resolve({
-							left,
-							main
-						});
-					}, 1000);
-				}).then((res) => {
-					console.log('-----------请求接口返回数据示例-------------');
-					console.log(res);
+						};
+					};
+
+					// 使用转换后的数据更新界面
+					const formattedData = formatData();
+					this.leftArray = formattedData.left;
+					this.mainArray = formattedData.main;
 
 					uni.hideLoading();
-					this.leftArray = res.left;
-					this.mainArray = res.main;
 
-					// DOM 挂载后 再调用 getElementTop 获取高度的方法。
+					// DOM 挂载后再调用 getElementTop 获取高度的方法
 					setTimeout(() => {
 						this.getElementTop();
 					}, 100);
+				}).catch(error => {
+					uni.hideLoading();
+					console.error('请求数据失败', error);
 				});
 			},
+
 			/* 获取元素顶部信息 */
 			getElementTop() {
 				new Promise((resolve, reject) => {
@@ -283,81 +328,81 @@
 
 			//**********商品加入购物车 ***************
 			// 商品加入购物车
-			    addCar(e) {
-					console.log("购物车的item",e.target.dataset.item)
-			        let item = e.target.dataset.item;
-			        let index = this.carData.findIndex(ev => ev.name === item.name);
-			        if(index === -1) {  
-			            item.num = 1; // 添加数量属性num，默认为1
-			            this.carData.push(item); // 把商品追加进购物车
-			        } else { 
-			            this.carData[index].num++; // 存在相同的商品则数量叠加
-			        }
-			        this.allNum();
-			        this.allPrice();
-			        this.isShowCar = true;
-			    },
+			addCar(e) {
+				console.log("购物车的item", e.target.dataset.item)
+				let item = e.target.dataset.item;
+				let index = this.carData.findIndex(ev => ev.name === item.name);
+				if (index === -1) {
+					item.num = 1; // 添加数量属性num，默认为1
+					this.carData.push(item); // 把商品追加进购物车
+				} else {
+					this.carData[index].num++; // 存在相同的商品则数量叠加
+				}
+				this.allNum();
+				this.allPrice();
+				this.isShowCar = true;
+			},
 
-			 // 增加数量
-			    clickAdd(index) {                    
-			        this.carData[index].num++;
-			        this.allNum();
-			        this.allPrice();
-			    },
+			// 增加数量
+			clickAdd(index) {
+				this.carData[index].num++;
+				this.allNum();
+				this.allPrice();
+			},
 
-			 // 减少数量，小于1时删除元素
-			    clickMinus(index) {
-			        if(this.carData[index].num > 1){
-			            this.carData[index].num--;                
-			        } else {
-			            this.carData.splice(index,1); // 从数组删除元素
-			        }    
-			        this.allNum();
-			        this.allPrice();
-			    },
+			// 减少数量，小于1时删除元素
+			clickMinus(index) {
+				if (this.carData[index].num > 1) {
+					this.carData[index].num--;
+				} else {
+					this.carData.splice(index, 1); // 从数组删除元素
+				}
+				this.allNum();
+				this.allPrice();
+			},
 
 
 			// 计算商品总数量
-			    allNum() {                
-			        let count = 0;
-			        this.carData.forEach(item => {
-			            count += item.num;
-			        });
-			        this.totalNum = count;
-			
-			        // 购物车有商品时，调整滚动区域高度
-			        if(this.totalNum === 1 && this.isAddHeight){
-			            this.scrollHeight -= 50;
-			            this.isAddHeight = false;
-			        } 
-			        // 购物车没有商品时，隐藏组件，还原滚动区域高度
-			        if (this.totalNum === 0){
-			            this.scrollHeight += 50;
-			            this.isAddHeight = true;
-			            this.isShowCar = false;
-			            this.clickCar();                    
-			        }
-			    },    
+			allNum() {
+				let count = 0;
+				this.carData.forEach(item => {
+					count += item.num;
+				});
+				this.totalNum = count;
 
-			 // 计算商品总价格
-			    allPrice() {                
-			        let Price = 0;
-			        this.carData.forEach(item => {
-			            Price += item.num * parseFloat(item.price);
-			        });
-			        this.totalPrice = Price.toFixed(2); // 保留两位小数
-			    },
-			
-			    // 显示、隐藏购物车清单
-			    clickCar() {
-			        this.isShowList = !this.isShowList;
-			        this.isShowCarMark = !this.isShowCarMark;
-			    },
-			
-			    clickCarMark() {
-			        this.isShowList = !this.isShowList;
-			        this.isShowCarMark = !this.isShowCarMark;
-			    },
+				// 购物车有商品时，调整滚动区域高度
+				if (this.totalNum === 1 && this.isAddHeight) {
+					this.scrollHeight -= 50;
+					this.isAddHeight = false;
+				}
+				// 购物车没有商品时，隐藏组件，还原滚动区域高度
+				if (this.totalNum === 0) {
+					this.scrollHeight += 50;
+					this.isAddHeight = true;
+					this.isShowCar = false;
+					this.clickCar();
+				}
+			},
+
+			// 计算商品总价格
+			allPrice() {
+				let Price = 0;
+				this.carData.forEach(item => {
+					Price += item.num * parseFloat(item.price);
+				});
+				this.totalPrice = Price.toFixed(2); // 保留两位小数
+			},
+
+			// 显示、隐藏购物车清单
+			clickCar() {
+				this.isShowList = !this.isShowList;
+				this.isShowCarMark = !this.isShowCarMark;
+			},
+
+			clickCarMark() {
+				this.isShowList = !this.isShowList;
+				this.isShowCarMark = !this.isShowCarMark;
+			},
 		}
 	}
 </script>
