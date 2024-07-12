@@ -34,6 +34,23 @@
           <el-form-item label="地址信息" :label-width="formLabelWidth">
             <el-input v-model="form.address" autocomplete="off"></el-input>
           </el-form-item>
+          <el-form-item>
+            <!-- <el-amap  :zoom="zoom"  class="amap-demo">
+              <el-amap-control-geolocation
+              position="RB"
+              :offset="offset"
+              :panToLocation="panToLocation"
+              :zoomToAccuracy="zoomToAccuracy"
+              :needAddress="needAddress"
+              :extensions="extensions"
+              :enableHighAccuracy="enableHighAccuracy"
+              :visible="visible"
+              @complete="getLocation"></el-amap-control-geolocation>
+              <el-amap-control-geolocation :visible="visible" @complete="getLocation"></el-amap-control-geolocation>
+
+            </el-amap> -->
+            <map-view @sendAddress="getAddress"></map-view>
+          </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -65,10 +82,13 @@
 
   </div>
 </template>
-
 <script>
-export default {
+import mapView from './MapContainer.vue'
 
+export default {
+  components:{
+     mapView
+  },
   data() {
     return {
       url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
@@ -79,12 +99,24 @@ export default {
           phone: '',
           address: '',
         },
-        formLabelWidth: '120px'
+      formLabelWidth: '120px',
+
+      // zoom: 12,
+      // // center: [121.59996, 31.197646],
+      // visible: true,
+      // needAddress:true,
     }
   },
 
   methods: {
-
+    // getLocation(e) {
+    //   console.log('getLocation: ', e)
+    // }
+    getAddress(msg){
+      // console.log("获取到地址: ",msg.address)
+      // this.form.address=msg.formattedAddress
+      this.form.address=msg.address
+    }
   },
 
 
@@ -98,7 +130,9 @@ export default {
     box-sizing: border-box; /*盒子大小规则*/
     font-family: sans-serif; /*字体:非衬线*/
   }
-
+  .amap-demo {
+      height: 300px;
+    }
 
   #title{
     position: absolute; /*绝对定位*/
