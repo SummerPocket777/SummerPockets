@@ -18,7 +18,7 @@ export const useCounterStore = defineStore('counter', {
 		},
 		showYuyueStore(data){
 			return new handlePromise(article.showYuyueStore,data);
-		}
+		},
 		showYuyueInfo(data){
 			return new handlePromise(article.showYuyueInfo,data);
 		}

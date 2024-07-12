@@ -130,6 +130,7 @@ public class Orders implements Serializable {
      */
     private Integer tablewareStatus;
 
+    @TableField(exist = false)
     private List<OrderDetail> orderDetailList;
 
     @TableField(exist = false)
