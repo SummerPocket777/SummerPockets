@@ -20,4 +20,10 @@ public class OrderController {
         List<Orders> orders = orderService.listOrders(userId, shopId);
         return ResultUtils.success(orders);
     }
+
+    @RequestMapping("/getOrdersListByShopId")
+    private BaseResponse<List<Orders>> getOrderByShopId(@RequestParam("shopId") Long shopId){
+        List<Orders> orders = orderService.listOrders(shopId);
+        return ResultUtils.success(orders);
+    }
 }
