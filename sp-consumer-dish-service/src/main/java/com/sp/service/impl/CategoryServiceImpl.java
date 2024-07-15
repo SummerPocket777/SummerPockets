@@ -75,7 +75,7 @@ public class CategoryServiceImpl extends ServiceImpl<CateMapper, Category> imple
         // 判断缓存中是否存在
         String listDishByShopKey=DishConstants.REDIS_USER_DISH + businessId;
         if (redisCacheUtil.hasKey(listDishByShopKey)) {
-            return redisCacheUtil.getCacheObject( listDishByShopKey);
+            return (UserDishDTO)redisCacheUtil.getCacheObject( listDishByShopKey);
         }
 
         UserDishDTO userDishDTO = new UserDishDTO();
