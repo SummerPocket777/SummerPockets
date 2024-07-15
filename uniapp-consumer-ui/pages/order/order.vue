@@ -82,15 +82,21 @@
       </view>
     </u-popup>
 	<!-- 订单选择弹窗 -->
-	<u-popup :show="orderShow" :closeable="true" :round="8" mode="center" @close="closeOrder">
+	<u-popup :show="orderShow" :closeable="true" :round="8" mode="bottom" @close="closeOrder">
 	  <view class="popup">
 	    <!-- 弹窗标题 -->
 	    <view class="title">订单详情</view>
 
 		<uni-list>
-			<uni-list-item v-for="(item,index) in orderList" style="display: flex; ">
-				<view >{{item.dish.name}}</view>
-				<view style="margin-left: auto;">数量 X {{item.number}}价格：{{item.amount}}</view>
+			<uni-list-item v-for="(item,index) in orderList" style="display: flex; margin: 30rpx; ">
+				<view style='margin-right: 100rpx;'>
+					 <up-image :show-loading="true" :src="item.dish.image" width="100rpx" height="100rpx"></up-image>
+				</view>
+				<view style='margin-right: 100rpx;'>
+					<view >{{item.dish.name}}</view>
+					<view style="color: grey;">数量 X {{item.number}}</view>
+				</view>
+				<view style="margin-left: auto; width: 120rpx;">价格：{{item.amount}}￥</view>
 
 			</uni-list-item>
 		</uni-list>
@@ -225,6 +231,11 @@
 			},
 			closeOrder(){
 				this.orderShow = false
+				//TODO 暂时使用shopid和userid作为假数据，后期需要传入
+					this.getOrderList({shopId:1,userId:1}).then(res=>{
+						this.List = res.data
+				
+					})
 			},
 			open(){
 				this.typeShow = true
