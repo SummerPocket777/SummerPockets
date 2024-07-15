@@ -44,7 +44,7 @@
 			},
 			mapNavigation(){
 				let plugin = requirePlugin('routePlan');
-				let key = 'T7WBZ-RXR6Q-UEZ54-4K7BS-Z3BIQ-AXBHS';  //使用在腾讯位置服务申请的key
+				let key = 'G4VBZ-WNQCJ-4XPFY-X6B35-BR32O-S7BF7';  //使用在腾讯位置服务申请的key
 				let referer = 'Sass';   //调用插件的app的名称
 				let endPoint = JSON.stringify({  //终点
 				  'name': '厦门北站',

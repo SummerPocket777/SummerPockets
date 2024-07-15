@@ -4,11 +4,11 @@
     <el-container>
   <el-header>
     <el-row style="height: 65px;padding-top: 15px;">
-      <el-col :span="5"  style="display: flex;">    
+      <el-col :span="5"  style="display: flex;">
         <div style="width: 30%;margin-top: 10px;">菜品名称：</div>
         <el-input
           placeholder="请输入内容"
-          v-model="input"
+          v-model="dishInput"
           clearable
           >
         </el-input>
@@ -42,7 +42,7 @@
         </el-col>
 
         <el-col :span="3" :offset="1" style="display: flex ;height: 65px;">
-          <el-button type="primary" style="height: 65%;">查询</el-button>
+          <el-button type="primary" style="height: 65%;"  @click="findList()">查询</el-button>
         </el-col>
 
     </el-row>
@@ -101,15 +101,31 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
   export default {
     methods: {
       handleClick(row) {
         console.log(row);
+      },
+      ...mapActions('kitchen', ['getOrderList']),
+      findList() {
+        this.getOrderList()
+        console.log(this.orderList);
       }
     },
+    computed: {
+
+    // goods模块下的分类选项的属性
+    ...mapState('kitchen', ['orderList'])
+
+    },
+    created() {
+    this.getOrderList()
+  },
 
     data() {
       return {
+        dishInput:'',
         tableData: [{
           date: '54555',
           name: '汉堡',
@@ -117,7 +133,7 @@
           state: '未上菜',
           day: '2020-01-01',
           time: '12:00'
-          
+
         }],
         options: [{
           value: '1',
