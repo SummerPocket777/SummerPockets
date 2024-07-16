@@ -44,9 +44,9 @@ public class AuthFilter {
                     .notMatch(ignoreWhite.getWhites())
                     .check(r -> {
 //                         检查是否登录 是否有token
-                        if (!VXUserStpUtil.isLogin() && !StpUtil.isLogin()) {
-                            throw new BusinessException(ErrorCode.NOT_LOGIN);
-                        }
+//                        if (!VXUserStpUtil.isLogin() && !StpUtil.isLogin()) {
+//                            throw new BusinessException(ErrorCode.NOT_LOGIN);
+//                        }
                     });
             }).setError(e -> {
                 log.error("网关过滤器的异常: ", e); // 打印完整的堆栈信息
