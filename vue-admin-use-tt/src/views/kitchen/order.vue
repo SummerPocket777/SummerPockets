@@ -101,26 +101,29 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+
   export default {
     methods: {
       handleClick(row) {
         console.log(row);
       },
-      ...mapActions('kitchen', ['getOrderList']),
       findList() {
-        this.getOrderList()
-        console.log(this.orderList);
+        this.loading = true
+        this.$store.dispatch('kitchen/getOrderList', 1 ).then((res) => {
+        console.log(res);
+        this.loading = false
+        }).catch(() => {
+          this.$message({
+            message: '查询失败',
+            type: 'error'
+          })
+          this.loading = false
+        })
+
       }
     },
-    computed: {
-
-    // goods模块下的分类选项的属性
-    ...mapState('kitchen', ['orderList'])
-
-    },
     created() {
-    this.getOrderList()
+    this.findList()
   },
 
     data() {
