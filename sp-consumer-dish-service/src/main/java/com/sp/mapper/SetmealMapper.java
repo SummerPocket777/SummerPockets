@@ -21,7 +21,7 @@ public interface SetmealMapper extends BaseMapper<Setmeal> {
      * @param setmealId
      * @return
      */
-    @Select("select sd.name, sd.copies, d.image, d.description " +
+    @Select("select d.name, sd.copies, d.image, d.description " +
             "from setmeal_dish sd left join dish d on sd.dish_id = d.id " +
             "where sd.setmeal_id = #{setmealId}")
     List<DishItemDTO> getDishItemBySetmealId(Long setmealId);

@@ -16,7 +16,7 @@ public final class DishConstants {
     /**
      * 用户从微信小程序查询该店铺全部商品的key
      */
-    public static final String REDIS_USER_DISH = "sp:dish:wxuser：business:";
+    public static final String REDIS_USER_DISH = "sp:dish:wxuser:business:";
     /**
      * 某个店铺下的菜品分类集合的key
      */

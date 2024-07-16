@@ -6,7 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 菜品及套餐分类
@@ -14,7 +17,10 @@ import lombok.Data;
  */
 @TableName(value ="category")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Category implements Serializable {
+
     /**
      * 主键
      */

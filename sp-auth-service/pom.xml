@@ -58,6 +58,10 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
 
         <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
         <dependency>
@@ -113,6 +117,12 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>5.8.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>2.0.50</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

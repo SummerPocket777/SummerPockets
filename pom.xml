@@ -37,6 +37,7 @@
         <rocketMq.version>2.0.4</rocketMq.version>
         <mybatis.spring.boot.starter>2.2.2</mybatis.spring.boot.starter>
         <spring.cloud.starter.bootstrap>3.1.5</spring.cloud.starter.bootstrap>
+        <satoken.spring.boot.starter>1.38.0</satoken.spring.boot.starter>
     </properties>
 
 
@@ -77,6 +78,20 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>2.0.50</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.13.3</version>
+            </dependency>
+
+
+
             <!--            alibaba云服务的nacos-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
@@ -111,12 +126,6 @@
                 <version>3.5.7</version>
             </dependency>
 
-            <!--            fastjson-->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>2.0.40</version>
-            </dependency>
             <!--小辣椒-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -130,6 +139,20 @@
                 <artifactId>spring-cloud-starter-bootstrap</artifactId>
                 <version>${spring.cloud.starter.bootstrap}</version>
             </dependency>
+
+            <!--   satoken-->
+            <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot-starter</artifactId>
+                <version>${satoken.spring.boot.starter}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-reactor-spring-boot-starter</artifactId>
+                <version>${satoken.spring.boot.starter}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>

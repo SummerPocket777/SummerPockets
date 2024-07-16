@@ -1,32 +1,27 @@
 package com.sp.config;
 
-import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-
-/**
-
- */
 @Configuration
 public class RedisConfig {
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 
-        //开始进行序列化
-        FastJsonRedisSerializer<String> stringFastJsonRedisSerializer = new FastJsonRedisSerializer<String>(String.class);
-        //对value值进行序列化
-        redisTemplate.setValueSerializer(stringFastJsonRedisSerializer);
-        //对key值进行序列化
-        redisTemplate.setKeySerializer(stringFastJsonRedisSerializer);
+        // 使用StringRedisSerializer来序列化和反序列化redis的key值
+        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(stringRedisSerializer);
+        redisTemplate.setHashKeySerializer(stringRedisSerializer);
 
-        redisTemplate.setHashValueSerializer(stringFastJsonRedisSerializer);
-        redisTemplate.setHashKeySerializer(stringFastJsonRedisSerializer);
+        // 使用CustomFastJsonRedisSerializer来序列化和反序列化redis的value值
+        CustomFastJsonRedisSerializer<Object> customFastJsonRedisSerializer = new CustomFastJsonRedisSerializer<>(Object.class);
+        redisTemplate.setValueSerializer(customFastJsonRedisSerializer);
+        redisTemplate.setHashValueSerializer(customFastJsonRedisSerializer);
 
         redisTemplate.afterPropertiesSet();
         return redisTemplate;

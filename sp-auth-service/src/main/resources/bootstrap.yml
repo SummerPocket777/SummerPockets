@@ -24,7 +24,6 @@ spring:
           - data-id: sp_mybatis_plus_config.yml
             refresh: true
         refresh-enabled: true
-  config:
-    import: nacos:42.193.140.71:8848 # 添加这一行
+
 
 

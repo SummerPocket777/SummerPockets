@@ -40,8 +40,8 @@ public class CartController {
      *
      */
     @GetMapping("/list")
-    public BaseResponse<List<ShoppingCart>> list(){
-        List<ShoppingCart> shoppingCartList=cartService.showCart();
+    public BaseResponse<List<ShoppingCart>> list(Long tableId, Long businessId){
+        List<ShoppingCart> shoppingCartList=cartService.showCart(tableId,businessId);
         return ResultUtils.success(shoppingCartList);
     }
 
@@ -50,8 +50,8 @@ public class CartController {
      *
      */
     @DeleteMapping("/clean")
-    public BaseResponse clean(){
-        cartService.cleanCart();
+    public BaseResponse clean(Long tableId, Long businessId){
+        cartService.cleanCart(tableId,businessId);
         return ResultUtils.success();
     }
 }

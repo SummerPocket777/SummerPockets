@@ -59,4 +59,14 @@ public final class RedisConstants {
      * 缓存时间偏移
      */
     public static final int CACHE_TIME_OFFSET = 10;
+
+    /**
+     * 用户购物车键
+     */
+    public static final String USER_CART_KEY = "sp:cart:business{%s}:table{%s}";
+
+    /**
+     * 购物车条目过期时间（天）
+     */
+    public static final Long USER_CART_TTL = 7L;
 }

@@ -23,10 +23,10 @@ public interface CartService {
      *
      * @return {@link List}<{@link ShoppingCart}>
      */
-    List<ShoppingCart> showCart();
+    List<ShoppingCart> showCart(Long tableId, Long businessId);
 
     /**
      * 清空购物车
      */
-    void cleanCart();
+    void cleanCart(Long tableId, Long businessId);
 }

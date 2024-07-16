@@ -54,11 +54,11 @@
       <jdbc-url>jdbc:mysql://42.193.140.71:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="@112.111.242.49" uuid="e57e7ef2-943e-45b3-96bc-904ccad75d2e">
+    <data-source source="LOCAL" name="@cchen.icu" uuid="e57e7ef2-943e-45b3-96bc-904ccad75d2e">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://112.111.242.49:13020</jdbc-url>
+      <jdbc-url>jdbc:mysql://cchen.icu:13020</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="db_test@112.111.242.49" uuid="6995ee42-b097-4123-ae21-a53202b84c8a">

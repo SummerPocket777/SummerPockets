@@ -11,31 +11,10 @@ spring:
         namespace: 345991e3-afea-4b55-a801-1897440f28f0
       #配置中心
       config:
-#        配置mybatis-plus
         namespace: 8df17812-8f13-4624-a16b-d95105438f2d
-        file-extension: yml
         #        默认命名规则是 服务名-环境.文件后缀
-        name: sp_mybatis_plus_config
-#        配置数据库配置
-  redis:
-    password: redis_root
-    #redis服务器连接地址
-    host: 112.111.242.49
-    #端口号
-    port: 13021
-    #连接超时时间（毫秒）
-    timeout: 10000
-    #使用的redis库
-    database: 0
-    jedis:
-      pool:
-        #连接池最大连接数
-        max-active: 10
-        #连接池中的最大空闲连接
-        max-idle: 10
-        #连接池中的最小空闲连接
-        min-idle: 2
-        #连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-wait: 10000
-
-
+        name: sp_gateway_config
+        shared-configs:
+          - data-id: sp_gateway_redis_config.yml
+            refresh: true
+        refresh-enabled: true
