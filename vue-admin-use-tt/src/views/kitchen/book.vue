@@ -34,7 +34,7 @@
         </el-col>
 
         <el-col :span="3" :offset="1" style="display: flex ;height: 65px;">
-          <el-button type="primary" style="height: 65%;">查询</el-button>
+          <el-button type="primary" style="height: 65%;"  @click="findList()">查询</el-button>
         </el-col>
 
     </el-row>
@@ -42,47 +42,63 @@
   </el-header>
   <el-main>
     <el-table
-      :data="tableData"
+      :data="bookList"
       border
     >
       <el-table-column
         fixed
-        prop="bookid"
+        prop="bookId"
         label="预约号"
         width="150">
       </el-table-column>
       <el-table-column
-        prop="num"
+        prop="bookNumber"
         label="人数"
         width="120">
       </el-table-column>
       <el-table-column
-        prop="tableid"
-        label="桌号"
+        prop="bookName"
+        label="预约人姓名"
         width="120">
       </el-table-column>
       <el-table-column
-        prop="day"
-        label="日期"
+        prop="bookPhone"
+        label="预约人电话"
         width="120">
       </el-table-column>
       <el-table-column
-        prop="time"
-        label="时间"
-        width="120">
+        prop="bookDate"
+        label="预约时间"
+        width="220">
       </el-table-column>
       <el-table-column
-        prop="state"
+        prop="isStatus"
         label="状态"
         width="120">
       </el-table-column>
+      <el-table-column
+        prop="isStatus"
+        label="状态"
+        width="120">
 
+        <template slot-scope="scope">
+            <span v-if="scope.row.isStatus == 1">未到店</span>
+            <span v-if="scope.row.isStatus == 2">已到店</span>
+            <span v-if="scope.row.isStatus == 3">已超时</span>
+
+
+
+        </template>
+
+
+
+      </el-table-column>
       <el-table-column
 
         label="操作"
         width="100">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+          <el-button  v-if="scope.row.isStatus==1 " @click="handleClick(scope.row)" type="text" size="small">到店</el-button>
           <el-button type="text" size="small">编辑</el-button>
 
         </template>
@@ -94,11 +110,29 @@
 </template>
 
 <script>
+
+import { mapActions, mapState } from 'vuex'
   export default {
     methods: {
+      ...mapActions('book', ['getBookList','updateStatus']),
       handleClick(row) {
         console.log(row);
+        row.isStatus=2;
+        this.updateStatus(row)
+      },
+
+      findList(){
+        this.getBookList(1)
+        console.log(this.bookList)
       }
+    },
+    computed: {
+    ...mapState('book', ['bookList'])
+    },
+
+    created() {
+      this.getBookList(1)
+      console.log(this.bookList)
     },
 
     data() {

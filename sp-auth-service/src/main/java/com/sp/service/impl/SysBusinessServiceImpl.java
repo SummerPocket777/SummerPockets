@@ -22,6 +22,7 @@ import com.sp.model.vo.UserTO;
 import com.sp.service.SysBusinessService;
 import com.sp.utils.RedisCacheUtil;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
@@ -51,6 +52,8 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
     private RedisCacheUtil redisCacheUtil;
     @Resource
     private SysRoleMapper sysRoleMapper;
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 获得安全店铺 后面可以用权限进行区分显示
@@ -171,7 +174,7 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
         user.setAvatar(userInDatabase.getAvatar());
 
 //      存用户对象 存七天
-        redisCacheUtil.setCacheObject("shop:userinfo:"+StpUtil.getTokenValue(),user,7, TimeUnit.DAYS);
+        redisTemplate.opsForValue().set("shop:userinfo:"+StpUtil.getTokenValue(),user,7, TimeUnit.DAYS);
         return StpUtil.getTokenValue();
     }
 

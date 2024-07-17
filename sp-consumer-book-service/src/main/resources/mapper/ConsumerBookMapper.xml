@@ -21,6 +21,9 @@
         book_name,book_phone,is_status,
         is_delete,consumer_id,book_createDate
     </sql>
+    <update id="updateStatus">
+        update consumer_book set is_status = #{status} where book_id = #{id}
+    </update>
     <select id="getBNameById" resultType="com.sp.dto.BookTo">
         SELECT business_name,book_date from sys_business,consumer_book WHERE sys_business.book_id=consumer_book.consumer_id
     </select>

@@ -15,6 +15,8 @@ import java.util.List;
 */
 public interface ConsumerBookMapper extends BaseMapper<ConsumerBook> {
     List<BookTo> getBNameById(Long consumerId);
+
+    void updateStatus(Integer status, Long id);
 }
 
 

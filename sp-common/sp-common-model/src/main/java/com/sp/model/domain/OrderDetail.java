@@ -58,6 +58,13 @@ public class OrderDetail implements Serializable {
      */
     private BigDecimal amount;
 
+    /**
+     * 订单状态
+     */
+    private Integer status;
+
+
+
     @TableField(exist = false)
 
     private Dish dish;
