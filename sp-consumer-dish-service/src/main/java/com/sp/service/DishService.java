@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface DishService {
     List<Dish> getDishList(Long shopId);
+
+    List<Dish> getDishListThroughSQL(Long shopId);
+
+    List<Dish> loadDishListToRedis(Long shopId);
 }

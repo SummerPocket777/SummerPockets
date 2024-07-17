@@ -66,12 +66,7 @@ public class CategoryServiceImpl extends ServiceImpl<CateMapper, Category> imple
 //        // redis数据库中没有数据,则加载数据至redis，然后返回
 //        return loadAllCateToRedis(shopId);
 //    }
-    /**
-     * 通过商店id获取店内菜列表
-     *
-     * @param businessId 业务
-     * @return {@link List }<{@link UserDishDTO }>
-     */
+
 //    @Override
 //    public UserDishDTO getListDishByShopId(Long businessId) {
 //        // 判断缓存中是否存在
@@ -168,6 +163,17 @@ public class CategoryServiceImpl extends ServiceImpl<CateMapper, Category> imple
 //        redisCacheUtil.setCacheObject(listDishByShopKey, JSON.toJSONString(userDishDTO));
 //        return userDishDTO;
 //    }
+
+
+
+
+    @Override
+    // 通过商店id获取菜品分类列表
+    public List<Category> getAllCate(Long shopId) {
+        QueryWrapper<Category> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("business_id", shopId);
+        return cateMapper.selectList(queryWrapper);
+    }
 
     /**
      * 通过商店id获取店内菜列表

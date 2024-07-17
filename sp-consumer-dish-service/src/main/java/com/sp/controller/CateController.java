@@ -21,10 +21,10 @@ public class CateController {
     @Autowired
     private CategoryServiceImpl cateService;
     // 获取所有菜品分类
-//    @GetMapping("/getAll")
-//    public BaseResponse<List<Category>>  getAllCate(@RequestParam("shopId") Long shopId){
-//        return ResultUtils.success(cateService.getAllCate(shopId));
-//    }
+    @GetMapping("/getAll")
+    public BaseResponse<List<Category>>  getAllCate(@RequestParam("shopId") Long shopId){
+        return ResultUtils.success(cateService.getAllCate(shopId));
+    }
 
     /**
      * 用户端根据商家id获取全部的菜品
@@ -40,5 +40,7 @@ public class CateController {
         UserDishDTO UserDishDTO=cateService.getListDishByShopId(businessId);
         return ResultUtils.success(UserDishDTO);
     }
+
+
 
 }
