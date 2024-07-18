@@ -2,7 +2,6 @@ package com.sp.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.sp.core.constants.RedisConstants;
-import com.sp.mapper.CartMapper;
 import com.sp.mapper.DishMapper;
 import com.sp.mapper.SetmealMapper;
 import com.sp.model.domain.Dish;
@@ -11,8 +10,11 @@ import com.sp.model.domain.ShoppingCart;
 import com.sp.model.vo.ShoppingCartVO;
 import com.sp.service.CartService;
 import com.sp.utils.RedisCacheUtil;
+import com.sp.ws.WebSocket;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,29 +27,33 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
+//@Lazy
 @Slf4j
 public class CartServiceImpl implements CartService {
-    @Resource
-    private CartMapper cartMapper;
     @Resource
     private DishMapper dishMapper;
     @Resource
     private SetmealMapper setmealMapper;
-
     @Resource
     private RedisCacheUtil redisCacheUtil;
 
-    /**
-     * 添加购物车
-     *
-     * @param shoppingCartVO 购物车dto
-     */
+    @Autowired
+    private  WebSocket webSocket;
+
+//    public CartServiceImpl() {
+//    }
+//
+//    @Autowired
+//    public CartServiceImpl(WebSocket webSocket) {
+//        this.webSocket = webSocket;
+//    }
+
     @Override
     public void add(ShoppingCartVO shoppingCartVO) {
         ShoppingCart shoppingCart = new ShoppingCart();
         BeanUtils.copyProperties(shoppingCartVO, shoppingCart);
-        Long userId = StpUtil.getLoginIdAsLong();
-        shoppingCart.setUserId(userId);
+//        Long userId = StpUtil.getLoginIdAsLong();
+//        shoppingCart.setUserId(userId);
         Long tableId = shoppingCartVO.getTableId();
         Long businessId = shoppingCartVO.getBusinessId();
 
@@ -79,15 +85,11 @@ public class CartServiceImpl implements CartService {
             redisCacheUtil.setCacheMapValue(cartKey, itemKey, shoppingCart);
             redisCacheUtil.expire(cartKey, RedisConstants.USER_CART_TTL, TimeUnit.DAYS);
         }
+
+        // 广播购物车更新信息
+        webSocket.broadcastToRoom(businessId, tableId, "update_cart", cart);
     }
 
-    /**
-     * 显示购物车
-     *
-     * @param tableId 桌号
-     * @param businessId 店铺号
-     * @return {@link List}<{@link ShoppingCart}>
-     */
     @Override
     public List<ShoppingCart> showCart(Long tableId, Long businessId) {
         String cartKey = String.format(RedisConstants.USER_CART_KEY, businessId, tableId);
@@ -96,11 +98,11 @@ public class CartServiceImpl implements CartService {
 
         cartMap.forEach((k, v) -> {
             ShoppingCart shoppingCart = new ShoppingCart();
-            if (k.startsWith("dish:")) { // 是菜品
+            if (k.startsWith("dish:")) {
                 shoppingCart.setAmount(v.getAmount().multiply(new BigDecimal(v.getNumber())));
                 shoppingCart.setDishId(v.getDishId());
                 shoppingCart.setDishFlavor(v.getDishFlavor());
-            } else { // 是套餐
+            } else {
                 shoppingCart.setAmount(v.getAmount().multiply(new BigDecimal(v.getNumber())));
                 shoppingCart.setSetmealId(v.getSetmealId());
             }
@@ -112,15 +114,12 @@ public class CartServiceImpl implements CartService {
         return shoppingCartList;
     }
 
-    /**
-     * 清空购物车
-     *
-     * @param tableId 桌号
-     * @param businessId 店铺号
-     */
     @Override
     public void cleanCart(Long tableId, Long businessId) {
         String cartKey = String.format(RedisConstants.USER_CART_KEY, businessId, tableId);
         redisCacheUtil.deleteObject(cartKey);
+
+        // 广播清空购物车信息
+        webSocket.broadcastToRoom(businessId, tableId, "clean_cart", null);
     }
 }

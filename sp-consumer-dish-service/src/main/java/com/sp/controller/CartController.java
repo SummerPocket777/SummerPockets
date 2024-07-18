@@ -5,10 +5,12 @@ import com.sp.core.common.ResultUtils;
 import com.sp.model.domain.ShoppingCart;
 import com.sp.model.vo.ShoppingCartVO;
 import com.sp.service.CartService;
+import com.sp.ws.WebSocket;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -20,13 +22,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/user/shoppingCart")
 @Slf4j
-
 public class CartController {
-    @Autowired
-    private CartService cartService;
+    @Resource
+    private  CartService cartService;
     /**
      * 添加购物车
      */
+//    @Resource
+//    public void setCartService(CartService cartService) {
+//        this.cartService = cartService;
+//    }
 
     @PostMapping("/add")
     public BaseResponse add(@RequestBody ShoppingCartVO shoppingCartVO){

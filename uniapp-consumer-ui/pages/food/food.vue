@@ -10,10 +10,10 @@
 					</view>
 					<view class="top-text">
 						<view class="text-first">
-							<u-text text="桌名+桌号" bold size="17px"></u-text>
+							 <u-text :text="`第${tableId}桌号`" bold size="17px"></u-text>
 						</view>
 						<view class="text-second">
-							<u-text text="用餐人数: "></u-text>
+							<u-text :text="`用餐人数:${online_count}人` "></u-text>
 						</view>
 					</view>
 
@@ -84,16 +84,16 @@
 					<image class="car-menu-image" :src="item.image" mode=""></image>
 				</view>
 				<view class="car-right-text" style="width: 73%;">
-					<view class="car-menu-name">{{item.name}}</view>
-					<view class="car-menu-explain">{{item.explain}}</view>
+					<view class="car-menu-name">{{item.name}}</view>s
+					<!-- <view class="car-menu-explain">{{item.explain}}</view> -->
 					<view class="car-menu-ps">
-						<view class="car-menu-price">¥{{item.price}}</view>
+						<view class="car-menu-price">¥{{item.amount}}</view>
 						<view class="car-num-select">
 							<view @click="clickMinus(index)">
 								<image style="width: 48rpx;height: 48rpx;" src="../../static/icon/定位.png">
 								</image>
 							</view>
-							<view style="margin: 0rpx 15rpx;font-size: 28rpx;"> {{item.num}} </view>
+							<view style="margin: 0rpx 15rpx;font-size: 28rpx;"> {{item.number}} </view>
 							<view @click="clickAdd(index)">
 								<image style="width: 48rpx;height: 48rpx;" src="../../static/icon/定位.png">
 								</image>
@@ -115,10 +115,13 @@
 	export default {
 		data() {
 			return {
+				businessId: 61,//店铺id
+				tableId: 72,   //桌号
+				online_count:0,//在线人数
 				store: dishStore(),
 				scrollHeight: 400,
 				scrollTopSize: 0,
-				fillHeight: 0, // 填充高度，用于最后一项低于滚动区域时使用
+				fillHeight: 10, // 填充高度，用于最后一项低于滚动区域时使用
 				leftArray: [],
 				mainArray: [],
 				topArr: [],
@@ -128,7 +131,8 @@
 				carData: [],
 				totalPrice: 0,
 				totalNum: 0,
-				isShowCar: true,
+				//显示属性
+				isShowCar: false,
 				isShowList: false,
 				isShowCarMark: false,
 				isAddHeight: true,
@@ -145,10 +149,11 @@
 			setTimeout(() => {
 				/* 等待滚动区域初始化完成 */
 				this.initScrollView().then(() => {
-					/* 获取列表数据，你的代码从此处开始 */
 					this.getListData();
 				})
 			}, 100);
+			/* 初始化 WebSocket 连接 */
+			this.initWebSocket();
 		},
 		methods: {
 			/* 初始化滚动区域 */
@@ -199,6 +204,9 @@
 								.filter(dish => dish.categoryId === category.id)
 								.map(dish => ({
 									id: dish.id,
+									dishId: dish.id,
+									setmealId: null,
+									dishFlavor: dish.dishFlavor,
 									name: dish.name,
 									price: dish.price,
 									image: dish.image,
@@ -210,6 +218,9 @@
 								.filter(setmeal => setmeal.categoryId === category.id)
 								.map(setmeal => ({
 									id: setmeal.id,
+									dishId: null,
+									setmealId: setmeal.id,
+									dishFlavor: setmeal.dishFlavor,
 									name: setmeal.name,
 									price: setmeal.price,
 									image: setmeal.imageUrl,
@@ -255,7 +266,7 @@
 					const formattedData = formatData();
 					this.leftArray = formattedData.left;
 					this.mainArray = formattedData.main;
-
+					console.log("this.mainArray",this.mainArray)
 					uni.hideLoading();
 
 					// DOM 挂载后再调用 getElementTop 获取高度的方法
@@ -283,8 +294,10 @@
 
 					/* 获取最后一项的高度，设置填充高度。判断和填充时做了 +-20 的操作，是为了滚动时更好的定位 */
 					let last = res[res.length - 1].height;
-					if (last - 20 < this.scrollHeight) {
+					// if (last - 20 < this.scrollHeight) { 
+					if (last< this.scrollHeight) { 
 						this.fillHeight = this.scrollHeight - last + 20;
+						// this.fillHeight = this.scrollHeight - last + 0;
 					}
 				});
 			},
@@ -325,35 +338,125 @@
 			scroll: function(e) {
 				this.scrollTop = e.detail.scrollTop
 			},
+			//**********websocket***************
+			// WebSocket 初始化
+			initWebSocket() {
+				this.socketTask = uni.connectSocket({
+					// url: 'ws://127.0.0.1:3777/consumer-dish/websocket/61/72/1',
+					url: 'ws://127.0.0.1:3777/consumer-dish/websocket/61/72/1',
 
+					header: {
+						'content-type': 'application/json'
+					},
+					success(res) {
+						console.log('WebSocket 创建连接成功',res);
+					},
+					fail() {
+						console.log('WebSocket 创建连接失败');
+					},
+				});
+
+				this.socketTask.onOpen(() => {
+					console.log('WebSocket 连接已打开');
+				});
+
+				this.socketTask.onMessage((event) => {
+					const message = JSON.parse(event.data);
+					this.handleSocketMessage(message);
+				});
+
+				this.socketTask.onClose(() => {
+					console.log('WebSocket 连接已关闭');
+				});
+
+				this.socketTask.onError((error) => {
+					console.error('WebSocket 连接错误', error);
+				});
+			},
+
+			// 处理 WebSocket 消息
+			handleSocketMessage(message) {
+				console.log("接受到的websockt信息", message);
+				if(message.action==="online_count"){
+					this.online_count=message.data;
+				}
+				if(message.action==="initial_cart"){
+					console.log("接受到的购物车信息", message.data);
+					let initCart=JSON.parse(message.data);
+					//字符串转数组
+						
+					this.carData=initCart;
+					//typeof查看购物车类型
+					console.log("typeof this.carData",typeof this.carData)
+
+					console.log("this.carData",this.carData)
+					this.allNum();
+					this.allPrice();
+				    this.isShowCar = true;
+				}
+				if(message.action==="add_cart"){
+					console.log("接受到的购物车项信息", message.data);
+					let index = this.carData.findIndex(ev => ev.name === item.name);
+					if (index === -1) {
+						item.number = 1; // 添加数量属性num，默认为1
+						this.carData.push(item); // 把商品追加进购物车
+						console.log("this.carData.push(item);",this.carData)
+					} else {
+						this.carData[index].number++; // 存在相同的商品则数量叠加
+						console.log("this.carData.push(item);",this.carData)
+					}
+					this.allNum();
+					this.allPrice();
+					this.isShowCar = true;
+				}
+			},
+
+			// 发送消息到 WebSocket
+			sendMessageToSocket(message) {
+				console.log("sendMessageToSocket message",message)
+				if (this.socketTask) {
+					this.socketTask.send({
+						data: JSON.stringify(message),
+						success() {
+							console.log('消息发送成功');
+						},
+						fail(error) {
+							console.error('消息发送失败', error);
+						}
+					});
+				}
+			},
 			//**********商品加入购物车 ***************
 			// 商品加入购物车
 			addCar(e) {
 				console.log("购物车的item", e.target.dataset.item)
 				let item = e.target.dataset.item;
-				let index = this.carData.findIndex(ev => ev.name === item.name);
-				if (index === -1) {
-					item.num = 1; // 添加数量属性num，默认为1
-					this.carData.push(item); // 把商品追加进购物车
-				} else {
-					this.carData[index].num++; // 存在相同的商品则数量叠加
+
+				const date={
+					action: 'add_cart',
+					data: {
+						businessId: this.businessId,
+						dishId: item.dishId,
+						setmealId: item.setmealId,
+						dishFlavor: item.dishFlavor,
+						tableId: this.tableId
+					}
 				}
-				this.allNum();
-				this.allPrice();
-				this.isShowCar = true;
+				// 发送消息到 WebSocket
+				this.sendMessageToSocket(date);
 			},
 
 			// 增加数量
 			clickAdd(index) {
-				this.carData[index].num++;
+				this.carData[index].number++;
 				this.allNum();
 				this.allPrice();
 			},
 
 			// 减少数量，小于1时删除元素
 			clickMinus(index) {
-				if (this.carData[index].num > 1) {
-					this.carData[index].num--;
+				if (this.carData[index].number > 1) {
+					this.carData[index].number--;
 				} else {
 					this.carData.splice(index, 1); // 从数组删除元素
 				}
@@ -365,11 +468,13 @@
 			// 计算商品总数量
 			allNum() {
 				let count = 0;
+				console.log("allNum forEach的this.carData",this.carData)
 				this.carData.forEach(item => {
-					count += item.num;
+					console.log("allNum forEach的item",item)
+					count += item.number;
 				});
 				this.totalNum = count;
-
+				
 				// 购物车有商品时，调整滚动区域高度
 				if (this.totalNum === 1 && this.isAddHeight) {
 					this.scrollHeight -= 50;
@@ -383,12 +488,12 @@
 					this.clickCar();
 				}
 			},
-
+			
 			// 计算商品总价格
 			allPrice() {
 				let Price = 0;
 				this.carData.forEach(item => {
-					Price += item.num * parseFloat(item.price);
+					Price += item.number * parseFloat(item.amount);
 				});
 				this.totalPrice = Price.toFixed(2); // 保留两位小数
 			},

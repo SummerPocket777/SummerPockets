@@ -7,3 +7,4 @@ manifest.json中配置
 
 方便使用将小程序APPid放在下面方便直接使用，每个人不同
 彬旭：APPID:wx33475484a15eed9b  密钥：8fae391a617824d3a03493c83ee1abe5
+罗汉：APPID:wx4cb76cbc95da958e  密钥：8fae391a617824d3a03493c83ee1abe5
