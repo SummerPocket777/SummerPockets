@@ -3,6 +3,7 @@ package com.sp.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sp.mapper.DishMapper;
+import com.sp.model.domain.Category;
 import com.sp.model.domain.Dish;
 import com.sp.service.DishService;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -19,6 +20,8 @@ public class DishServiceImpl implements DishService {
     private DishMapper dishMapper;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+    @Autowired
+    private CategoryServiceImpl categoryService;
     //从redis中获取数据,如果redis数据库中有数据，则返回，如果没有数据，则加载数据至redis，然后返回
     public List<Dish> getDishList(Long shopId){
         Object o = redisTemplate.opsForValue().get("dishList:"+shopId);
@@ -34,6 +37,15 @@ public class DishServiceImpl implements DishService {
         QueryWrapper<Dish> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("business_id", shopId);
         List<Dish> dishList = dishMapper.selectList(queryWrapper);
+
+        List<Category> allCate = categoryService.getAllCate(shopId);
+        for (Dish dish : dishList) {
+            for (Category category : allCate) {
+                if(dish.getCategoryId().equals(category.getId())){
+                    dish.setCategory(category);
+                }
+            }
+        }
         return dishList;
     }
 

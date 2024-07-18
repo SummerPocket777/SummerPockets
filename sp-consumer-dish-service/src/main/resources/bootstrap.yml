@@ -11,12 +11,17 @@ spring:
         namespace: 96cff065-08ed-4fe3-8a89-696f7be807e6
       #配置中心
       config:
-        #        配置mybatis-plus
         namespace: 8df17812-8f13-4624-a16b-d95105438f2d
         shared-configs:
+          - data-id: sp_gateway_security_ignore_whites.yml
+            refresh: true
+          - data-id: sp_auth.yml
+            refresh: true
           - data-id: sp_redis_config.yml
             refresh: true
           - data-id: sp_mybatis_plus_config.yml
+            refresh: true
+          - data-id: datasource-config.yml
             refresh: true
         refresh-enabled: true
 
