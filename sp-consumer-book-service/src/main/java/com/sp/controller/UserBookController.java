@@ -40,8 +40,9 @@ public class UserBookController {
         return ResultUtils.success(bookId);
     }
     @GetMapping("/selectPage")
-    public BaseResponse<List<ConsumerBook>> list(){
+    public BaseResponse<List<ConsumerBook>> list(@RequestParam("shopId" ) Long shopId){
         QueryWrapper<ConsumerBook> consumerBookQueryWrapper = new QueryWrapper<>();
+        consumerBookQueryWrapper.eq("shop_id",shopId);
         List<ConsumerBook> list = consumerBookService.list(consumerBookQueryWrapper);
         return ResultUtils.success(list);
     }
@@ -51,4 +52,9 @@ public class UserBookController {
         return ResultUtils.success(list);
     }
 
+    @RequestMapping("/updateStatus")
+    private BaseResponse<String> updateOrderStatus(@RequestParam("status")Integer status,@RequestParam("id")Long  id){
+        consumerBookService.updateBook(status, id);
+        return ResultUtils.success("更新成功");
+    }
 }

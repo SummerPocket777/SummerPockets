@@ -68,6 +68,13 @@ public class ConsumerBookServiceImpl extends ServiceImpl<ConsumerBookMapper, Con
     }
 
 
+    @Override
+    //更新订单详情状态(用于上菜，退菜）
+    public void updateBook(Integer status, Long id) {
+        consumerBookMapper.updateStatus(status,id);
+    }
+
+
 }
 
 

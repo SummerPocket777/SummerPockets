@@ -1,91 +1,56 @@
-import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
-import { resetRouter } from '@/router'
+import { getDishList } from '@/api/dish'
 
 const getDefaultState = () => {
   return {
-    token: getToken(),
-    name: '',
-    avatar: ''
+    dishList: [],
+    pageNo: 1,
+    pageSize: 3,
+    pageTotalCount: 1
+
   }
 }
 
 const state = getDefaultState()
 
 const mutations = {
-  RESET_STATE: (state) => {
-    Object.assign(state, getDefaultState())
+  set_dishList(state, data) {
+    state.dishList = data
   },
-  SET_TOKEN: (state, token) => {
-    state.token = token
+
+  set_pageNo(state, data) {
+    state.pageNo = data
   },
-  SET_NAME: (state, name) => {
-    state.name = name
+
+  set_pageSize(state, data) {
+    state.pageSize = data
   },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
+
+  set_pageTotalCount(state, data) {
+    state.pageTotalCount = data
   }
 }
 
 const actions = {
-  // user login
-  login({ commit }, userInfo) {
-    const { username, password } = userInfo
+
+
+  getDishList({ commit }, data) {
+    const { pageNo, pageSize, id } = data
 
     return new Promise((resolve, reject) => {
-      login({ 'username': username.trim(), 'password': password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data)
-        setToken(data)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
+      getDishList({ pageNo: pageNo, id: id, pageSize: pageSize }).then(res => {
 
-  // get user info
-  getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const { data } = response
-
-        if (!data) {
-          return reject('Verification failed, please Login again.')
+        if (res.data) {
+          commit('set_dishList', res.data.items)
+          commit('set_pageTotalCount', res.data.totalCount)
+          commit('set_pageNo', res.data.pageNo)
+          commit('set_pageSize', res.data.pageSize)
         }
-
-        const { name, avatar } = data
-
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
+        resolve(res.data)
       }).catch(error => {
         reject(error)
       })
     })
-  },
 
-  // user logout
-  logout({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        removeToken() // must remove  token  first
-        resetRouter()
-        commit('RESET_STATE')
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
-
-  // remove token
-  resetToken({ commit }) {
-    return new Promise(resolve => {
-      removeToken() // must remove  token  first
-      commit('RESET_STATE')
-      resolve()
-    })
   }
 }
 

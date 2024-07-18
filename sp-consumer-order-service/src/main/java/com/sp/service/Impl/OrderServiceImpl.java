@@ -9,9 +9,12 @@ import com.sp.model.domain.Dish;
 import com.sp.model.domain.OrderDetail;
 import com.sp.model.domain.Orders;
 import com.sp.service.OrderService;
+import com.sp.vo.PageOrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,15 +30,31 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     //根据商家id查询订单
-    public List<Orders> listOrders(Long shopId) {
+    public List<Orders> listOrders(PageOrderVO pageOrderVO) {
         QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("business_id",shopId);
+        queryWrapper.eq("business_id",pageOrderVO.getShopId());
         List<Orders> orders = orderMapper.selectList(queryWrapper);
         for(Orders item : orders){
             List<OrderDetail> orderDetails = listOrderDetail(item.getId());
             item.setOrderDetailList(orderDetails);
         }
-        return orders;
+        List<Orders> res = new ArrayList<>();
+        for(Orders item : orders){
+            for(OrderDetail od : item.getOrderDetailList()){
+                Orders temp = new Orders();
+                temp.setId(item.getId());
+                temp.setOrderDetail(od);
+                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+                temp.setDaytt(sdf1.format(item.getOrderTime()));
+                SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+                temp.setTimett(sdf2.format(item.getOrderTime()));
+                temp.setNumber(item.getNumber());
+                temp.setStatus(item.getStatus());
+                temp.setTableId(item.getTableId());
+                res.add(temp);
+            }
+        }
+        return res;
     }
 
     @Override
@@ -63,6 +82,12 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setDish(loadDishById(orderDetail.getDishId()));
         }
         return orderDetails;
+    }
+
+    @Override
+    //更新订单详情状态(用于上菜，退菜）
+    public void updateOrderDetail(Integer status, Long id) {
+        orderDetailMapper.updateStatus(status,id);
     }
 
 

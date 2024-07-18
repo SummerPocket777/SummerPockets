@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface CategoryService extends IService<Category>{
 
-    //获取所有分类,通过redis
+
 //    List<Category> loadAllCateToRedis(Long shopId);
-//    //从redis获取所有分类
-//    List<Category> getAllCate(Long shopId);
+    //从redis获取所有分类
+    List<Category> getAllCate(Long shopId);
 
     /**
      * 通过商店id获取列表菜
@@ -21,4 +21,6 @@ public interface CategoryService extends IService<Category>{
      * @return {@link List }<{@link UserDishDTO }>
      */
     UserDishDTO getListDishByShopId(Long businessId);
+
+
 }

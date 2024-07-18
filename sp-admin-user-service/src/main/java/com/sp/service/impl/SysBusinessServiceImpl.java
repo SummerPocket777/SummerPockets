@@ -59,7 +59,7 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
             safeBusiness.setEmail(email.substring(0, 3) + "****" + email.substring(email.indexOf('@')));
         }
 
-        safeBusiness.setLogoUrl(business.getLogoUrl());
+//        safeBusiness.setLogoUrl(business.getLogoUrl());
         safeBusiness.setStatus(business.getStatus());
         safeBusiness.setCreateTime(business.getCreateTime());
         safeBusiness.setUpdateTime(business.getUpdateTime());

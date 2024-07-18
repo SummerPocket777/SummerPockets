@@ -25,6 +25,7 @@ public class ConsumerBook implements Serializable {
   private Long isDelete;
   private Long consumerId;
   private Date bookCreatedate;
+  private Long shopId;
 
   @TableField(exist = false)
   private static final long serialVersionUID = 1L;

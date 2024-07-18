@@ -8,7 +8,7 @@
           <el-option v-for="item in cates" :key="item.id" :label="item.cate_zh" :value="item.cate" />
         </el-select>
         <el-date-picker type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" />
-        <el-button type="primary" icon="el-icon-search">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="getList()">搜索</el-button>
         <el-button type="primary" icon="el-icon-edit" @click="openForm()">添加</el-button>
         <el-button type="primary" icon="el-icon-download">导出</el-button>
 
@@ -16,17 +16,17 @@
     </el-row>
 
     <!-- 表格 -->
-    <el-table :data="list" border style="width: 100%; margin-top: 20px">
-      <el-table-column prop="id" label="序号" align="center" sortable width="180">
+    <el-table :data="dishList" border style="width: 100%; margin-top: 20px">
+      <el-table-column prop="id" label="序号" align="center" sortable width="200">
         <template slot-scope="{ row, $index }">
           <div :class=" row ">{{ $index + 1 }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="name" label="商品" align="center" width="180">
+      <el-table-column prop="name" label="商品" align="center" width="200">
         <!-- slot-scope="scope"  scope.row  scope.$index -->
         <!-- 作用域插槽：重很重 -->
         <template slot-scope="{ row, $index }">
-          <img :src="row.img" style="width: 60px" alt="">
+          <img :src="row.image" style="width: 60px" alt="">
           <div :class=" $index ">{{ row.name }}</div>
         </template>
       </el-table-column>
@@ -39,13 +39,13 @@
 
       <el-table-column prop="cate" label="品类" align="center">
         <template slot-scope="{ row, $index }">
-          <div :class=" $index ">{{ row.cate }}</div>
+          <div :class=" $index ">{{ row.category.name }}</div>
         </template>
       </el-table-column>
 
       <el-table-column prop="hot" label="是否热销" align="center">
         <template slot-scope="{ row, $index }">
-          <div :class=" $index ">{{ row.hot ? "是" : "否" }}</div>
+          <div :class=" $index ">{{ row.isHot==1 ? "是" : "否" }}</div>
         </template>
       </el-table-column>
 
@@ -57,14 +57,14 @@
 
       <el-table-column prop="check_status" label="商品状态" align="center">
         <template slot-scope="{ row, $index }">
-          <div :class=" $index ">{{ row.check_status ? "已上架" : "待审核" }}</div>
+          <div :class=" $index ">{{ row.status==1 ? "已上架" : "待审核" }}</div>
         </template>
       </el-table-column>
 
       <el-table-column label="操作" width="230" align="center">
         <template slot-scope="{ row }">
           <el-button type="primary" size="mini">编辑</el-button>
-          <el-button v-if="row.published" type="primary" size="mini">详情</el-button>
+          <el-button v-if="row.status==1" type="primary" size="mini">详情</el-button>
           <el-button v-else type="success" size="mini">审核</el-button>
           <el-button size="mini" type="danger">删除</el-button>
         </template>
@@ -72,9 +72,12 @@
     </el-table>
 
     <!-- 分页 -->
-    <el-pagination style="margin-top: 20px" :current-page="page" :page-sizes="[2, 5, 10, 20]" :page-size="size"
-      layout="total, sizes, prev, pager, next, jumper" :total="400" @size-change="handleSizeChange"
-      @current-change="handleCurrentChange" />
+    <el-pagination style="margin-top: 20px" 
+      background
+      layout="prev, pager, next"
+      :total="this.pageTotalCount" 
+      :current-page="this.pageNo"  
+      @current-change="handleCurrentChange(index)" />
     <dialog-form ref="dialogForm"></dialog-form>
   </div>
 
@@ -82,6 +85,9 @@
 
 <script>
 import dialogForm from './components/listForm.vue'
+import { mapActions, mapState } from 'vuex'
+
+
 export default {
   name: 'Good',
   props: [],
@@ -118,11 +124,16 @@ export default {
           check_status: true
         }
       ],
-      page: 1,
-      size: 2
+      pageData:{
+        pageNo:1,
+        pageSize:3,
+        id:1
+      }
     }
   },
   methods: {
+
+    ...mapActions('dish', ['getDishList']),
     openForm(id){
       console.log(this.$refs.dialogForm)
       if(id){
@@ -131,11 +142,25 @@ export default {
         this.$refs.dialogForm.open()
       }           
     },
-    // 改变一页显示多少条数据触发
-    handleSizeChange() {},
     // 点击页码触发
-    handleCurrentChange() {}
+    handleCurrentChange(index) {
+      this.pageData.pageNo = index
+      this.getDishList(pageData)
+    },
+    getList(){
+      this.getDishList(pageData)
+      console.log(this.dishList)
+    }
+  },
+  computed: {
+    ...mapState('dish', ['dishList','pageNo','pageSize','pageTotalCount'])
+    },
+
+
+  created(){
+    this.getDishList(pageData)
   }
+
 }
 </script>
 

@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getOrderList(shopId) {
+export function getBookList(shopId) {
   return request({
-    url: '/consumer-order/order/getOrdersListByShopId',
+    url: '/consumer-book/book/selectPage',
     method: 'get',
     params: {
       shopId: shopId
@@ -11,9 +11,10 @@ export function getOrderList(shopId) {
 }
 
 
-export function updateOrderStatus(status, id) {
+
+export function updateStatus(status, id) {
   return request({
-    url: '/consumer-order/order/updateOrderStatus',
+    url: '/consumer-book/book/updateStatus',
     method: 'get',
     params: {
       status,

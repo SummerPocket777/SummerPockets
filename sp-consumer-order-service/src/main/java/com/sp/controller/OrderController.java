@@ -3,8 +3,11 @@ package com.sp.controller;
 
 import com.sp.core.common.BaseResponse;
 import com.sp.core.common.ResultUtils;
+import com.sp.model.PageResult;
+import com.sp.model.domain.OrderDetail;
 import com.sp.model.domain.Orders;
 import com.sp.service.OrderService;
+import com.sp.vo.PageOrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +25,15 @@ public class OrderController {
     }
 
     @RequestMapping("/getOrdersListByShopId")
-    private BaseResponse<List<Orders>> getOrderByShopId(@RequestParam("shopId") Long shopId){
-        List<Orders> orders = orderService.listOrders(shopId);
+    private BaseResponse< PageResult<List<Orders>>> getOrderByShopId(@RequestBody PageOrderVO pageOrderVO) {
+        PageResult<List<Orders>> orders = new PageResult<>();
+        List<Orders> orders1 = orderService.listOrders(pageOrderVO);
         return ResultUtils.success(orders);
+    }
+
+    @RequestMapping("/updateOrderStatus")
+    private BaseResponse<String> updateOrderStatus(@RequestParam("status")Integer status,@RequestParam("id")Long  id){
+        orderService.updateOrderDetail(status, id);
+        return ResultUtils.success("更新成功");
     }
 }

@@ -1,7 +1,9 @@
 package com.sp.model;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sp.core.constants.SystemConstants;
+import com.sp.model.domain.SysBusiness;
 
 import java.util.List;
 
@@ -12,6 +14,10 @@ import java.util.List;
  * @date 2023/04/02
  */// T表示泛型，因为将来分页模型对应的数据类型是不确定的
 public class PageResult<T> {
+	private PageResult<T> pageResult;
+	public PageResult(){};
+
+
 	public static final Long PAGE_SIZE = SystemConstants.PAGE_SIZE;
 
 	// 表示显示当前页[显示第几页]

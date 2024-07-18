@@ -18,4 +18,8 @@ public interface ConsumerBookService extends IService<ConsumerBook> {
     long bookInsert(ConsumerBook consumerBook);
     PageResult<ConsumerBook> pageQuery(BookPageQueryVo bookPageQueryVo);
     List<BookTo> getBNameById(Long id);
+
+    void updateBook(Integer status, Long id);
+
+
 }

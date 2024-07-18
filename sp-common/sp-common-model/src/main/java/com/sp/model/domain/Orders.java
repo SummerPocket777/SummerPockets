@@ -132,7 +132,12 @@ public class Orders implements Serializable {
 
     @TableField(exist = false)
     private List<OrderDetail> orderDetailList;
-
+    @TableField(exist = false)
+    private OrderDetail orderDetail;
+    @TableField(exist = false)
+    private String Daytt;
+    @TableField(exist = false)
+    private String Timett;
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

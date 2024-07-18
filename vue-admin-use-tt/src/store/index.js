@@ -7,6 +7,8 @@ import user from './modules/user'
 import dish from './modules/dish'
 import permission from './modules/permission'
 import tagsView from './modules/tagsView'
+import kitchen from './modules/kitchen'
+import book from './modules/book'
 
 Vue.use(Vuex)
 
@@ -17,7 +19,9 @@ const store = new Vuex.Store({
     user,
     dish,
     permission,
-    tagsView
+    tagsView,
+    kitchen,
+    book
   },
   getters
 })
