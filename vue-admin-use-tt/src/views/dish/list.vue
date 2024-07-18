@@ -72,9 +72,12 @@
     </el-table>
 
     <!-- 分页 -->
-    <el-pagination style="margin-top: 20px" :current-page="page" :page-sizes="[2, 5, 10, 20]" :page-size="size"
-      layout="total, sizes, prev, pager, next, jumper" :total="400" @size-change="handleSizeChange"
-      @current-change="handleCurrentChange" />
+    <el-pagination style="margin-top: 20px" 
+      background
+      layout="prev, pager, next"
+      :total="this.pageTotalCount" 
+      :current-page="this.pageNo"  
+      @current-change="handleCurrentChange(index)" />
     <dialog-form ref="dialogForm"></dialog-form>
   </div>
 
@@ -121,8 +124,11 @@ export default {
           check_status: true
         }
       ],
-      page: 1,
-      size: 2
+      pageData:{
+        pageNo:1,
+        pageSize:3,
+        id:1
+      }
     }
   },
   methods: {
@@ -136,22 +142,23 @@ export default {
         this.$refs.dialogForm.open()
       }           
     },
-    // 改变一页显示多少条数据触发
-    handleSizeChange() {},
     // 点击页码触发
-    handleCurrentChange() {},
+    handleCurrentChange(index) {
+      this.pageData.pageNo = index
+      this.getDishList(pageData)
+    },
     getList(){
-      this.getDishList(1)
+      this.getDishList(pageData)
       console.log(this.dishList)
     }
   },
   computed: {
-    ...mapState('dish', ['dishList'])
+    ...mapState('dish', ['dishList','pageNo','pageSize','pageTotalCount'])
     },
 
 
   created(){
-    this.getDishList(1)
+    this.getDishList(pageData)
   }
 
 }

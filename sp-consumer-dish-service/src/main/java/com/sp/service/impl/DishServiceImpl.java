@@ -2,10 +2,15 @@ package com.sp.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sp.mapper.DishMapper;
+import com.sp.model.PageRequest;
+import com.sp.model.PageResult;
 import com.sp.model.domain.Category;
 import com.sp.model.domain.Dish;
+import com.sp.model.domain.SysBusiness;
 import com.sp.service.DishService;
+import com.sp.vo.PageVO;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -33,12 +38,37 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public List<Dish> getDishListThroughSQL(Long shopId) {
-        QueryWrapper<Dish> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("business_id", shopId);
-        List<Dish> dishList = dishMapper.selectList(queryWrapper);
+    //查找该商店的菜单信息，通过数据库，没有经过redis
+    public PageResult<Dish> getDishListThroughSQL(PageVO pageVO) {
 
-        List<Category> allCate = categoryService.getAllCate(shopId);
+//        PageResult<List<Dish>> pageResult = dishMapper.selectPage(shopId);
+        Page<Dish> page = new Page<>(pageVO.getPageNo(), pageVO.getPageSize());
+        QueryWrapper<Dish> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("business_id", pageVO.getId());
+        dishMapper.selectPage(page,queryWrapper);
+        List<Dish> list = page.getRecords();
+
+        PageResult<Dish> pageResult = new PageResult<>();
+        pageResult.setPageNo(page.getCurrent());
+        pageResult.setPageSize(page.getSize());
+        pageResult.setTotalRow(page.getTotal());
+        pageResult.setPageTotalCount(page.getPages());
+        pageResult.setItems(list);
+        if (page.getTotal() == 0) {
+            pageResult.setHasNext(false);
+            pageResult.setHasPrevious(false);
+        } else {
+            pageResult.setHasNext(page.hasNext());
+            pageResult.setHasPrevious(page.hasPrevious());
+        }
+
+        return pageResult;
+
+    }
+
+    //用于给菜品添加分类到属性中
+    private List<Dish> loadCategoryToDish(List<Dish> dishList){
+        List<Category> allCate = categoryService.getAllCate(dishList.get(0).getId());
         for (Dish dish : dishList) {
             for (Category category : allCate) {
                 if(dish.getCategoryId().equals(category.getId())){

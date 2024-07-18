@@ -12,12 +12,10 @@ export function getAllCate(shopId) {
 }
 
 
-export function getDishList(shopId) {
+export function getDishList(data) {
   return request({
     url: '/consumer-dish/dish/getAll',
-    method: 'get',
-    params: {
-      shopId
-    }
+    method: 'post',
+    data
   })
 }
