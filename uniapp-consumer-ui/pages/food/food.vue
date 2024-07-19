@@ -109,9 +109,11 @@
 </template>
 
 <script>
+	import { mapStores, mapActions, mapState } from 'pinia';
 	import {
 		dishStore
 	} from '@/store/dish.js';
+	import{ useRestaurantStore } from '@/store/restaurant.js'
 	export default {
 		data() {
 			return {
@@ -136,25 +138,17 @@
 				isShowList: false,
 				isShowCarMark: false,
 				isAddHeight: true,
+				scanCodeMsg:""
 			}
 		},
 		onLoad(){
-			wx.scanCode({
-			  success: (res) => {
-			    console.log('扫描结果:', res);
-			    // 你可以在这里处理扫描结果
-			  },
-			  fail: (err) => {
-			    console.error('扫描失败:', err);
-			    // 处理扫描失败
-			  },
-			  complete: () => {
-			    console.log('扫描完成');
-			    // 不论成功或失败都执行
-			  }
-			});
+			//调用二维码
+			this.takePhoto()
 		},
 		computed: {
+			//使用useRestaurantStore
+			...mapStores(useRestaurantStore),
+			...mapState(useRestaurantStore,['businessId','tableId']),
 			/* 计算左侧滚动位置定位 */
 			leftIntoView() {
 				return `left-${this.leftIndex > 3 ? (this.leftIndex-3):0}`;
@@ -172,6 +166,8 @@
 			this.initWebSocket();
 		},
 		methods: {
+			//使用useRestaurantStore的方法
+			...mapActions(useRestaurantStore,['setTableId','setBusinessId','reset']),
 			/* 初始化滚动区域 */
 			initScrollView() {
 				return new Promise((resolve, reject) => {
@@ -523,6 +519,43 @@
 			clickCarMark() {
 				this.isShowList = !this.isShowList;
 				this.isShowCarMark = !this.isShowCarMark;
+			},
+			//二维码扫面
+			takePhoto() {
+				if(this.businessId == '' | this.tableId == ''){
+					wx.scanCode({
+						onlyFromCamera: true,
+						success: (res) => {
+							console.log(res.result)
+							let pairs = res.result.split('&')
+							let params = {};
+							pairs.forEach(pair => {
+							    let [key, value] = pair.split('=');
+							    params[key] = value;
+							});
+							console.log(params)
+							this.businessId = params.businessId
+							this.tableId = params.tableId
+							console.log('piana businessId ---',this.businessId)
+							console.log('piana tableId---',this.tableId)
+						},
+						fail: (res) => {
+							console.log(res.errMsg)
+						},
+						complete: (res) => {
+							console.log(res.errMsg)
+							if(res.errMsg === "scanCode:fail cancel"){
+								uni.showToast({
+								  title: '请扫描二维码', // 提示的内容
+								  icon: 'error', // 图标，支持"success"、"loading"，默认是"success"
+								  duration: 2000 // 提示的延迟时间，单位为毫秒，默认是1500
+								});
+								this.takePhoto()
+							}
+						}
+					})
+				}
+				
 			},
 		}
 	}
