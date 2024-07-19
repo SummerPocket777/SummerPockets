@@ -40,6 +40,7 @@ public class ConsumerBookServiceImpl extends ServiceImpl<ConsumerBookMapper, Con
         if (consumerBook==null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
+
         return this.save(consumerBook)?consumerBook.getBookId():0;
     }
 

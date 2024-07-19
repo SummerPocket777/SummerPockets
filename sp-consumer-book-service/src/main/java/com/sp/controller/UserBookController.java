@@ -54,36 +54,9 @@ public class UserBookController {
         return ResultUtils.success(list);
     }
 
-    @GetMapping("/getAllInfo")
-    public BaseResponse<List<BookInfovo>> getAllInfo(@PathVariable("consumerId") Long id , @PathVariable("consumerName") String consumerName){
-        List<BookInfovo> list = consumerBookService.getAllInfo(id,consumerName);
-        return ResultUtils.success(list);
-    }
     @RequestMapping("/updateStatus")
     private BaseResponse<String> updateOrderStatus(@RequestParam("status")Integer status,@RequestParam("id")Long  id){
         consumerBookService.updateBook(status, id);
         return ResultUtils.success("更新成功");
-    }
-
-    @RequestMapping("/selectAllBusiness")
-    private BaseResponse<List<SysBusiness>> selectAllBusiness(){
-        List<SysBusiness> list = consumerBookService.selectAll();
-        return ResultUtils.success(list);
-    }
-
-    @GetMapping ("/getYuyueLists")
-    private BaseResponse<List<ConsumerBook>> getYuyueList(Long userID){
-        List<ConsumerBook> list = consumerBookService.getYuyueList(userID);
-        return ResultUtils.success(list);
-    }
-
-    @RequestMapping("/cancelBook")
-    private BaseResponse<String> cancelBook(@RequestParam("bookId")Long id){
-        if (consumerBookService.cancelBook(id)){
-            return ResultUtils.success("取消成功");
-        }else {
-            return ResultUtils.success("取消失败");
-        }
-
     }
 }
