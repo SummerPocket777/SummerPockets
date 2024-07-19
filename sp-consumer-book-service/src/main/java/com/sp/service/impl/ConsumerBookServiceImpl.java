@@ -6,10 +6,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sp.core.enums.ErrorCode;
 import com.sp.core.exception.BusinessException;
 import com.sp.mapper.ConsumerBookMapper;
+import com.sp.mapper.SysbusinessMapper;
 import com.sp.model.PageResult;
+import com.sp.model.domain.SysBusiness;
 import com.sp.pojo.ConsumerBook;
 import com.sp.service.ConsumerBookService;
 import com.sp.dto.BookTo;
+import com.sp.vo.BookInfovo;
 import com.sp.vo.BookPageQueryVo;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,10 @@ public class ConsumerBookServiceImpl extends ServiceImpl<ConsumerBookMapper, Con
     implements ConsumerBookService {
     @Resource
     private ConsumerBookMapper consumerBookMapper;
+
+    @Resource
+    private SysbusinessMapper sysbusinessMapper;
+
 
     @Override
     public long bookInsert(ConsumerBook consumerBook) {
@@ -74,7 +81,28 @@ public class ConsumerBookServiceImpl extends ServiceImpl<ConsumerBookMapper, Con
         consumerBookMapper.updateStatus(status,id);
     }
 
+    @Override
+    public List<SysBusiness> selectAll() {
+        return sysbusinessMapper.selectList(null);
+    }
 
+    @Override
+    public List<BookInfovo> getAllInfo(Long id, String consumerName) {
+        //QueryWrapper查找返回集合
+        return consumerBookMapper.getAllByUserId(id,consumerName);
+    }
+
+    @Override
+    public List<ConsumerBook> getYuyueList(Long userID) {
+        return sysbusinessMapper.getYuyueList(userID);
+    }
+
+    @Override
+    public boolean cancelBook(Long id) {
+        QueryWrapper<ConsumerBook> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("book_id",id);
+        return consumerBookMapper.delete(queryWrapper) >0;
+    }
 }
 
 

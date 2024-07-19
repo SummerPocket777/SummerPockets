@@ -30,6 +30,8 @@
 </template>
 
 <script>
+	import { mapStores,mapState,mapActions } from 'pinia'
+	import { useUserStore } from '@/store/user.js'
 	export default {
 		data() {
 			return {
@@ -39,9 +41,13 @@
 			}
 		},
 		onLoad() {
-			this.userName = getApp().globalData.userName
-			this.userImage = getApp().globalData.userImage
+			this.userName = this.myUserInfo.name
+			this.userImage = this.myUserInfo.image
 			console.log(this.userImage)
+		},
+		computed:{
+			...mapStores(useUserStore),
+			...mapState(useUserStore,['myUserInfo'])
 		},
 		methods: {
 			gotomyyuyue(){

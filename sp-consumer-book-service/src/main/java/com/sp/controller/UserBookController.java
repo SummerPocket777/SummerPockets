@@ -5,11 +5,14 @@ import com.sp.core.common.BaseResponse;
 import com.sp.core.common.ResultUtils;
 import com.sp.core.enums.ErrorCode;
 import com.sp.core.exception.BusinessException;
+import com.sp.model.domain.SysBusiness;
 import com.sp.pojo.ConsumerBook;
 import com.sp.service.ConsumerBookService;
 import com.sp.dto.BookTo;
+import com.sp.vo.BookInfovo;
 import com.sp.vo.BookVo;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -40,9 +43,8 @@ public class UserBookController {
         return ResultUtils.success(bookId);
     }
     @GetMapping("/selectPage")
-    public BaseResponse<List<ConsumerBook>> list(@RequestParam("shopId" ) Long shopId){
+    public BaseResponse<List<ConsumerBook>> list(){
         QueryWrapper<ConsumerBook> consumerBookQueryWrapper = new QueryWrapper<>();
-        consumerBookQueryWrapper.eq("shop_id",shopId);
         List<ConsumerBook> list = consumerBookService.list(consumerBookQueryWrapper);
         return ResultUtils.success(list);
     }
@@ -52,9 +54,36 @@ public class UserBookController {
         return ResultUtils.success(list);
     }
 
+    @GetMapping("/getAllInfo")
+    public BaseResponse<List<BookInfovo>> getAllInfo(@PathVariable("consumerId") Long id , @PathVariable("consumerName") String consumerName){
+        List<BookInfovo> list = consumerBookService.getAllInfo(id,consumerName);
+        return ResultUtils.success(list);
+    }
     @RequestMapping("/updateStatus")
     private BaseResponse<String> updateOrderStatus(@RequestParam("status")Integer status,@RequestParam("id")Long  id){
         consumerBookService.updateBook(status, id);
         return ResultUtils.success("更新成功");
+    }
+
+    @RequestMapping("/selectAllBusiness")
+    private BaseResponse<List<SysBusiness>> selectAllBusiness(){
+        List<SysBusiness> list = consumerBookService.selectAll();
+        return ResultUtils.success(list);
+    }
+
+    @GetMapping ("/getYuyueLists")
+    private BaseResponse<List<ConsumerBook>> getYuyueList(Long userID){
+        List<ConsumerBook> list = consumerBookService.getYuyueList(userID);
+        return ResultUtils.success(list);
+    }
+
+    @RequestMapping("/cancelBook")
+    private BaseResponse<String> cancelBook(@RequestParam("bookId")Long id){
+        if (consumerBookService.cancelBook(id)){
+            return ResultUtils.success("取消成功");
+        }else {
+            return ResultUtils.success("取消失败");
+        }
+
     }
 }

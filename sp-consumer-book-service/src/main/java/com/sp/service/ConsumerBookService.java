@@ -3,8 +3,10 @@ package com.sp.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sp.model.PageResult;
+import com.sp.model.domain.SysBusiness;
 import com.sp.pojo.ConsumerBook;
 import com.sp.dto.BookTo;
+import com.sp.vo.BookInfovo;
 import com.sp.vo.BookPageQueryVo;
 
 import java.util.List;
@@ -19,7 +21,14 @@ public interface ConsumerBookService extends IService<ConsumerBook> {
     PageResult<ConsumerBook> pageQuery(BookPageQueryVo bookPageQueryVo);
     List<BookTo> getBNameById(Long id);
 
+    List<BookInfovo> getAllInfo(Long id , String consumerName);
+
     void updateBook(Integer status, Long id);
 
+    List<SysBusiness> selectAll();
+
+    List<ConsumerBook> getYuyueList(Long userID);
+
+    boolean cancelBook(Long id);
 
 }

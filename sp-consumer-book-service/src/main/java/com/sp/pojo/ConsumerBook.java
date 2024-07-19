@@ -26,6 +26,9 @@ public class ConsumerBook implements Serializable {
   private Long consumerId;
   private Date bookCreatedate;
   private Long shopId;
+  private Long userID;
+
+  private String businessName;
 
   @TableField(exist = false)
   private static final long serialVersionUID = 1L;
