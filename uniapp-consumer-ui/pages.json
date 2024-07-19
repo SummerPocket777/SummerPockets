@@ -117,14 +117,14 @@
 				"iconPath": "static/icon/首页.png",
 				"selectedIconPath": "static/icon/首页 (1).png"
 			},
+			// {
+			// 	"text": "点单",
+			// 	"pagePath": "pages/shop/shop",
+			// 	"iconPath": "static/icon/点单.png",
+			// 	"selectedIconPath": "static/icon/点单 (1).png"
+			// },
 			{
 				"text": "点单",
-				"pagePath": "pages/shop/shop",
-				"iconPath": "static/icon/点单.png",
-				"selectedIconPath": "static/icon/点单 (1).png"
-			},
-			{
-				"text": "food",
 				"pagePath": "pages/food/food",
 				"iconPath": "static/icon/点单.png",
 				"selectedIconPath": "static/icon/点单 (1).png"

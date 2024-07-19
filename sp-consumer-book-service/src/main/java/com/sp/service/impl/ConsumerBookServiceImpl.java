@@ -14,6 +14,7 @@ import com.sp.service.ConsumerBookService;
 import com.sp.dto.BookTo;
 import com.sp.vo.BookInfovo;
 import com.sp.vo.BookPageQueryVo;
+import com.sp.vo.BookVo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,6 +43,11 @@ public class ConsumerBookServiceImpl extends ServiceImpl<ConsumerBookMapper, Con
         }
 
         return this.save(consumerBook)?consumerBook.getBookId():0;
+    }
+
+    @Override
+    public long getConsumerId(String name) {
+        return sysbusinessMapper.getIdByName(name);
     }
 
     @Override
@@ -94,7 +100,7 @@ public class ConsumerBookServiceImpl extends ServiceImpl<ConsumerBookMapper, Con
     }
 
     @Override
-    public List<ConsumerBook> getYuyueList(Long userID) {
+    public List<BookVo> getYuyueList(Long userID) {
         return sysbusinessMapper.getYuyueList(userID);
     }
 

@@ -3,6 +3,7 @@ package com.sp.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sp.model.domain.SysBusiness;
 import com.sp.pojo.ConsumerBook;
+import com.sp.vo.BookVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.List;
  * @description
  */
 public interface SysbusinessMapper extends BaseMapper<SysBusiness> {
-    List<ConsumerBook> getYuyueList(@Param("userID") Long userID);
+    List<BookVo> getYuyueList(@Param("userID") Long userID);
+
+    int getIdByName(@Param("businessName") String businessName);
 
 }

@@ -138,6 +138,22 @@
 				isAddHeight: true,
 			}
 		},
+		onLoad(){
+			wx.scanCode({
+			  success: (res) => {
+			    console.log('扫描结果:', res);
+			    // 你可以在这里处理扫描结果
+			  },
+			  fail: (err) => {
+			    console.error('扫描失败:', err);
+			    // 处理扫描失败
+			  },
+			  complete: () => {
+			    console.log('扫描完成');
+			    // 不论成功或失败都执行
+			  }
+			});
+		},
 		computed: {
 			/* 计算左侧滚动位置定位 */
 			leftIntoView() {

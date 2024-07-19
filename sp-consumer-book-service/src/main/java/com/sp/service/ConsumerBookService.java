@@ -8,6 +8,7 @@ import com.sp.pojo.ConsumerBook;
 import com.sp.dto.BookTo;
 import com.sp.vo.BookInfovo;
 import com.sp.vo.BookPageQueryVo;
+import com.sp.vo.BookVo;
 
 import java.util.List;
 
@@ -27,8 +28,10 @@ public interface ConsumerBookService extends IService<ConsumerBook> {
 
     List<SysBusiness> selectAll();
 
-    List<ConsumerBook> getYuyueList(Long userID);
+    List<BookVo> getYuyueList(Long userID);
 
     boolean cancelBook(Long id);
+
+    long getConsumerId(String name);
 
 }

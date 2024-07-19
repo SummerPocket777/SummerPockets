@@ -61,9 +61,9 @@
 				this.getAllYuyueInfoByIdd({
 					"userID": this.myUserInfo.id
 				}).then(res => {
-
+					console.log("11222222222-----------",res.data)
 					this.setAllYuyueInfo(res.data)
-					console.log(this.allYuyueInfo)
+					console.log("111111111-----------",this.allYuyueInfo)
 					for (let i = 0; i < this.allYuyueInfo.length; i++) {
 						// 初始化 myyuyueInfo[i] 为对象
 						if (!this.myyuyueInfo[i]) {

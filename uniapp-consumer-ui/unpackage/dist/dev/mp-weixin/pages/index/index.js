@@ -55,6 +55,10 @@ const _sfc_main = {
     },
     yuyueSure(e) {
       console.log(this.yuyueInfo);
+      console.log(11111111111111112);
+      console.log(this.businessInfo.name);
+      console.log(this.myUserInfo.id);
+      console.log(11111111111111112);
       const selectedDateTime = new Date(this.yuyueInfo.datetimesingle).getTime();
       const currentDateTime = (/* @__PURE__ */ new Date()).getTime();
       const sevenDaysLaterDateTime = currentDateTime + 7 * 24 * 60 * 60 * 1e3;
@@ -103,7 +107,9 @@ const _sfc_main = {
           "bookNumber": this.yuyueInfo.peopleNumber,
           "bookDate": this.yuyueInfo.datetimesingle,
           "bookName": this.yuyueInfo.userName,
-          "bookPhone": this.yuyueInfo.userPhone
+          "bookPhone": this.yuyueInfo.userPhone,
+          "businessName": this.businessInfo.name,
+          "userId": this.myUserInfo.id
         }).then((res) => {
           console.log("预约结果", res);
           if (res.code == 2e4) {
@@ -204,6 +210,7 @@ const _sfc_main = {
           this.arr[i] = res.data[i].businessName;
         }
         console.log(this.arr);
+        this.businessInfo.name = this.arr[this.index];
       }).catch((err) => {
         console.log(err);
       });
