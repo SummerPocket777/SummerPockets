@@ -8,6 +8,7 @@ import com.sp.core.common.ResultUtils;
 import com.sp.core.enums.ErrorCode;
 import com.sp.core.exception.BusinessException;
 import com.sp.model.domain.ConsumerUser;
+import com.sp.model.domain.SysBusiness;
 import com.sp.model.dto.VXUserLoginDTO;
 import com.sp.model.vo.BusinessLoginVO;
 import com.sp.model.vo.BusinessRegisterVO;
@@ -124,4 +125,14 @@ public class TokenController {
         long id= sysBusinessService.registerBusiness(vo);
         return ResultUtils.success(id);
     }
+    @GetMapping("getUserDetail")
+    public BaseResponse getUserDetail() {
+        SysBusiness sysBusiness = (SysBusiness)StpUtil.getTokenSession().get("user");
+        if (sysBusiness==null){
+            Long loginId = StpUtil.getLoginIdAsLong();
+            sysBusiness = sysBusinessService.getById(loginId);
+        }
+        return ResultUtils.success(sysBusiness);
+    }
+
 }

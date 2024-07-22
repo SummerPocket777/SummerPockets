@@ -3,6 +3,8 @@ package com.sp.controller;
 
 import com.sp.core.common.BaseResponse;
 import com.sp.core.common.ResultUtils;
+import com.sp.core.enums.ErrorCode;
+import com.sp.core.exception.BusinessException;
 import com.sp.model.PageResult;
 import com.sp.model.domain.OrderDetail;
 import com.sp.model.domain.Orders;
@@ -24,13 +26,20 @@ public class OrderController {
         return ResultUtils.success(orders);
     }
 
-    @RequestMapping("/getOrdersListByShopId")
-    private BaseResponse< PageResult<List<Orders>>> getOrderByShopId(@RequestBody PageOrderVO pageOrderVO) {
-        PageResult<List<Orders>> orders = new PageResult<>();
-        List<Orders> orders1 = orderService.listOrders(pageOrderVO);
-        return ResultUtils.success(orders);
-    }
+    @GetMapping("/getOrdersListByShopId")
+    private BaseResponse<List<Orders>> getOrderByShopId(Long shopId) {
 
+        List<Orders> orders1 = orderService.listOrders(shopId);
+        return ResultUtils.success(orders1);
+    }
+//    @RequestMapping("/getOrdersListByShopId")
+//    private BaseResponse< PageResult<Orders>> getOrderByShopId(@RequestBody PageOrderVO pageOrderVO) {
+//        if (pageOrderVO== null ){
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+//        }
+//        orderService.pageOrders(pageOrderVO);
+//        return ResultUtils.success(orders);
+//    }
     @RequestMapping("/updateOrderStatus")
     private BaseResponse<String> updateOrderStatus(@RequestParam("status")Integer status,@RequestParam("id")Long  id){
         orderService.updateOrderDetail(status, id);

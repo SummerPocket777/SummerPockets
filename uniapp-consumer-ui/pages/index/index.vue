@@ -1,8 +1,20 @@
 <template>
 	<view class="content" style="background-image: url(../../static/index-back.jpg);">
 		<!-- 小程序基础库需配置为 2.22.1 -->
+		<view class="uni-list">
+			<view class="uni-list-cell">
+				<view class="uni-list-cell-left">
+					当前选择的餐厅
+				</view>
+				<view>
+					<picker :value="index" :range="arr" @change="bindChange">
+						<view>{{arr[index]}}</view>
+					</picker>
+				</view>
+			</view>
+		</view>
 		<button size="mini" open-type="getUserInfo" @tap="getUserProfile">预约</button>
-		<button @click="testtes">是否登录</button>
+		<button @click="getAllBusinesses">是否登录</button>
 		<view :class="yuyueClass">
 			<view class="yuyue-title">
 				<text>预约</text>
@@ -46,7 +58,9 @@
 	import {
 		useCounterStore
 	} from '@/store/yuyue.js'
-import  {useUserStore}  from '@/store/user.js'
+	import {
+		useUserStore
+	} from '@/store/user.js'
 
 	export default {
 		data() {
@@ -60,29 +74,38 @@ import  {useUserStore}  from '@/store/user.js'
 					datetimesingle: ''
 				},
 				today: '',
-				userInfo:{
-					code:''
-				}
+				userInfo: {
+					code: ''
+				},
+				index: 0,
+				arr: [1,2,3,4]
 
 			}
 		},
 		onLoad() {
 			this.setToday()
+console.log(11111111111111)
+			this.getAllBusinesses()
+			console.log(222222222222)
+			
 		},
 		onShow() {
 			this.setToday()
+			
 		},
 		onReady() {
 
 
 		},
 		computed: {
-			...mapStores(useCounterStore,useUserStore),
+			...mapStores(useCounterStore, useUserStore),
+			...mapState(useUserStore, ['myUserInfo']),
+			...mapState(useCounterStore, ['businessInfo']),
 			// ...mapState(useCounterStore, ['count', 'double'])
 		},
 		methods: {
-			...mapActions(useCounterStore, ['insertYuyue']),
-			...mapActions(useUserStore, ['login','islogin']),
+			...mapActions(useCounterStore, ['insertYuyue',,'getAllBusinessin']),
+			...mapActions(useUserStore, ['login', 'islogin']),
 			setToday() {
 				const now = new Date();
 				const year = now.getFullYear();
@@ -97,6 +120,10 @@ import  {useUserStore}  from '@/store/user.js'
 			},
 			yuyueSure(e) {
 				console.log(this.yuyueInfo)
+				console.log(11111111111111111)
+				console.log(this.businessInfo.name)
+				console.log(this.myUserInfo.id)
+				console.log(11111111111111111)
 				const selectedDateTime = new Date(this.yuyueInfo.datetimesingle).getTime();
 				const currentDateTime = new Date().getTime();
 				const sevenDaysLaterDateTime = currentDateTime + (7 * 24 * 60 * 60 * 1000); // 7天后的时间戳
@@ -145,34 +172,36 @@ import  {useUserStore}  from '@/store/user.js'
 					})
 				} else {
 					this.insertYuyue({
-						"bookNumber": this.yuyueInfo.peopleNumber,
-						"bookDate": this.yuyueInfo.datetimesingle,
-						"bookName": this.yuyueInfo.userName,
-						"bookPhone": this.yuyueInfo.userPhone
-					})
-					.then(res => {
-						console.log("预约结果", res);
-						if(res.data.code == 20000){
-							uni.showToast({
-								title:'预约成功',
-								icon:'success'
-						
-							})
-						}else{
-							uni.showToast({
-								title:'网络请求失败',
-								icon:'loading'
-						
-							})
-						}
-					}).catch(err => {
-						console.error("预约失败", err);
-						uni.showToast({
-							title:'网络请求失败',
-							icon:'loading'
-						
+							"bookNumber": this.yuyueInfo.peopleNumber,
+							"bookDate": this.yuyueInfo.datetimesingle,
+							"bookName": this.yuyueInfo.userName,
+							"bookPhone": this.yuyueInfo.userPhone,
+							"businessName": this.businessInfo.name,
+							"userId": this.myUserInfo.id
 						})
-					});
+						.then(res => {
+							console.log("预约结果", res);
+							if (res.code == 20000) {
+								uni.showToast({
+									title: '预约成功',
+									icon: 'success'
+
+								})
+							} else {
+								uni.showToast({
+									title: '网络请请求失败',
+									icon: 'loading'
+
+								})
+							}
+						}).catch(err => {
+							console.error("预约失败", err);
+							uni.showToast({
+								title: '网络请求失败',
+								icon: 'loading'
+
+							})
+						});
 
 				}
 				this.yuyueInfo = {
@@ -193,23 +222,24 @@ import  {useUserStore}  from '@/store/user.js'
 				this.yuyueClass = "yuyue-box1"
 			},
 			getUserProfile() {
+				console.log(this.myUserInfo)
+				if (this.myUserInfo.name == '' || this.myUserInfo.image == '') {
 
-				if (false) {
-					console.log("一登陆")
-				} else {
 					console.log("未登录")
 					wx.login({
 						success: (res) => {
-							console.log("res.code",res.code)
-							console.log("this ",this)
+							console.log("res", res)
+							console.log("this ", this)
 							this.userInfo.code = res.code
 							this.login(this.userInfo)
-							.then(res =>{
-								console.log("登录结果",res)
-							}).catch(err =>{
-								console.error("登录失败",err)
-							})
-						
+								.then(res => {
+									console.log("登录结果", res)
+									this.myUserInfo.id = res.data.id
+									console.log(this.myUserInfo.id)
+								}).catch(err => {
+									console.error("登录失败", err)
+								})
+
 						}
 					})
 					wx.getUserProfile({
@@ -219,8 +249,11 @@ import  {useUserStore}  from '@/store/user.js'
 							console.log(res)
 							console.log(res.userInfo.nickName)
 							console.log(res.userInfo.avatarUrl)
-							getApp().globalData.userName = res.userInfo.nickName
-							getApp().globalData.userImage = res.userInfo.avatarUrl
+							
+							this.myUserInfo.name = res.userInfo.nickName
+							this.myUserInfo.image = res.userInfo.avatarUrl
+							console.log(this.myUserInfo)
+
 							this.yuyueClass = "yuyue-box"
 						},
 						fail: (err) => {
@@ -233,11 +266,36 @@ import  {useUserStore}  from '@/store/user.js'
 							})
 						}
 					})
+				} else {
+					console.log("一登陆")
+					this.yuyueClass = "yuyue-box"
 				}
 
 			},
-			testtes(){
+			testtes() {
 				this.userStore.islogin()
+			},
+			bindChange(e) {
+				console.log('picker发送选择改变，携带值为', e.detail.value)
+				this.index = e.detail.value
+				this.businessInfo.name = this.arr[this.index]
+				console.log(this.businessInfo.name)
+			},
+			getAllBusinesses(){
+				this.getAllBusinessin().then(res => {
+					console.log(11111111111111)
+					console.log(res.data)
+					console.log(222222222222)
+					for(let i = 0;i<res.data.length;i++){
+						
+						this.arr[i] = res.data[i].businessName
+					}
+					console.log(this.arr)
+					this.businessInfo.name = this.arr[this.index]
+					
+				}).catch(err => {
+					console.log(err)
+				})
 			}
 		}
 	}
@@ -331,5 +389,16 @@ import  {useUserStore}  from '@/store/user.js'
 
 	.yuyue-sure button {
 		width: 350rpx;
+	}
+	.uni-list{
+		margin-bottom: 300rpx;
+	}
+	.uni-list-cell{
+		text-align: center;
+		background-color: #e5e5e5;
+		border-radius: 20rpx;
+		width: 550rpx;
+		height: 145rpx;
+		font-size: 50rpx;
 	}
 </style>

@@ -27,7 +27,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
-//@Lazy
 @Slf4j
 public class CartServiceImpl implements CartService {
     @Resource
@@ -37,16 +36,6 @@ public class CartServiceImpl implements CartService {
     @Resource
     private RedisCacheUtil redisCacheUtil;
 
-    @Autowired
-    private  WebSocket webSocket;
-
-//    public CartServiceImpl() {
-//    }
-//
-//    @Autowired
-//    public CartServiceImpl(WebSocket webSocket) {
-//        this.webSocket = webSocket;
-//    }
 
     @Override
     public void add(ShoppingCartVO shoppingCartVO) {
@@ -85,9 +74,6 @@ public class CartServiceImpl implements CartService {
             redisCacheUtil.setCacheMapValue(cartKey, itemKey, shoppingCart);
             redisCacheUtil.expire(cartKey, RedisConstants.USER_CART_TTL, TimeUnit.DAYS);
         }
-
-        // 广播购物车更新信息
-        webSocket.broadcastToRoom(businessId, tableId, "update_cart", cart);
     }
 
     @Override
@@ -118,8 +104,5 @@ public class CartServiceImpl implements CartService {
     public void cleanCart(Long tableId, Long businessId) {
         String cartKey = String.format(RedisConstants.USER_CART_KEY, businessId, tableId);
         redisCacheUtil.deleteObject(cartKey);
-
-        // 广播清空购物车信息
-        webSocket.broadcastToRoom(businessId, tableId, "clean_cart", null);
     }
 }

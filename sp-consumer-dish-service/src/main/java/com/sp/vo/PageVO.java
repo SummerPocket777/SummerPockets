@@ -8,5 +8,7 @@ public class PageVO {
     private Integer pageNo;
     private Integer pageSize;
     private Long id;
+    private Integer categoryId;
+    private String keyword;
 
 }

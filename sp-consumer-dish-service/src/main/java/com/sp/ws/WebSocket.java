@@ -59,7 +59,6 @@ public class WebSocket {
         broadcastOnlineCount();
 
         // 加载 Redis 中的购物车数据并发送给新连接的用户
-        List<ShoppingCart> shoppingCartList = cartService.showCart(Long.valueOf(tableId), Long.valueOf(businessId));
         this.sendMessage("initial_cart", JSONObject.toJSONString(cartService.showCart(Long.valueOf(tableId), Long.valueOf(businessId))));
 
         log.info("用户 {} 连接到房间 {}", userId, roomKey);
@@ -107,14 +106,15 @@ public class WebSocket {
         } else if (action.equals("show")) {
             this.sendMessage("initial_cart", JSONObject.toJSONString(cartService.showCart(Long.valueOf(tableId), Long.valueOf(businessId))));
         }
-        // 广播消息到该房间的所有用户
-        ROOMS.get(roomKey).values().forEach(webSocket -> {
-            try {
-                webSocket.session.getBasicRemote().sendText(message);
-            } catch (IOException e) {
-                log.error("发送消息失败", e);
-            }
-        });
+        // 广播消息到该房间的所有用户 并且排除自己
+//        broadcastToRoom(Long.valueOf(businessId), Long.valueOf(tableId), action, dataObject);
+//        ROOMS.get(roomKey).values().forEach(webSocket -> {
+//            try {
+//                webSocket.session.getBasicRemote().sendText(message);
+//            } catch (IOException e) {
+//                log.error("发送消息失败", e);
+//            }
+//        });
     }
 
     @OnError

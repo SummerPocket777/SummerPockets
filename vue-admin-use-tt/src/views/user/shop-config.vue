@@ -26,24 +26,24 @@
           <div :class=" row ">{{ $index + 1 }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="name" label="店铺名" align="center" width="180">
+      <el-table-column prop="businessName" label="店铺名" align="center" width="180">
         <!-- slot-scope="scope"  scope.row  scope.$index -->
         <!-- 作用域插槽：重很重 -->
         <template slot-scope="{ row, $index }">
 
-          <div :class=" $index ">{{ row.name }}</div>
+          <div :class=" $index ">{{ row.businessName }}</div>
         </template>
       </el-table-column>
 
-      <el-table-column prop="price" label="logo" align="center">
+      <el-table-column prop="avatar" label="logo" align="center">
         <template slot-scope="{ row }">
-          <img :src="row.img" style="width: 60px" alt="">
+          <img :src="row.avatar" style="width: 60px" alt="">
         </template>
       </el-table-column>
 
       <el-table-column prop="phone" label="联系方式" align="center">
         <template slot-scope="{ row, $index }">
-          <div :class=" $index ">{{ row.cate }}</div>
+          <div :class=" $index ">{{ row.phone }}</div>
         </template>
       </el-table-column>
 
@@ -53,15 +53,15 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="create_time" label="创建时间" align="center">
+      <el-table-column prop="createTime" label="创建时间" align="center">
         <template slot-scope="{ row, $index }">
-          <div :class=" $index ">{{ row.create_time }}</div>
+          <div :class=" $index ">{{ row.createTime }}</div>
         </template>
       </el-table-column>
 
-      <el-table-column prop="check_status" label="门店状态" align="center">
+      <el-table-column prop="status" label="门店状态" align="center">
         <template slot-scope="{ row, $index }">
-          <div :class=" $index ">{{ row.check_status ? "已上架" : "待审核" }}</div>
+          <div :class=" $index ">{{ row.status ? "已上架" : "待审核" }}</div>
         </template>
       </el-table-column>
 
@@ -94,12 +94,15 @@
 </template>
 
 <script>
+import { getAllShopList } from '@/api/shopManage'
 export default {
+  created() {
+    this.getAllShop()
+  },
   name: 'Good',
   props: [],
   data() {
     return {
-
       list: [
         {
           id: 1,
@@ -131,6 +134,13 @@ export default {
     }
   },
   methods: {
+    getAllShop(){
+      getAllShopList(19)
+      .then(res => {
+        this.list = res.data
+        console.log(this.list);
+      })
+    },
     // 改变一页显示多少条数据触发
     handleSizeChange() {},
     // 点击页码触发

@@ -99,10 +99,10 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
         if (id == null || id <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        // 根据ID查询旧的团队信息
+        // 根据ID查询旧的信息
         SysBusiness oldBusiness = this.getById(id);
 
-        // 校验旧队伍是否存在
+        // 校验旧是否存在
         if (oldBusiness == null) {
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }

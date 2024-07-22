@@ -22,6 +22,8 @@ public class BookVo extends PageRequest implements Serializable {
     private Long isDelete;
     private Long consumerId;
     private Date bookCreatedate;
+    private String businessName;
+    private Long userId;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

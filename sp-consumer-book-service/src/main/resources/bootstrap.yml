@@ -8,7 +8,8 @@ spring:
       password: summerrice
       #注册中心
       discovery:
-        namespace: 96cff065-08ed-4fe3-8a89-696f7be807e6
+        namespace: 345991e3-afea-4b55-a801-1897440f28f0
+
       #配置中心
       config:
         namespace: 8df17812-8f13-4624-a16b-d95105438f2d
@@ -19,14 +20,14 @@ spring:
             refresh: true
           - data-id: sp_redis_config.yml
             refresh: true
+          - data-id: sp_sa_token_config.yml
+            refresh: true
           - data-id: sp_mybatis_plus_config.yml
             refresh: true
-          - data-id: datasource-config.yml
-            refresh: true
         refresh-enabled: true
-  #        配置数据库配置
   config:
     import: nacos:42.193.140.71:8848 # 添加这一行
+
 
 
 

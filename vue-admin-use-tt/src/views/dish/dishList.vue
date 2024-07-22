@@ -3,11 +3,11 @@
     <!-- 筛选面板 -->
     <el-row>
       <el-col :span="24">
-        <el-input style="width: 135px" placeholder="请输入内容" />
-        <el-select v-model="value" placeholder="请选择">
-          <el-option v-for="item in cates" :key="item.id" :label="item.cate_zh" :value="item.cate" />
+        <el-input style="width: 135px" placeholder="请输入内容" v-model="inputValue" />
+        <el-select v-model="cateValue" clearable placeholder="请选择">
+          <el-option v-for="item in cateList" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
-        <el-date-picker type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" />
+
         <el-button type="primary" icon="el-icon-search" @click="getList()">搜索</el-button>
         <el-button type="primary" icon="el-icon-edit" @click="openForm()">添加</el-button>
         <el-button type="primary" icon="el-icon-download">导出</el-button>
@@ -49,12 +49,6 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="create_time" label="发布时间" align="center">
-        <template slot-scope="{ row, $index }">
-          <div :class=" $index ">{{ row.create_time }}</div>
-        </template>
-      </el-table-column>
-
       <el-table-column prop="check_status" label="商品状态" align="center">
         <template slot-scope="{ row, $index }">
           <div :class=" $index ">{{ row.status==1 ? "已上架" : "待审核" }}</div>
@@ -64,7 +58,7 @@
       <el-table-column label="操作" width="230" align="center">
         <template slot-scope="{ row }">
           <el-button type="primary" size="mini">编辑</el-button>
-          <el-button v-if="row.status==1" type="primary" size="mini">详情</el-button>
+          <el-button v-if="row.status==1" type="primary" size="mini" @click="getDishDetail(row.id)">详情</el-button>
           <el-button v-else type="success" size="mini">审核</el-button>
           <el-button size="mini" type="danger">删除</el-button>
         </template>
@@ -72,12 +66,15 @@
     </el-table>
 
     <!-- 分页 -->
-    <el-pagination style="margin-top: 20px" 
+    <el-pagination style="margin-top: 20px"
       background
-      layout="prev, pager, next"
-      :total="this.pageTotalCount" 
-      :current-page="this.pageNo"  
-      @current-change="handleCurrentChange(index)" />
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="pageData.totalRow"
+       @size-change="handlePageSizeChange"
+      :page-sizes="[3, 5, 10]"
+      :page-size="pageData.pageSize"
+      :current-page="pageData.pageNo"
+      @current-change="handleCurrentChange" />
     <dialog-form ref="dialogForm"></dialog-form>
   </div>
 
@@ -85,82 +82,83 @@
 
 <script>
 import dialogForm from './components/listForm.vue'
-import { mapActions, mapState } from 'vuex'
+import {getDishList,getAllCate,getDishDetail} from '@/api/dish'
+
 
 
 export default {
-  name: 'Good',
+
   props: [],
   components: { dialogForm },
   data() {
     return {
-      cates: [
-        { id: 1, cate_zh: '电器', cate: 'dianqi' },
-        { id: 2, cate_zh: '生活', cate: 'shenghuo' }
-      ],
-      list: [
-        {
-          id: 1,
-          create_time: '2016-05-02',
-          name: '猪脚饭',
-          address: '111',
-          img: 'https://img10.360buyimg.com/mobilecms/s360x360_jfs/t1/132363/40/2790/109217/5ef04734E44252d8a/c9f28f327259059e.jpg!q70.dpg.webp',
-          price: 19.9,
-          cate: '套餐饭',
-          hot: true,
-          published: false,
-          check_status: false
-        },
-        {
-          id: 2,
-          create_time: '2016-05-02',
-          name: '鸡腿饭',
-          address: '222',
-          img: 'https://img10.360buyimg.com/mobilecms/s360x360_jfs/t1/132363/40/2790/109217/5ef04734E44252d8a/c9f28f327259059e.jpg!q70.dpg.webp',
-          price: 19.9,
-          cate: '套餐饭',
-          hot: false,
-          published: true,
-          check_status: true
-        }
-      ],
-      pageData:{
-        pageNo:1,
-        pageSize:3,
-        id:1
-      }
+      cateList:[],
+      cateValue:'',
+      inputValue:'',
+
+      pageData : {
+        pageNo : 1,
+        pageSize : 5,
+        id:1,
+        pageTotalCount:5,
+        totalRow:3
+      },
+      dishList : [],
+
     }
   },
   methods: {
-
-    ...mapActions('dish', ['getDishList']),
     openForm(id){
-      console.log(this.$refs.dialogForm)
       if(id){
         this.$refs.dialogForm.open(id)
       }else{
         this.$refs.dialogForm.open()
-      }           
+      }
     },
     // 点击页码触发
     handleCurrentChange(index) {
       this.pageData.pageNo = index
-      this.getDishList(pageData)
+      this.getList()
+    },
+    handlePageSizeChange(size) {
+      this.pageData.pageSize = size;
+      this.getList(); // 切换每页数量时重置到第一页
     },
     getList(){
-      this.getDishList(pageData)
-      console.log(this.dishList)
-    }
-  },
-  computed: {
-    ...mapState('dish', ['dishList','pageNo','pageSize','pageTotalCount'])
+
+      this.getListCate()
+      const { pageNo, pageSize, id } = this.pageData
+      var categoryId = this.cateValue
+      var keyword = this.inputValue
+
+      getDishList({ pageNo: pageNo, id: id, pageSize: pageSize,categoryId:categoryId,keyword:keyword }).then(res => {
+          if (res.data) {
+              this.dishList = res.data.items
+              this.pageData.totalRow = res.data.totalRow
+          }
+          console.log(this.dishList)
+        })
+
+
     },
+    getListCate(){
+      getAllCate(1).then(res => {
+        this.cateList = res.data
+      })
+    },
+    getDishDetail(id){
+      console.log("详情id",id)
+      getDishDetail(id).then(res => {
+        console.log("getDishDetail res",res)
+      })
+    }
 
 
+  },
   created(){
-    this.getDishList(pageData)
-  }
-
+    this.getList()
+    this.getListCate()
+  },
 }
 </script>
 

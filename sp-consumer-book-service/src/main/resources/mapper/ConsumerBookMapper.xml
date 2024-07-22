@@ -16,6 +16,18 @@
             <result property="bookCreatedate" column="book_createDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <resultMap id="BaseResultMap1" type="com.sp.vo.BookInfovo">
+    <id property="bookId" column="book_id" jdbcType="INTEGER"/>
+    <result property="bookNumber" column="book_number" jdbcType="INTEGER"/>
+    <result property="bookDate" column="book_date" jdbcType="VARCHAR"/>
+    <result property="bookName" column="book_name" jdbcType="VARCHAR"/>
+    <result property="bookPhone" column="book_phone" jdbcType="VARCHAR"/>
+    <result property="isStatus" column="is_status" jdbcType="INTEGER"/>
+    <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
+    <result property="consumerId" column="consumer_id" jdbcType="INTEGER"/>
+    <result property="bookCreatedate" column="book_createDate" jdbcType="TIMESTAMP"/>
+</resultMap>
+
     <sql id="Base_Column_List">
         book_id,book_number,book_date,
         book_name,book_phone,is_status,
@@ -25,6 +37,9 @@
         update consumer_book set is_status = #{status} where book_id = #{id}
     </update>
     <select id="getBNameById" resultType="com.sp.dto.BookTo">
-        SELECT business_name,book_date from sys_business,consumer_book WHERE sys_business.book_id=consumer_book.consumer_id
+        SELECT business_name,book_date from sys_business,consumer_book WHERE sys_business.sys_id=consumer_book.consumer_id AND sys_business.sys_id = #{id}
+    </select>
+    <select id="getAllByUserId" resultType="com.sp.vo.BookInfovo">
+        SELECT * from sys_business,consumer_book WHERE sys_business.sys_id=consumer_book.consumer_id AND consumer_book.user_id = #{id} AND sys_business.business_name = #{consumerName}
     </select>
 </mapper>

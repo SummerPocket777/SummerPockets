@@ -7,12 +7,17 @@ import {
 } from '../api/user.js'
 
 export const useUserStore = defineStore('user',{
-	state:()=>{
-
-	},
+	state:()=>({
+				myUserInfo:{
+					name:'',
+					image:'',
+					id:''
+				}
+			
+	}),
 	actions:{
 		login(userInfo){
-			console.log("user.js userInfo",userInfo)
+
 			return new handlePromise(article.login,userInfo)
 		},
 		islogin(){

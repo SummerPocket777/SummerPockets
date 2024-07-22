@@ -8,7 +8,7 @@ spring:
       password: summerrice
       #注册中心
       discovery:
-        namespace: 345991e3-afea-4b55-a801-1897440f28f0
+        namespace: b9ec38c3-ee5e-44e3-9af4-bb1a26ef47f2
       #配置中心
       config:
 #        配置mybatis-plus

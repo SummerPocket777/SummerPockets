@@ -8,7 +8,7 @@ spring:
       password: summerrice
       #注册中心
       discovery:
-        namespace: 96cff065-08ed-4fe3-8a89-696f7be807e6
+        namespace: 345991e3-afea-4b55-a801-1897440f28f0
       #配置中心
       #配置中心
       config:

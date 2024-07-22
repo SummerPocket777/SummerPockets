@@ -23,5 +23,26 @@ export const article = {
 			data,
 		})
 	},
+	getAllBusines(){
+		return request({
+			url:'/consumer-book/book/selectAllBusiness',
+			method: 'GET',
+		})
+	},
+	getAllYuyueInfoByIddd(data){
+		console.log(data)
+		return request({
+			url:'/consumer-book/book/getYuyueLists',
+			method: 'GET',
+			data,
+		})
+	},
+	cancelBooks(data){
+		return request({
+			url:'/consumer-book/book/cancelBook',
+			method: 'GET',
+			data,
+		})
+	}
 	
 }

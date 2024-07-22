@@ -49,48 +49,42 @@
         fixed
         prop="bookId"
         label="预约号"
-        width="150">
+    >
       </el-table-column>
       <el-table-column
         prop="bookNumber"
         label="人数"
-        width="120">
+      >
       </el-table-column>
       <el-table-column
         prop="bookName"
         label="预约人姓名"
-        width="120">
+       >
       </el-table-column>
       <el-table-column
         prop="bookPhone"
         label="预约人电话"
-        width="120">
+      >
       </el-table-column>
       <el-table-column
         prop="bookDate"
         label="预约时间"
-        width="220">
+        >
       </el-table-column>
       <el-table-column
         prop="isStatus"
         label="状态"
-        width="120">
+       >
       </el-table-column>
       <el-table-column
         prop="isStatus"
         label="状态"
-        width="120">
-
-        <template slot-scope="scope">
+        >
+        <template v-slot="scope">
             <span v-if="scope.row.isStatus == 1">未到店</span>
             <span v-if="scope.row.isStatus == 2">已到店</span>
             <span v-if="scope.row.isStatus == 3">已超时</span>
-
-
-
         </template>
-
-
 
       </el-table-column>
       <el-table-column
@@ -144,7 +138,7 @@ import { mapActions, mapState } from 'vuex'
           state: '未到',
           day: '2020-01-01',
           time: '12:00'
-          
+
         }],
         options: [{
           value: '1',
