@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sp.mapper.UserStatisticsMapper">
+    <select id="selectOrdersByDateRange" resultType="com.sp.model.domain.Orders">
+        select * from orders where checkout_time between #{startDate} and #{endDate}
+    </select>
+
+    <!-- 查询本周的订单数量，按照星期几统计 -->
+    <select id="countWeeklyOrders" resultType="map">
+        SELECT DAYOFWEEK(checkout_time) - 1 AS day, COUNT(*) AS count
+        FROM orders
+        WHERE business_id = #{businessId}
+          AND YEARWEEK(checkout_time) = YEARWEEK(NOW())
+        GROUP BY day
+    </select>
+
+    <!-- 查询本月的订单数量，按照日期统计 -->
+    <select id="countMonthlyOrders" resultType="map">
+        SELECT DAYOFMONTH(checkout_time) AS day, COUNT(*) AS count
+        FROM orders
+        WHERE business_id = #{businessId}
+          AND DATE_FORMAT(checkout_time, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')
+        GROUP BY day
+    </select>
+</mapper>

@@ -52,7 +52,7 @@
 								icon:'success',
 							})
 							setTimeout(()=>{
-								
+				
 								uni.navigateTo({
 									url:'/pages/yuyue/yuyue'
 								})

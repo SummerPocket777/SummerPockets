@@ -49,7 +49,4 @@ public class UserController {
 //        userService.logout(token);
         return ResultUtils.success("退出成功");
     }
-
-
-
 }
