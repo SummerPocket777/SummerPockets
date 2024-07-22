@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 @Service
 public class DishServiceImpl implements DishService {
@@ -41,19 +42,28 @@ public class DishServiceImpl implements DishService {
     //查找该商店的菜单信息，通过数据库，没有经过redis
     public PageResult<Dish> getDishListThroughSQL(PageVO pageVO) {
 
-//        PageResult<List<Dish>> pageResult = dishMapper.selectPage(shopId);
+
         Page<Dish> page = new Page<>(pageVO.getPageNo(), pageVO.getPageSize());
         QueryWrapper<Dish> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("business_id", pageVO.getId());
+
+        if(pageVO.getCategoryId()!=null){
+            queryWrapper.eq("category_id", pageVO.getCategoryId());
+        }
+        if(pageVO.getKeyword()!=null ){
+            queryWrapper.like("name", pageVO.getKeyword());
+        }
+
         dishMapper.selectPage(page,queryWrapper);
         List<Dish> list = page.getRecords();
+        List<Dish> dishes = loadCategoryToDish(list);
 
         PageResult<Dish> pageResult = new PageResult<>();
         pageResult.setPageNo(page.getCurrent());
         pageResult.setPageSize(page.getSize());
         pageResult.setTotalRow(page.getTotal());
         pageResult.setPageTotalCount(page.getPages());
-        pageResult.setItems(list);
+        pageResult.setItems(dishes);
         if (page.getTotal() == 0) {
             pageResult.setHasNext(false);
             pageResult.setHasPrevious(false);
@@ -68,7 +78,7 @@ public class DishServiceImpl implements DishService {
 
     //用于给菜品添加分类到属性中
     private List<Dish> loadCategoryToDish(List<Dish> dishList){
-        List<Category> allCate = categoryService.getAllCate(dishList.get(0).getId());
+        List<Category> allCate = categoryService.getAllCate(dishList.get(0).getBusinessId());
         for (Dish dish : dishList) {
             for (Category category : allCate) {
                 if(dish.getCategoryId().equals(category.getId())){
@@ -87,9 +97,11 @@ public class DishServiceImpl implements DishService {
         redisTemplate.opsForValue().set("dishList", dishList);
         return dishList;
     }
-    //发送消息队列
+    //添加菜品
     public void insertDish(Dish dish){
-        rocketMQTemplate.convertAndSend("addDish", JSON.toJSONString(dish));
+        dish.setCreateTime(new Date());
+        dish.setStatus(1);
+        dishMapper.insert(dish);
     }
 
 

@@ -21,9 +21,16 @@ public class DishController {
     @RequestMapping("/getAll")
     //该方法没有存入到redis中
     public BaseResponse<PageResult<Dish>> getAll(@RequestBody PageVO pageVO){
-
-
         PageResult<Dish> dishListThroughSQL = dishService.getDishListThroughSQL(pageVO);
         return ResultUtils.success(dishListThroughSQL);
     }
+
+    @RequestMapping("/add")
+    //添加菜品
+    public BaseResponse<String> addDish(@RequestBody Dish dish){
+        dishService.insertDish(dish);
+        return ResultUtils.success("添加成功");
+    }
+
+
 }

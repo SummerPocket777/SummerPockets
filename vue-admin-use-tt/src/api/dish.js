@@ -1,7 +1,6 @@
 import request from '@/utils/request'
 
 export function getAllCate(shopId) {
-  console.log(data)
   return request({
     url: '/consumer-dish/consumer/dish/cate/getAll',
     method: 'get',
@@ -15,6 +14,14 @@ export function getAllCate(shopId) {
 export function getDishList(data) {
   return request({
     url: '/consumer-dish/dish/getAll',
+    method: 'post',
+    data
+  })
+}
+
+export function addDish(data) {
+  return request({
+    url: '/consumer-dish/dish/add',
     method: 'post',
     data
   })
