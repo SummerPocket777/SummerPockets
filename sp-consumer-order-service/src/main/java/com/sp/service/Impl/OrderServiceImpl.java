@@ -30,9 +30,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     //根据商家id查询订单
-    public List<Orders> listOrders(PageOrderVO pageOrderVO) {
+    public List<Orders> listOrders(Long shopId) {
         QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("business_id",pageOrderVO.getShopId());
+        queryWrapper.eq("business_id",shopId);
         List<Orders> orders = orderMapper.selectList(queryWrapper);
         for(Orders item : orders){
             List<OrderDetail> orderDetails = listOrderDetail(item.getId());

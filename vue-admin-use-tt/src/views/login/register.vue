@@ -19,7 +19,7 @@
     </el-form-item>
 
     <el-form-item label="手机号：">
-        <el-input v-model="userVo.phone" />
+        <el-input v-model="userVo.phone" type="string" />
       </el-form-item>
       <el-form-item label="校验码：">
         <el-col :span="10" style="margin-right: 100px;"><el-input v-model="userVo.code" /></el-col>
@@ -140,12 +140,14 @@ import Axios from 'axios';
         },
         sendVerificationCode(){
           console.log(111)
+          console.log("phone",this.userVo.phone)
+          console.log("imgCode",this.userVo.imgCode)
             Axios.get(
                 '/api/auth/business/getCode',
                 {
                   phone: this.userVo.phone,
                   imgCode: this.userVo.imgCode
-                }
+                },
                 // this.userVo
             ).then(res =>{
                 console.log(res)

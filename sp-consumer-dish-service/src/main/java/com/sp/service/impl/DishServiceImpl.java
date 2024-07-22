@@ -3,19 +3,24 @@ package com.sp.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sp.mapper.DishFlavorMapper;
 import com.sp.mapper.DishMapper;
 import com.sp.model.PageRequest;
 import com.sp.model.PageResult;
 import com.sp.model.domain.Category;
 import com.sp.model.domain.Dish;
+import com.sp.model.domain.DishFlavor;
 import com.sp.model.domain.SysBusiness;
+import com.sp.model.dto.DishDTO;
 import com.sp.service.DishService;
 import com.sp.vo.PageVO;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 @Service
@@ -24,6 +29,8 @@ public class DishServiceImpl implements DishService {
     private RocketMQTemplate rocketMQTemplate;
     @Autowired
     private DishMapper dishMapper;
+    @Resource
+    private DishFlavorMapper dishFlavorMapper;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
@@ -38,10 +45,14 @@ public class DishServiceImpl implements DishService {
         return loadDishListToRedis(shopId);
     }
 
+    /**
+     * 查找该商店的菜单信息，通过数据库，没有经过redis
+     *
+     * @param pageVO 页签证官
+     * @return {@link PageResult }<{@link Dish }>
+     */
     @Override
-    //查找该商店的菜单信息，通过数据库，没有经过redis
     public PageResult<Dish> getDishListThroughSQL(PageVO pageVO) {
-
 
         Page<Dish> page = new Page<>(pageVO.getPageNo(), pageVO.getPageSize());
         QueryWrapper<Dish> queryWrapper = new QueryWrapper<>();
@@ -97,6 +108,33 @@ public class DishServiceImpl implements DishService {
         redisTemplate.opsForValue().set("dishList", dishList);
         return dishList;
     }
+
+    /**
+     * 以口味为生
+     *
+     * @param id id
+     * @return {@link DishDTO }
+     */
+    @Override
+    public DishDTO getByIdWithFlavor(Long id) {
+        //1 根据id查询菜品
+        Dish dish = this.dishMapper.selectById(id);
+
+
+        //2 根据菜品查询口味
+        QueryWrapper<DishFlavor> dishFlavorQueryWrapper = new QueryWrapper<>();
+        dishFlavorQueryWrapper.eq("dish_id",id);
+
+        List<DishFlavor> dishFlavors= dishFlavorMapper.selectList(dishFlavorQueryWrapper);
+
+
+        //3 封装到vo
+        DishDTO dishDTO = new DishDTO();
+        BeanUtils.copyProperties(dish,dishDTO);
+        dishDTO.setFlavors(dishFlavors);
+        return dishDTO;
+    }
+
     //添加菜品
     public void insertDish(Dish dish){
         dish.setCreateTime(new Date());

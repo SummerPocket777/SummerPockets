@@ -4,7 +4,7 @@
     <el-row>
       <el-col :span="24">
         <el-input style="width: 135px" placeholder="请输入内容" v-model="inputValue" />
-        <el-select v-model="cateValue" placeholder="请选择">
+        <el-select v-model="cateValue" clearable placeholder="请选择">
           <el-option v-for="item in cateList" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
 
@@ -49,12 +49,6 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="create_time" label="发布时间" align="center">
-        <template slot-scope="{ row, $index }">
-          <div :class=" $index ">{{ row.create_time }}</div>
-        </template>
-      </el-table-column>
-
       <el-table-column prop="check_status" label="商品状态" align="center">
         <template slot-scope="{ row, $index }">
           <div :class=" $index ">{{ row.status==1 ? "已上架" : "待审核" }}</div>
@@ -64,7 +58,7 @@
       <el-table-column label="操作" width="230" align="center">
         <template slot-scope="{ row }">
           <el-button type="primary" size="mini">编辑</el-button>
-          <el-button v-if="row.status==1" type="primary" size="mini">详情</el-button>
+          <el-button v-if="row.status==1" type="primary" size="mini" @click="getDishDetail(row.id)">详情</el-button>
           <el-button v-else type="success" size="mini">审核</el-button>
           <el-button size="mini" type="danger">删除</el-button>
         </template>
@@ -72,12 +66,14 @@
     </el-table>
 
     <!-- 分页 -->
-    <el-pagination style="margin-top: 20px" 
+    <el-pagination style="margin-top: 20px"
       background
-      layout="prev, pager, next"
-      :total="pageData.totalRow" 
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="pageData.totalRow"
+       @size-change="handlePageSizeChange"
+      :page-sizes="[3, 5, 10]"
       :page-size="pageData.pageSize"
-      :current-page="pageData.pageNo"  
+      :current-page="pageData.pageNo"
       @current-change="handleCurrentChange" />
     <dialog-form ref="dialogForm"></dialog-form>
   </div>
@@ -86,7 +82,7 @@
 
 <script>
 import dialogForm from './components/listForm.vue'
-import {getDishList,getAllCate} from '@/api/dish'
+import {getDishList,getAllCate,getDishDetail} from '@/api/dish'
 
 
 
@@ -102,7 +98,7 @@ export default {
 
       pageData : {
         pageNo : 1,
-        pageSize : 3,
+        pageSize : 5,
         id:1,
         pageTotalCount:5,
         totalRow:3
@@ -117,12 +113,16 @@ export default {
         this.$refs.dialogForm.open(id)
       }else{
         this.$refs.dialogForm.open()
-      }           
+      }
     },
     // 点击页码触发
     handleCurrentChange(index) {
       this.pageData.pageNo = index
       this.getList()
+    },
+    handlePageSizeChange(size) {
+      this.pageData.pageSize = size;
+      this.getList(); // 切换每页数量时重置到第一页
     },
     getList(){
 
@@ -145,21 +145,20 @@ export default {
       getAllCate(1).then(res => {
         this.cateList = res.data
       })
+    },
+    getDishDetail(id){
+      console.log("详情id",id)
+      getDishDetail(id).then(res => {
+        console.log("getDishDetail res",res)
+      })
     }
 
-  
+
   },
-
-
   created(){
     this.getList()
     this.getListCate()
-
-    
   },
-
-
-
 }
 </script>
 

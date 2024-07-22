@@ -19,6 +19,16 @@ export function getDishList(data) {
   })
 }
 
+export function getDishDetail(id) {
+  return request({
+    url: '/consumer-dish/dish/getDishDetail',
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}
+
 export function addDish(data) {
   return request({
     url: '/consumer-dish/dish/add',

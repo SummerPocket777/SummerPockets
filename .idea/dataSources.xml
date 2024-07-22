@@ -1,114 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@localhost" uuid="d4871084-d0fe-4cd2-9eae-61346fa6266f">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="db_test@localhost" uuid="28c9dc20-3f97-4286-aeee-d0d44b14fd4e">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>$PROJECT_DIR$/sp-auth/src/main/resources/application.yml</remarks>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/db_test?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=Asia/Shanghai</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="db_test@localhost" uuid="ff8ddfd9-a952-48a5-b521-4b341d78125f">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>$PROJECT_DIR$/sp-common/sp-common-model/src/main/resources/application.yml</remarks>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/db_test?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=Asia/Shanghai</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="db_test@localhost" uuid="001b62fc-8f5a-47a4-a5db-056905f27246">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/db_test</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="db_test@42.193.140.71" uuid="d04f0bc2-0528-4062-9081-e60a922cd61b">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://42.193.140.71:3306/db_test</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="db_test@42.193.140.71 [2]" uuid="78e2d44e-20c4-4a00-8a39-c707801111c2">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://42.193.140.71:3306/db_test</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="@42.193.140.71" uuid="2084f038-6bab-4115-b8ca-22961d1b94b0">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://42.193.140.71:3306</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="@112.111.242.49" uuid="e57e7ef2-943e-45b3-96bc-904ccad75d2e">
+    <data-source source="LOCAL" name="@cchen.icu" uuid="e57e7ef2-943e-45b3-96bc-904ccad75d2e">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://cchen.icu:13020</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="db_test@112.111.242.49" uuid="6995ee42-b097-4123-ae21-a53202b84c8a">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>$PROJECT_DIR$/sp-auth-service/src/main/resources/application.yml</remarks>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://112.111.242.49:13020/db_test?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=Asia/Shanghai</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="db_test@112.111.242.49" uuid="d0706842-5056-4189-9a87-99e01e283d1f">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>$PROJECT_DIR$/sp-common/sp-common-redis/src/main/resources/application.yml</remarks>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://112.111.242.49:13020/db_test?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=Asia/Shanghai</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="db_test@112.111.242.49" uuid="95af1bc5-fd91-4cc5-9b18-325f03ac927a">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>$PROJECT_DIR$/sp-consumer-dish-service/src/main/resources/application.yml</remarks>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://112.111.242.49:13020/db_test?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=Asia/Shanghai</jdbc-url>
-      <jdbc-additional-properties>
-        <property name="com.intellij.clouds.kubernetes.db.host.port" />
-        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
-        <property name="com.intellij.clouds.kubernetes.db.container.port" />
-      </jdbc-additional-properties>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="db_test@112.111.242.49" uuid="6f932ca6-ae93-4284-87a2-b0917a807ba5">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>$PROJECT_DIR$/sp-consumer-user-service/src/main/resources/application.yml</remarks>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://112.111.242.49:13020/db_test?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=Asia/Shanghai</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="db_test@112.111.242.49" uuid="6000f187-f505-4392-9814-ed4ae261bf06">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>$PROJECT_DIR$/sp-shop-user-service/src/main/resources/application.yml</remarks>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://112.111.242.49:13020/db_test?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=Asia/Shanghai</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

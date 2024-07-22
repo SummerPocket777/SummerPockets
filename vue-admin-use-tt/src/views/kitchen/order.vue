@@ -37,44 +37,44 @@
         fixed
         prop="number"
         label="订单号"
-        width="150">
+     >
       </el-table-column>
       <el-table-column
         prop="orderDetail.dish.name"
         label="菜品名称"
-        width="120">
+       >
       </el-table-column>
       <el-table-column
         prop="orderDetail.dishFlavor"
         label="口味"
-        width="120">
+       >
       </el-table-column>
       <el-table-column
         prop="orderDetail.number"
         label="数量"
-        width="120">
+     >
       </el-table-column>
       <el-table-column
         prop="tableId"
         label="桌号"
-        width="120"
+
         :filters="getfilterNameItem()"
         >
       </el-table-column>
       <el-table-column
         prop="daytt"
         label="日期"
-        width="120">
+      >
       </el-table-column>
       <el-table-column
         prop="timett"
         label="时间"
-        width="120">
+      >
       </el-table-column>
       <el-table-column
         prop="orderDetail.status"
         label="状态"
-        width="120">
+       >
 
         <template slot-scope="scope">
             <span v-if="scope.row.orderDetail.status == 1">未上菜</span>
@@ -92,7 +92,7 @@
       <el-table-column
         prop="orderDetail.status"
         label="操作"
-        width="100">
+      >
         <template slot-scope="scope">
           <el-button v-if="scope.row.orderDetail.status==1 || scope.row.orderDetail.status==3 "  @click="handleClick(scope.row)" type="text" size="small">上菜</el-button>
 
@@ -132,7 +132,7 @@ import { mapActions, mapState } from 'vuex'
       }
 
 
-      
+
     },
     computed: {
     ...mapState('kitchen', ['orderList'])

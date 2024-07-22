@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SpringBootApplication
-public class consumerDishService {
+public class    consumerDishService {
     public static void main( String[] args )
     {
         SpringApplication.run(consumerDishService.class,args);

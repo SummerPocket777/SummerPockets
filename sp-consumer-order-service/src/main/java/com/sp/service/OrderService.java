@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface OrderService {
 
-    List<Orders> listOrders(PageOrderVO pageOrderVO);
+    List<Orders> listOrders(Long shopId);
 
     List<Orders> listOrders(Long userId,Long shopId);
 
