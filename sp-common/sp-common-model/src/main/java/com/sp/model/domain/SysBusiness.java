@@ -82,6 +82,7 @@ public class SysBusiness implements Serializable {
     private Integer roleId;
 
     private String businessName;
+    private String address;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

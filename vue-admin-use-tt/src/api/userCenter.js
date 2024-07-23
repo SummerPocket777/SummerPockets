@@ -20,3 +20,9 @@ export function getUserDetail(){
     method: 'get'
   })
 }
+
+export function uploadFile(){
+  return request({
+    url: '/common-fileupload/file/upload'
+  })
+}

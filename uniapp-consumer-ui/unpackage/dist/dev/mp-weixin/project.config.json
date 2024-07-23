@@ -19,8 +19,8 @@
     "ignoreUploadUnusedFiles": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.22.1",
-  "appid": "wx33475484a15eed9b",
+  "libVersion": "",
+  "appid": "wx1a7e40a92cd58f63",
   "projectname": "sp-consumer-ui",
   "condition": {},
   "editorSetting": {
