@@ -23,6 +23,23 @@ export function logout() {
     method: 'post'
   })
 }
+export function getCode(phone,imageCode){
+  return request({
+    url:'/auth/business/getCode',
+    method: 'get',
+    params: {
+      phone:phone,
+      imgCode:imageCode
+    }
+  })
+}
+export function register(data){
+  return request({
+    url:'/auth/user/register',
+    method: 'post',
+    data
+  })
+}
 //
 // import request from '@/utils/request'
 //
