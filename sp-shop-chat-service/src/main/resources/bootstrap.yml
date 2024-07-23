@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: sp-consumer-order-service
+  cloud:
+    nacos:
+      server-addr: 42.193.140.71:8848
+      username: nacos
+      password: summerrice
+      #注册中心
+      discovery:
+        namespace: 8df17812-8f13-4624-a16b-d95105438f2d
+      #配置中心
+      config:
+        namespace: 8df17812-8f13-4624-a16b-d95105438f2d
+        shared-configs:
+          - data-id: sp_gateway_security_ignore_whites.yml
+            refresh: true
+          - data-id: sp_auth.yml
+            refresh: true
+          - data-id: sp_redis_config.yml
+            refresh: true
+          - data-id: sp_mybatis_plus_config.yml
+            refresh: true
+          - data-id: datasource-config.yml
+            refresh: true
+        refresh-enabled: true
+  #        配置数据库配置
+

@@ -11,4 +11,6 @@ public class UserTO {
     private String name;
     private ArrayList<String> roles;
 
+    private Long userId;
+
 }
