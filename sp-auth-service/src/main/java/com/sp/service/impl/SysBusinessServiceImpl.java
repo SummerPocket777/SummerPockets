@@ -197,7 +197,7 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
         validateAccPwd(userAccount,userPassword);
         //2 从缓存中获取验证码
         String redisKey = RedisConstants.REGISTER_CODE_KEY + phone;
-        String redisCode = redisCacheUtil.getCacheObject(redisKey);
+        String redisCode = redisCacheUtil.getCacheObject(redisKey).toString();
         if (redisCode == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"验证码已过期，请重新获取");
         }
