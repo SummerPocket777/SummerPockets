@@ -22,6 +22,12 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+
+    <el-button
+    plain
+    @click="open2">
+    不会自动关闭
+    </el-button>
   </div>
 </template>
 
@@ -48,7 +54,14 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-    }
+    },
+    open2() {
+        this.$notify({
+          title: '提示',
+          message: '预约信息',
+          duration: 0
+        });
+      }
   }
 }
 </script>

@@ -172,6 +172,7 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
         role.add(sysRole.getName());
         user.setRoles(role);
         user.setAvatar(userInDatabase.getAvatar());
+        user.setUserId(userInDatabase.getId());
 
 //      存用户对象 存七天
         redisTemplate.opsForValue().set("shop:userinfo:"+StpUtil.getTokenValue(),user,7, TimeUnit.DAYS);

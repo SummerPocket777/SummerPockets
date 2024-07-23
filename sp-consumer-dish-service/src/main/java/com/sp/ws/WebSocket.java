@@ -175,7 +175,4 @@ public class WebSocket {
 }
 
 
-class Message {
-    private String action;
-    private ShoppingCartVO data;
-}
+
