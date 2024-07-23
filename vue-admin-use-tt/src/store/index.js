@@ -8,6 +8,7 @@ import permission from './modules/permission'
 import tagsView from './modules/tagsView'
 import kitchen from './modules/kitchen'
 import book from './modules/book'
+import userCenter from './modules/userCenter'
 
 Vue.use(Vuex)
 
@@ -19,7 +20,8 @@ const store = new Vuex.Store({
     permission,
     tagsView,
     kitchen,
-    book
+    book,
+    userCenter
   },
   getters
 })

@@ -3,14 +3,14 @@
 		<view class="shop-top">
 			<view class="top-name">
 				<view class="top-img">
-					<u-image width="150rpx" height="150rpx" shape="square" radius="5px"></u-image>
+					<image width="150rpx" height="150rpx" shape="square" radius="5px"></image>
 				</view>
 				<view class="top-text">
 					<view class="text-first">
-						<u-text text="桌名+桌号" bold size="17px"></u-text>
+						<text text="桌名+桌号" bold size="17px"></text>
 					</view>
 					<view class="text-second">
-						<u-text text="用餐人数: "></u-text>
+						<text text="用餐人数: "></text>
 					</view>
 				</view>
 				

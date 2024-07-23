@@ -19,12 +19,12 @@
     </el-form-item>
 
     <el-form-item label="手机号：">
-        <el-input v-model="userVo.phone" type="string" />
+        <el-input v-model="userVo.phone" />
       </el-form-item>
       <el-form-item label="校验码：">
         <el-col :span="10" style="margin-right: 100px;"><el-input v-model="userVo.code" /></el-col>
 
-        <el-button type="warning" @click="sendVerificationCode" >
+        <el-button type="warning" @click="sendVerificationCode (userVo.phone,userVo.imgCode)" >
           {{'发送验证码' }}
         </el-button>
       </el-form-item>
@@ -32,7 +32,7 @@
 
     <el-form-item label="">
 
-    <el-button style="margin-left: 100px;" @click="doReg()">注册</el-button>
+    <el-button style="margin-left: 100px;" @click="doReg(userVo)">注册</el-button>
     <el-button @click="docancel()">取消</el-button>
 
 
@@ -74,8 +74,8 @@
 
 
   <script>
-import Axios from 'axios';
-
+import { getCode } from '@/api/user'
+import { register } from '@/api/user'
 // import {reactive, ref} from 'vue'
 // import Axios from '../api/axios';
 // import {ElMessage} from "element-plus";
@@ -117,44 +117,33 @@ import Axios from 'axios';
               path:"/login"
             })
         },
-        doReg() {
-          this.$axios.post(
-            "/api/auth/user/register",
-            this.userVo
-          ).then(res => {
-            console.log(res)
+        doReg(userVo) {
+        //   this.$axios.post(
+        //     "/api/auth/user/register",
+        //     this.userVo
+        //   ).then(res => {
+        //     console.log(res)
 
 
-              this.$message('注册成功');
+        //       this.$message('注册成功');
 
-              this.$router.push({
-              path: '/login',  //通过path跳转是以get的方式跳转的，传递方式是query
-        })
+        //       this.$router.push({
+        //       path: '/login',  //通过path跳转是以get的方式跳转的，传递方式是query
+        // })
 
 
-          }).catch(e =>{
+        //   }).catch(e =>{
 
+        //   })
+          register(userVo).then(res =>{
+            console.log(res);
           })
 
-
         },
-        sendVerificationCode(){
-          console.log(111)
-          console.log("phone",this.userVo.phone)
-          console.log("imgCode",this.userVo.imgCode)
-            Axios.get(
-                '/api/auth/business/getCode',
-                {
-                  phone: this.userVo.phone,
-                  imgCode: this.userVo.imgCode
-                },
-                // this.userVo
-            ).then(res =>{
-                console.log(res)
+        sendVerificationCode(phone,imgCode){
 
-
-            }).catch(e =>{
-                console.log(e)
+            getCode(phone,imgCode).then(res=>{
+              console.log(res);
             })
         }
       },

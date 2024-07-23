@@ -6,21 +6,22 @@
 			<view class="shop-top">
 				<view class="top-name">
 					<view class="top-img">
-						<u-image width="150rpx" height="150rpx" shape="square" radius="5px"></u-image>
+						<image width="150rpx" height="150rpx" shape="square" radius="5px"></image>
 					</view>
 					<view class="top-text">
 						<view class="text-first">
-							<u-text :text="`第${tableId}桌号`" bold size="17px"></u-text>
+							 <text :text="`第${tableId}桌号`" bold size="17px">第${tableId}桌号</text>
 						</view>
 						<view class="text-second">
-							<u-text :text="`用餐人数:${online_count}人` "></u-text>
+							<text :text="`用餐人数:${online_count}人` ">用餐人数:${online_count}人</text>
 						</view>
 					</view>
 
 				</view>
 				<view class="top-search">
-					<up-search placeholder="请输入菜品" input-align="center" action-text=""></up-search>
-					<u-image width="50rpx" height="50rpx" src="../../static/icon/定位.png" @tap="intoMap"></u-image>
+					<input class="uni-input" focus placeholder="请输入"> </input>
+					<!-- <search placeholder="请输入菜品" input-align="center" action-text=""></search> -->
+					<image class="location-img" src="../../static/icon/定位.png" @tap="intoMap"></image>
 				</view>
 			</view>
 		</view>
@@ -46,7 +47,7 @@
 								<image :src="item2.image" mode=""></image>
 								<view>
 									<view>{{item2.name}}</view>
-									<!-- <view class="describe">{{item2.description}}</view> -->
+									<view class="describe">{{item2.description}}</view>
 									<view class="money">¥{{item2.price}}</view>
 								</view>
 								<view @click="addCar" :data-item="item2">加入购物车</view>
@@ -109,17 +110,21 @@
 </template>
 
 <script>
+	// import upSearch from '../../uni_modules/uview-plus/components/u-search/u-search.vue'
 	import { mapStores, mapActions, mapState } from 'pinia';
 	import {
 		dishStore
 	} from '@/store/dish.js';
 	import{ useRestaurantStore } from '@/store/restaurant.js'
 	export default {
+		// components:{
+		// 	upSearch
+		// },
 		data() {
 			return {
-				businessId: 61, //店铺id
-				tableId: 72, //桌号
-				online_count: 0, //在线人数
+				businessId: 61,//店铺id
+				tableId: 72,   //桌号
+				online_count:0,//在线人数
 				store: dishStore(),
 				scrollHeight: 400,
 				scrollTopSize: 0,
@@ -278,7 +283,7 @@
 					const formattedData = formatData();
 					this.leftArray = formattedData.left;
 					this.mainArray = formattedData.main;
-					console.log("this.mainArray", this.mainArray)
+					console.log("this.mainArray",this.mainArray)
 					uni.hideLoading();
 
 					// DOM 挂载后再调用 getElementTop 获取高度的方法
@@ -307,7 +312,7 @@
 					/* 获取最后一项的高度，设置填充高度。判断和填充时做了 +-20 的操作，是为了滚动时更好的定位 */
 					let last = res[res.length - 1].height;
 					// if (last - 20 < this.scrollHeight) { 
-					if (last < this.scrollHeight) {
+					if (last< this.scrollHeight) { 
 						this.fillHeight = this.scrollHeight - last + 20;
 						// this.fillHeight = this.scrollHeight - last + 0;
 					}
@@ -353,16 +358,15 @@
 			//**********websocket***************
 			// WebSocket 初始化
 			initWebSocket() {
-				if (this.socketTask) return; // 防止重复连接
 				this.socketTask = uni.connectSocket({
 					// url: 'ws://127.0.0.1:3777/consumer-dish/websocket/61/72/1',
-					url: 'ws://127.0.0.1:3777/consumer-dish/websocket/61/72/2',
+					url: 'ws://127.0.0.1:3777/consumer-dish/websocket/61/72/1',
 
 					header: {
 						'content-type': 'application/json'
 					},
 					success(res) {
-						console.log('WebSocket 创建连接成功', res);
+						console.log('WebSocket 创建连接成功',res);
 					},
 					fail() {
 						console.log('WebSocket 创建连接失败');
@@ -390,35 +394,43 @@
 			// 处理 WebSocket 消息
 			handleSocketMessage(message) {
 				console.log("接受到的websockt信息", message);
-				if (message.action === "online_count") {
-					this.online_count = message.data;
-				} else if (message.action === "initial_cart") {
+				if(message.action==="online_count"){
+					this.online_count=message.data;
+				}
+				if(message.action==="initial_cart"){
 					console.log("接受到的购物车信息", message.data);
-					let initCart = JSON.parse(message.data);
-					this.carData = initCart;
+					let initCart=JSON.parse(message.data);
+					//字符串转数组
+						
+					this.carData=initCart;
 					//typeof查看购物车类型
-					console.log("typeof this.carData", typeof this.carData)
-					console.log("this.carData", this.carData)
+					console.log("typeof this.carData",typeof this.carData)
+
+					console.log("this.carData",this.carData)
+					this.allNum();
+					this.allPrice();
+				    this.isShowCar = true;
+				}
+				if(message.action==="add_cart"){
+					console.log("接受到的购物车项信息", message.data);
+					let index = this.carData.findIndex(ev => ev.name === item.name);
+					if (index === -1) {
+						item.number = 1; // 添加数量属性num，默认为1
+						this.carData.push(item); // 把商品追加进购物车
+						console.log("this.carData.push(item);",this.carData)
+					} else {
+						this.carData[index].number++; // 存在相同的商品则数量叠加
+						console.log("this.carData.push(item);",this.carData)
+					}
 					this.allNum();
 					this.allPrice();
 					this.isShowCar = true;
-				} else if (message.action === "add_cart") {
-					// console.log("接受到的购物车项信息", message.data);
-					// console.log("typeof message.data", typeof message.data);
-					let initCart = JSON.parse(message.data);
-					this.carData = initCart;
-					this.allNum();
-					this.allPrice();
-					this.isShowCar = true;
-				} else if (message.action === "clean_cart") {
-					console.log("清除购物车")
-					this.carData = [];
 				}
 			},
 
 			// 发送消息到 WebSocket
 			sendMessageToSocket(message) {
-				console.log("sendMessageToSocket message", message)
+				console.log("sendMessageToSocket message",message)
 				if (this.socketTask) {
 					this.socketTask.send({
 						data: JSON.stringify(message),
@@ -437,7 +449,7 @@
 				console.log("购物车的item", e.target.dataset.item)
 				let item = e.target.dataset.item;
 
-				const date = {
+				const date={
 					action: 'add_cart',
 					data: {
 						businessId: this.businessId,
@@ -448,7 +460,7 @@
 					}
 				}
 				// 发送消息到 WebSocket
-				this.sendMessageToSocket(date); 
+				this.sendMessageToSocket(date);
 			},
 
 			// 增加数量
@@ -473,13 +485,13 @@
 			// 计算商品总数量
 			allNum() {
 				let count = 0;
-				console.log("allNum forEach的this.carData", this.carData)
+				console.log("allNum forEach的this.carData",this.carData)
 				this.carData.forEach(item => {
-					console.log("allNum forEach的item", item)
+					console.log("allNum forEach的item",item)
 					count += item.number;
 				});
 				this.totalNum = count;
-
+				
 				// 购物车有商品时，调整滚动区域高度
 				if (this.totalNum === 1 && this.isAddHeight) {
 					this.scrollHeight -= 50;
@@ -493,13 +505,12 @@
 					this.clickCar();
 				}
 			},
-
+			
 			// 计算商品总价格
 			allPrice() {
 				let Price = 0;
 				this.carData.forEach(item => {
-					// Price += item.number * parseFloat(item.amount);
-					Price +=parseFloat(item.amount);
+					Price += item.number * parseFloat(item.amount);
 				});
 				this.totalPrice = Price.toFixed(2); // 保留两位小数
 			},
@@ -559,7 +570,10 @@
 	page {
 		height: 100vh;
 	}
-
+    .location-img{
+		width:50rpx;
+		height:50rpx
+	}
 	.container {
 		height: 100%;
 	}
@@ -582,7 +596,11 @@
 			align-items: center;
 
 			.top-img {
+				width: 150rpx;
+				height: 150rpx;
 				margin: 0 50rpx;
+				background-color: #eee;
+				border-radius: 5px;
 			}
 
 			.top-text {
@@ -599,6 +617,13 @@
 		.top-search {
 			margin-left: 50rpx;
 			display: flex;
+			.uni-input{
+				background-color: #eee;
+				width: 600rpx;
+				height: 60rpx;
+				border-radius: 5px;
+				margin-right: 10px;
+			}
 		}
 
 	}

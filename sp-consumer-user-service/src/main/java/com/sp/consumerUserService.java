@@ -14,7 +14,6 @@ public class consumerUserService
 {
     public static void main( String[] args )
     {
-
         SpringApplication.run(consumerUserService.class, args);
     }
 }

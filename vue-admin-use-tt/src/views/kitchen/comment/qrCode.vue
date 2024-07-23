@@ -1,5 +1,5 @@
 <!-- src/components/QrCode.vue -->
-<template>
+<!-- <template>
   <div :id="id" :ref="id"></div>
 </template>
 
@@ -59,4 +59,4 @@ export default {
 
 <style scoped>
 /* Add any necessary styling here */
-</style>
+</style> -->
