@@ -6,7 +6,7 @@
 			:longitude="longitude" @tap="openLocation"></map>
 			</view>
 			<view class="map-navigation">
-				<u-text text="地图导航" @tap="mapNavigation"></u-text>
+				<text @tap="mapNavigation">地图导航</text>
 			</view>
 		</view>
 		

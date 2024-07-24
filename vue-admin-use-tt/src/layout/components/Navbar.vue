@@ -22,6 +22,12 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+
+    <el-button
+    plain
+    @click="open2">
+    不会自动关闭
+    </el-button>
   </div>
 </template>
 
@@ -48,7 +54,25 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-    }
+    },
+    open2() {
+        this.$notify({
+          title: '提示',
+          message: '预约信息',
+          duration: 0
+        });
+      },
+
+  async init() {
+            //创建webSocket对象
+            ws = new WebSocket("ws://127.0.0.1:5455/chat");
+            //给ws绑定事件
+            ws.onopen = this.onopen;
+            //接收到服务端推送的消息后触发
+            ws.onmessage = this.onMessage;
+
+            ws.onclose = this.onClose;
+      },
   }
 }
 </script>

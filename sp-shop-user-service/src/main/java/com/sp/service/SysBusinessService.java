@@ -16,4 +16,5 @@ import java.util.List;
 public interface SysBusinessService extends IService<SysBusiness> {
 
     PageResult<SysBusiness> pageQuery(BusinessVo businessVo);
+
 }

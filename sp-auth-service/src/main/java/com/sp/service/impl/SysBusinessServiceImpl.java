@@ -172,6 +172,7 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
         role.add(sysRole.getName());
         user.setRoles(role);
         user.setAvatar(userInDatabase.getAvatar());
+        user.setUserId(userInDatabase.getId());
 
 //      存用户对象 存七天
         redisTemplate.opsForValue().set("shop:userinfo:"+StpUtil.getTokenValue(),user,7, TimeUnit.DAYS);
@@ -197,7 +198,7 @@ public class SysBusinessServiceImpl extends ServiceImpl<SysBusinessMapper, SysBu
         validateAccPwd(userAccount,userPassword);
         //2 从缓存中获取验证码
         String redisKey = RedisConstants.REGISTER_CODE_KEY + phone;
-        String redisCode = redisCacheUtil.getCacheObject(redisKey);
+        String redisCode = redisCacheUtil.getCacheObject(redisKey).toString();
         if (redisCode == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"验证码已过期，请重新获取");
         }
