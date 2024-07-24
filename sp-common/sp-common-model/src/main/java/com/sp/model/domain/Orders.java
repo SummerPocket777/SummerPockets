@@ -90,7 +90,7 @@ public class Orders implements Serializable {
     /**
      * 实收金额
      */
-    private double amount;
+    private BigDecimal amount;
 
     /**
      * 备注
