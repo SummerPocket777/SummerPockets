@@ -61,7 +61,18 @@ export default {
           message: '预约信息',
           duration: 0
         });
-      }
+      },
+
+  async init() {
+            //创建webSocket对象
+            ws = new WebSocket("ws://127.0.0.1:5455/chat");
+            //给ws绑定事件
+            ws.onopen = this.onopen;
+            //接收到服务端推送的消息后触发
+            ws.onmessage = this.onMessage;
+
+            ws.onclose = this.onClose;
+      },
   }
 }
 </script>
