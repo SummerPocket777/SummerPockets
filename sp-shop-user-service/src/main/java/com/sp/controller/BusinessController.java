@@ -5,10 +5,7 @@ import com.sp.core.common.BaseResponse;
 import com.sp.core.common.ResultUtils;
 import com.sp.pojo.SysBusiness;
 import com.sp.service.SysBusinessService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.annotation.Resources;
@@ -26,6 +23,11 @@ public class BusinessController {
         queryWrapper.eq("parent_id",parentId);
         List<SysBusiness> list = sysBusinessService.list(queryWrapper);
         return ResultUtils.success(list);
+    }
+
+    @PostMapping("/add")
+    public BaseResponse<List<SysBusiness>> list(){
+        return null;
     }
 
 }

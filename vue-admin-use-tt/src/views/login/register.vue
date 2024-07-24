@@ -14,8 +14,6 @@
       <el-col :span="8" style="margin-right: 120px;" >    <el-input v-model="userVo.imgCode" size="small" > </el-input></el-col>
 
       <el-col :span="8">    <img :src="codeImg" @click="changeCode"></el-col>
-
-
     </el-form-item>
 
     <el-form-item label="手机号：">
