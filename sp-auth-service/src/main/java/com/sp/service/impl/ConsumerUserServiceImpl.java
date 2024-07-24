@@ -13,6 +13,7 @@ import com.sp.model.domain.ConsumerUser;
 
 import com.sp.model.dto.VXUserLoginDTO;
 import com.sp.model.vo.VXUserLoginVO;
+import com.sp.properties.WeChatProperties;
 import com.sp.service.ConsumerUserService;
 import com.sp.utils.HttpClientUtil;
 import com.sp.utils.VXUserStpUtil;
