@@ -2,6 +2,7 @@ package com.sp.core.common;
 
 import com.sp.core.enums.ErrorCode;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * @date 2023/07/28
  */
 @Data
+@NoArgsConstructor
 public class BaseResponse<T> implements Serializable {
 
     private static final long serialVersionUID = 8153981949738243118L;

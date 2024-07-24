@@ -1,13 +1,15 @@
 package com.sp.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.sp.model.PageResult;
 import com.sp.model.domain.Dish;
+import com.sp.model.domain.SetmealDish;
 import com.sp.model.dto.DishDTO;
 import com.sp.vo.PageVO;
 
 import java.util.List;
 
-public interface DishService {
+public interface DishService extends IService<Dish> {
     List<Dish> getDishList(Long shopId);
 
     PageResult<Dish> getDishListThroughSQL(PageVO pageVO);
@@ -21,4 +23,10 @@ public interface DishService {
      * @return {@link DishDTO }
      */
     DishDTO getByIdWithFlavor(Long id);
+
+    void delete(List<Long> ids);
+
+    void startOtStop(Integer status, Long id);
+
+    void updateWithFlavor(DishDTO dishDTO);
 }

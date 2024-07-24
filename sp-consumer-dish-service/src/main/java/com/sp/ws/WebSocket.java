@@ -1,9 +1,7 @@
 package com.sp.ws;
 
-import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson2.JSONObject;
 import com.sp.config.HttpSessionConfig;
-import com.sp.model.domain.ShoppingCart;
 import com.sp.model.vo.ShoppingCartVO;
 import com.sp.service.CartService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,14 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -91,8 +88,11 @@ public class WebSocket {
         // 反序列化 JSON 字符串到 ShoppingCartVO 对象
         JSONObject jsonObject = JSONObject.parseObject(message);
 
-        //转换出字段
         String action=jsonObject.getString("action");
+        if (action.equals("ping")) {
+            this.sendMessage("pong", null);
+            return;
+        }
         JSONObject dataObject = jsonObject.getJSONObject("data");
 
         //判断
@@ -105,7 +105,12 @@ public class WebSocket {
             this.sendMessage("clean_cart", "");
         } else if (action.equals("show")) {
             this.sendMessage("initial_cart", JSONObject.toJSONString(cartService.showCart(Long.valueOf(tableId), Long.valueOf(businessId))));
+        } else if (action.equals("del_cart")) {
+            ShoppingCartVO shoppingCartVO = dataObject.toJavaObject(ShoppingCartVO.class);
+            cartService.del(shoppingCartVO);
+            this.sendMessage("initial_cart", JSONObject.toJSONString(cartService.showCart(Long.valueOf(tableId), Long.valueOf(businessId))));
         }
+
         // 广播消息到该房间的所有用户 并且排除自己
 //        broadcastToRoom(Long.valueOf(businessId), Long.valueOf(tableId), action, dataObject);
 //        ROOMS.get(roomKey).values().forEach(webSocket -> {

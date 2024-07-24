@@ -3,6 +3,7 @@ package com.sp.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sp.model.domain.SetmealDish;
+import io.lettuce.core.dynamic.annotation.Param;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ import java.util.List;
 public interface SetmealDishMapper extends BaseMapper<SetmealDish> {
 
     void insertBatch(List<SetmealDish> setmealDishes);
+    //select setmeal id from setmeal dis where dish_id in(1,2,3,4,5)
+    List<Long> getSetmealIdsByDishIds(@Param("dishIds") List<Long> dishIds);
 }
 
 

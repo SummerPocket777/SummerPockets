@@ -8,19 +8,19 @@
 			<view class="text-f" @click="gotocoupons">
 				<text class="description">绑定手机号获取更多优惠推荐</text>
 				<view class="right-icon">
-					<up-icon name="arrow-right"></up-icon>
+					<!-- <up-icon name="arrow-right"></up-icon> -->
 				</view>
 			</view>
 			<view class="text-s">
 				<text class="description">关于我们</text>
 				<view class="right-icon">
-					<up-icon name="arrow-right"></up-icon>
+					<!-- <up-icon name="arrow-right"></up-icon> -->
 				</view>
 			</view>
 			<view class="text-t" @click="gotomyyuyue">
 				<text class="description">我的预约</text>
 				<view class="right-icon">
-					<up-icon name="arrow-right"></up-icon>
+					<!-- <up-icon name="arrow-right"></up-icon> -->
 				</view>
 			</view>
 		</view>

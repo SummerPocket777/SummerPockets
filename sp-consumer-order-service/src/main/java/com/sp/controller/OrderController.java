@@ -3,13 +3,11 @@ package com.sp.controller;
 
 import com.sp.core.common.BaseResponse;
 import com.sp.core.common.ResultUtils;
-import com.sp.core.enums.ErrorCode;
-import com.sp.core.exception.BusinessException;
-import com.sp.model.PageResult;
-import com.sp.model.domain.OrderDetail;
 import com.sp.model.domain.Orders;
+import com.sp.model.dto.OrderSubmitDTO;
+import com.sp.model.vo.OrdersSubmitVO;
 import com.sp.service.OrderService;
-import com.sp.vo.PageOrderVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/order")
+@Slf4j
 public class OrderController {
     @Autowired
     private OrderService orderService;
@@ -45,4 +44,12 @@ public class OrderController {
         orderService.updateOrderDetail(status, id);
         return ResultUtils.success("更新成功");
     }
+    @PostMapping("/submit")
+    public BaseResponse<OrderSubmitDTO> sumbit(@RequestBody OrdersSubmitVO ordersSubmitVO){
+        log.info("用户下单的参数为{}",ordersSubmitVO);
+        OrderSubmitDTO orderSubmitVO=orderService.sumbitOrder(ordersSubmitVO);
+        return ResultUtils.success(orderSubmitVO);
+    }
+
+
 }

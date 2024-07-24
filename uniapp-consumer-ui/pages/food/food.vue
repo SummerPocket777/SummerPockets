@@ -6,21 +6,21 @@
 			<view class="shop-top">
 				<view class="top-name">
 					<view class="top-img">
-						<u-image width="150rpx" height="150rpx" shape="square" radius="5px"></u-image>
+						<image width="150rpx" height="150rpx" shape="square" radius="5px"></image>
 					</view>
 					<view class="top-text">
 						<view class="text-first">
-							<u-text :text="`第${tableId}桌号`" bold size="17px"></u-text>
+							<text :text="`第${tableId}桌号`" bold size="17px"></text>
 						</view>
 						<view class="text-second">
-							<u-text :text="`用餐人数:${online_count}人` "></u-text>
+							<text :text="`用餐人数:${online_count}人` "></text>
 						</view>
 					</view>
 
 				</view>
 				<view class="top-search">
-					<up-search placeholder="请输入菜品" input-align="center" action-text=""></up-search>
-					<u-image width="50rpx" height="50rpx" src="../../static/icon/定位.png" @tap="intoMap"></u-image>
+					<search placeholder="请输入菜品" input-align="center" action-text=""></search>
+					<image width="50rpx" height="50rpx" src="../../static/icon/定位.png" @tap="intoMap"></image>
 				</view>
 			</view>
 		</view>
@@ -49,6 +49,7 @@
 									<!-- <view class="describe">{{item2.description}}</view> -->
 									<view class="money">¥{{item2.price}}</view>
 								</view>
+								<view >选择规格</view>
 								<view @click="addCar" :data-item="item2">加入购物车</view>
 							</view>
 						</view>
@@ -65,7 +66,7 @@
 			<view class="car-pice">¥{{totalPrice}}</view>
 		</view>
 		<view class="car-right">
-			<view class="car-text">选好了</view>
+			<view class="car-text" @click="sumbit">去支付</view>
 		</view>
 	</view>
 	<!-- 凸起图标 -->
@@ -84,17 +85,17 @@
 					<image class="car-menu-image" :src="item.image" mode=""></image>
 				</view>
 				<view class="car-right-text" style="width: 73%;">
-					<view class="car-menu-name">{{item.name}}</view>s
+					<view class="car-menu-name">{{item.name}}</view>
 					<!-- <view class="car-menu-explain">{{item.explain}}</view> -->
 					<view class="car-menu-ps">
 						<view class="car-menu-price">¥{{item.amount}}</view>
 						<view class="car-num-select">
-							<view @click="clickMinus(index)">
+							<view @click="clickMinus(item)">
 								<image style="width: 48rpx;height: 48rpx;" src="../../static/icon/定位.png">
 								</image>
 							</view>
 							<view style="margin: 0rpx 15rpx;font-size: 28rpx;"> {{item.number}} </view>
-							<view @click="clickAdd(index)">
+							<view @click="clickAdd(item)">
 								<image style="width: 48rpx;height: 48rpx;" src="../../static/icon/定位.png">
 								</image>
 							</view>
@@ -117,8 +118,8 @@
 	export default {
 		data() {
 			return {
-				businessId: 61, //店铺id
-				tableId: 72, //桌号
+				businessId: 0, //店铺id
+				tableId: 0, //桌号
 				online_count: 0, //在线人数
 				store: dishStore(),
 				scrollHeight: 400,
@@ -134,6 +135,7 @@
 				totalPrice: 0,
 				totalNum: 0,
 				//显示属性
+				isLoad:false,
 				isShowCar: false,
 				isShowList: false,
 				isShowCarMark: false,
@@ -141,9 +143,13 @@
 				scanCodeMsg:""
 			}
 		},
-		onLoad(){
+		created() {
 			//调用二维码
+			console.log("created")
 			this.takePhoto()
+		},
+		onLoad(){
+			
 		},
 		computed: {
 			//使用useRestaurantStore
@@ -299,6 +305,7 @@
 						resolve(data);
 					}).exec();
 				}).then((res) => {
+					console.log("获取元素顶部信息 res",res)
 					let topArr = res.map((item) => {
 						return item.top - this.scrollTopSize; /* 减去滚动容器距离顶部的距离 */
 					});
@@ -410,6 +417,14 @@
 					this.allNum();
 					this.allPrice();
 					this.isShowCar = true;
+				}else if (message.action === "del_cart") {
+					// console.log("接受到的购物车项信息", message.data);
+					// console.log("typeof message.data", typeof message.data);
+					let initCart = JSON.parse(message.data);
+					this.carData = initCart;
+					this.allNum();
+					this.allPrice();
+					this.isShowCar = true;
 				} else if (message.action === "clean_cart") {
 					console.log("清除购物车")
 					this.carData = [];
@@ -452,23 +467,66 @@
 			},
 
 			// 增加数量
-			clickAdd(index) {
-				this.carData[index].number++;
-				this.allNum();
-				this.allPrice();
+			clickAdd(item) {
+				const date = {
+					action: 'add_cart',
+					data: {
+						businessId: this.businessId,
+						dishId: item.dishId,
+						setmealId: item.setmealId,
+						dishFlavor: item.dishFlavor,
+						tableId: this.tableId
+					}
+				}
+				// 发送消息到 WebSocket
+				this.sendMessageToSocket(date); 
+				
+				
+				// this.carData[index].number++;
+				// this.allNum();
+				// this.allPrice();
 			},
 
 			// 减少数量，小于1时删除元素
-			clickMinus(index) {
-				if (this.carData[index].number > 1) {
-					this.carData[index].number--;
-				} else {
-					this.carData.splice(index, 1); // 从数组删除元素
+			clickMinus(item) {
+				console.log("减少购物车的item",item)
+				const date = {
+					action: 'del_cart',
+					data: {
+						businessId: this.businessId,
+						dishId: item.dishId,
+						setmealId: item.setmealId,
+						dishFlavor: item.dishFlavor,
+						tableId: this.tableId
+					}
 				}
-				this.allNum();
-				this.allPrice();
+				// 发送消息到 WebSocket
+				this.sendMessageToSocket(date); 
+				
+				
+				// if (this.carData[index].number > 1) {
+				// 	this.carData[index].number--;
+				// } else {
+				// 	this.carData.splice(index, 1); // 从数组删除元素
+				// }
+				// this.allNum();
+				// this.allPrice();
 			},
-
+			sumbit(){
+				//todo 获取当前登录的用户id
+				console.log("提交购物车",this.carData)
+				const date ={
+						// shoppingCart:this.carData,
+						businessId: this.businessId,
+						userId: 1,
+						tableId: this.tableId
+				};
+				this.store.sumbitOrder(date).then(res=>{
+					console.log("res")
+				})
+				
+ 
+			},
 
 			// 计算商品总数量
 			allNum() {
@@ -516,7 +574,9 @@
 			},
 			//二维码扫面
 			takePhoto() {
-				if(this.businessId == '' | this.tableId == ''){
+					console.log("二维码扫面businessId",this.businessId)
+					console.log("二维码扫面tableId",this.tableId)
+				if(this.businessId === 0 | this.tableId === 0){
 					wx.scanCode({
 						onlyFromCamera: true,
 						success: (res) => {
@@ -532,6 +592,7 @@
 							this.tableId = params.tableId
 							console.log('piana businessId ---',this.businessId)
 							console.log('piana tableId---',this.tableId)
+							this.isLoad=true;
 						},
 						fail: (res) => {
 							console.log(res.errMsg)

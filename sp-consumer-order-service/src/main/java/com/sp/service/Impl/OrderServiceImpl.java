@@ -2,22 +2,36 @@ package com.sp.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
+//import com.sp.client.ConsumerDishCartFeign;
+import com.sp.client.CartFeignClient;
+import com.sp.core.common.BaseResponse;
+import com.sp.core.enums.ErrorCode;
+import com.sp.core.exception.BusinessException;
 import com.sp.mapper.DishMapper;
 import com.sp.mapper.OrderDetailMapper;
 import com.sp.mapper.OrderMapper;
 import com.sp.model.domain.Dish;
 import com.sp.model.domain.OrderDetail;
 import com.sp.model.domain.Orders;
+import com.sp.model.domain.ShoppingCart;
+import com.sp.model.dto.OrderSubmitDTO;
+import com.sp.model.vo.OrdersSubmitVO;
 import com.sp.service.OrderService;
-import com.sp.vo.PageOrderVO;
+import com.sp.ws.WebSocket;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
@@ -27,6 +41,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private DishMapper dishMapper;
 
+    @Resource
+    private CartFeignClient cartFeignClient;
 
     @Override
     //根据商家id查询订单
@@ -95,5 +111,82 @@ public class OrderServiceImpl implements OrderService {
     //用于装载菜品信息
     public Dish loadDishById(Long dishId) {
         return dishMapper.selectById(dishId);
+    }
+
+    /**
+     * 提交订单
+     *
+     * @param ordersSubmitVO 订单提交vo
+     * @return {@link OrderSubmitDTO }
+     */
+    @Override
+    public OrderSubmitDTO sumbitOrder(OrdersSubmitVO ordersSubmitVO) {
+        if (ordersSubmitVO == null||
+            ordersSubmitVO.getBusinessId()== null||
+            ordersSubmitVO.getUserId()==null||
+            ordersSubmitVO.getTableId()==null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Long businessId = ordersSubmitVO.getBusinessId();
+        Long tableId = ordersSubmitVO.getTableId();
+        Long userId = ordersSubmitVO.getUserId();
+
+        //获取购物车信息
+        BaseResponse<List<ShoppingCart>> response = cartFeignClient.list(tableId,businessId);
+        log.info("response{}",response);
+        if (response.getCode() != 20000){
+           throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        if (response.getData() == null||response.getData().size()==0){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 计算购物车总金额
+        List<ShoppingCart> shoppingCartList = response.getData();
+        BigDecimal orderAmount = BigDecimal.ZERO;
+        for (ShoppingCart item : shoppingCartList) {
+            if (item.getNumber() == null || item.getNumber() <= 0) {
+                throw new BusinessException(ErrorCode.PARAMS_ERROR);
+            }
+            // 调用方法计算总金额
+            BigDecimal amount = item.getAmount();
+            orderAmount = orderAmount.add(amount);
+        }
+
+        //保存订单到数据库
+        Orders orders = new Orders();
+
+        orders.setOrderTime(new Date());
+        orders.setPayStatus(Orders.UN_PAID);
+        orders.setStatus(Orders.PAID);// 待付款
+        orders.setNumber(String.valueOf(System.currentTimeMillis()) + userId);
+        orders.setUserId(userId);
+        orders.setAmount(orderAmount);
+        orders.setBusinessId(businessId);
+        orders.setTableId(Math.toIntExact(tableId));
+        orderMapper.insert(orders);
+
+        for (ShoppingCart item : shoppingCartList) {
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setOrderId(orders.getId());
+            orderDetail.setDishId(item.getDishId());
+            orderDetail.setDishFlavor(item.getDishFlavor());
+            orderDetail.setNumber(item.getNumber());
+            orderDetail.setAmount(item.getAmount());
+            orderDetailMapper.insert(orderDetail);
+        }
+
+        // 清空用户的购物车数据
+        cartFeignClient.clean(tableId, businessId);
+        //todo 通知前端清空购物车
+//        webSocket.broadcastToRoom(businessId, tableId, "clean_cart", null);
+
+        OrderSubmitDTO orderSubmitDTO = OrderSubmitDTO.builder()
+                .id(orders.getId())
+                .orderTime(orders.getOrderTime())
+                .orderNumber(orders.getNumber())
+                .orderAmount(orders.getAmount())
+                .build();
+
+        return orderSubmitDTO;
     }
 }

@@ -1,11 +1,9 @@
-<!-- src/components/QrCode.vue -->
 <template>
   <div :id="id" :ref="id"></div>
 </template>
 
 <script>
 import QRCode from 'qrcodejs2';
-import { onMounted, watch } from 'vue';
 
 export default {
   name: 'QrCode',
@@ -35,24 +33,27 @@ export default {
       default: '#ffffff'
     }
   },
-  setup(props) {
-    const createQrcode = () => {
-      const qrElement = document.getElementById(props.id);
+  watch: {
+    text() {
+      this.createQrcode();
+    }
+  },
+  mounted() {
+    this.createQrcode();
+  },
+  methods: {
+    createQrcode() {
+      const qrElement = document.getElementById(this.id);
       qrElement.innerHTML = '';
       new QRCode(qrElement, {
-        text: props.text,
-        width: props.width,
-        height: props.height,
-        colorDark: props.colorDark,
-        colorLight: props.colorLight,
+        text: this.text,
+        width: this.width,
+        height: this.height,
+        colorDark: this.colorDark,
+        colorLight: this.colorLight,
         correctLevel: QRCode.CorrectLevel.H
       });
-    };
-
-    onMounted(createQrcode);
-    watch(() => props.text, createQrcode);
-
-    return {};
+    }
   }
 };
 </script>

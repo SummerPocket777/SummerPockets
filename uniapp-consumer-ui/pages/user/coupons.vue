@@ -65,7 +65,6 @@
 </template>
 
 <script>
-import { image } from '../../uni_modules/uview-plus/libs/function/test';
 export default {
   data() {
     return {

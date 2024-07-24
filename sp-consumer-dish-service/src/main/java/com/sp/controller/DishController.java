@@ -6,13 +6,15 @@ import com.sp.model.PageResult;
 import com.sp.model.domain.Dish;
 import com.sp.model.dto.DishDTO;
 import com.sp.service.impl.DishServiceImpl;
+import com.sp.utils.RedisCacheUtil;
 import com.sp.vo.PageVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/dish")
@@ -20,6 +22,9 @@ import javax.annotation.Resource;
 public class DishController {
     @Resource
     private DishServiceImpl dishService;
+
+    @Resource
+    private RedisTemplate  redisTemplate;
 
     @RequestMapping("/getAll")
     //该方法没有存入到redis中
@@ -46,6 +51,59 @@ public class DishController {
         log.info("根据id查询菜品:{}",id);
         DishDTO dishVO=dishService.getByIdWithFlavor(id);
         return ResultUtils.success(dishVO);
+    }
+
+    /**
+     * 批量删除菜品
+     *
+     * @param ids id
+     * @return {@link BaseResponse }
+     */
+    @GetMapping
+    public BaseResponse delete(@RequestParam List<Long> ids){
+        log.info("菜品批量删除：{}",ids);
+        dishService.delete(ids);
+
+        //将所有的菜品数据进行缓存删除  dish_开头的
+//        cleanDishRedis("dish_*");
+
+        return ResultUtils.success();
+    }
+
+    /**
+     * 起售停售菜品
+     *
+     * @param status 状态
+     * @param id     id
+     */
+    @PostMapping("status/{status}/{id}")
+    public BaseResponse startOtStop(@PathVariable Integer status,@PathVariable Long id){
+        log.info("起售停售菜品:{},{}",status,id);
+        dishService.startOtStop(status,id);
+
+        //将所有的菜品数据进行缓存删除  dish_开 头的
+//        cleanDishRedis("dish_*");
+        return ResultUtils.success();
+    }
+
+    @PutMapping
+    public  BaseResponse update(@RequestBody DishDTO dishDTO){
+        log.info("修改菜品信息:{}",dishDTO);
+        dishService.updateWithFlavor(dishDTO);
+        //修改操作
+        //        cleanDishRedis("dish_*");
+        return ResultUtils.success();
+
+    }
+
+    /**
+     * 清除缓存中的菜品
+     *
+     * @param pattern 模式
+     */
+    private void cleanDishRedis(String pattern) {
+        Set keys = redisTemplate.keys(pattern);
+        redisTemplate.delete(keys);
     }
 
 }

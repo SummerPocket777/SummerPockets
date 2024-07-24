@@ -63,7 +63,7 @@ public final class RedisConstants {
     /**
      * 用户购物车键
      */
-    public static final String USER_CART_KEY = "sp:cart:business{%s}:table{%s}";
+    public static final String USER_CART_KEY = "sp:cart:business_%s:table_%s";
 
     /**
      * 购物车条目过期时间（天）

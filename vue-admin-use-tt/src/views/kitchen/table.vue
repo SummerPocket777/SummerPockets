@@ -1,4 +1,3 @@
-<!-- src/views/Table.vue -->
 <template>
   <div>
     <el-select v-model="selectedShop" placeholder="请选择店铺" @change="updateTableList">
@@ -29,58 +28,47 @@
 </template>
 
 <script>
-import { ref } from 'vue';
 import QrCode from './comment/qrCode.vue';
 
 export default {
   name: 'Table',
   components: { QrCode },
-  setup() {
-    const selectedShop = ref(null);
-    const shops = ref([
-      { id: 1, name: '店铺1' },
-      { id: 2, name: '店铺2' }
-    ]);
-    const tables = ref([]);
-
-    const updateTableList = () => {
-      if (selectedShop.value) {
+  data() {
+    return {
+      selectedShop: null,
+      shops: [
+        { id: 1, name: '店铺1' },
+        { id: 2, name: '店铺2' }
+      ],
+      tables: []
+    };
+  },
+  methods: {
+    updateTableList() {
+      if (this.selectedShop) {
         // 假设每个店铺初始有两个桌子
-        tables.value = [
+        this.tables = [
           { id: 1 },
           { id: 2 }
         ];
       } else {
-        tables.value = [];
+        this.tables = [];
       }
-    };
-
-    const addTable = () => {
-      const newId = tables.value.length ? tables.value[tables.value.length - 1].id + 1 : 1;
-      tables.value.push({ id: newId });
-    };
-
-    const removeTable = () => {
-      tables.value.pop();
-    };
-
-    const generateQRCodeText = (tableId) => {
-      return `businessId=${selectedShop.value}&tableId=${tableId}`;
-    };
-
-    return {
-      selectedShop,
-      shops,
-      tables,
-      updateTableList,
-      addTable,
-      removeTable,
-      generateQRCodeText
-    };
+    },
+    addTable() {
+      const newId = this.tables.length ? this.tables[this.tables.length - 1].id + 1 : 1;
+      this.tables.push({ id: newId });
+    },
+    removeTable() {
+      this.tables.pop();
+    },
+    generateQRCodeText(tableId) {
+      return `businessId=${this.selectedShop}&tableId=${tableId}`;
+    }
   }
 };
 </script>
 
 <style scoped>
-/* Add any necessary styling here */
+
 </style>

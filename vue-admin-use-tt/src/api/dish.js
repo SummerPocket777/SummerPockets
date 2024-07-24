@@ -28,6 +28,12 @@ export function getDishDetail(id) {
     }
   })
 }
+export function startOtStop(params) {
+  return request({
+    url: `/consumer-dish/dish/status/${params.status}/${params.id}`,
+    method: 'post'
+  });
+}
 
 export function addDish(data) {
   return request({

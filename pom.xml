@@ -22,7 +22,6 @@
         <module>sp-consumer-voucher-service</module>
         <module>sp-admin-user-service</module>
         <module>sp-consumer-book-service</module>
-        <module>sp-websocket-service</module>
     </modules>
 
     <properties>
@@ -174,6 +173,8 @@
                 <artifactId>redisson</artifactId>
                 <version>3.17.5</version>
             </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
