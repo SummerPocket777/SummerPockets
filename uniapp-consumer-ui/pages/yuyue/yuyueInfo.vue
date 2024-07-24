@@ -2,7 +2,7 @@
 	<view>
 		<view :class="titileClass">{{yuyuestatussss}}</view>
 		<view class="infobox">
-			<text style="width: 170rpx;margin-right: 20rpx;margin-left: 20rpx;">用餐人数:</text>
+			<text style="width: 170rpx;margin-right: 20rpx;margin-left: 20rpx;">来店人数:</text>
 			<text>{{myyuyueinfos.peopleNumber}} 人</text>
 		</view>
 		<view class="infobox">

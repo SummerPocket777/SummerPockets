@@ -12,6 +12,7 @@ import java.util.List;
 public interface OrderService {
 
     List<Orders> listOrders(Long shopId);
+    List<Orders> listHistoryOrders(Long shopId);
 
     List<Orders> listOrders(Long userId,Long shopId);
 

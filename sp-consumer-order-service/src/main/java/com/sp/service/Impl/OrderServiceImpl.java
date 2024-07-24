@@ -74,6 +74,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Orders> listHistoryOrders(Long shopId) {
+
+        QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("business_id",shopId);
+        List<Orders> orders = orderMapper.selectList(queryWrapper);
+        for(Orders item : orders){
+            List<OrderDetail> orderDetails = listOrderDetail(item.getId());
+            item.setOrderDetailList(orderDetails);
+        }
+        return orders;
+    }
+
+    @Override
     //根据商家id和用户id来查询用户订单
     public List<Orders> listOrders(Long userId, Long shopId) {
         QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();

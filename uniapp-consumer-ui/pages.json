@@ -123,18 +123,18 @@
 			// 	"iconPath": "static/icon/点单.png",
 			// 	"selectedIconPath": "static/icon/点单 (1).png"
 			// },
-			{
-				"text": "点单",
-				"pagePath": "pages/food/food",
-				"iconPath": "static/icon/点单.png",
-				"selectedIconPath": "static/icon/点单 (1).png"
-			},
-			{
-				"text": "订单",
-				"pagePath": "pages/order/order",
-				"iconPath": "static/icon/订单.png",
-				"selectedIconPath": "static/icon/订单 (1).png"
-			},
+			// {
+			// 	"text": "点单",
+			// 	"pagePath": "pages/food/food",
+			// 	"iconPath": "static/icon/点单.png",
+			// 	"selectedIconPath": "static/icon/点单 (1).png"
+			// },
+			// {
+			// 	"text": "订单",
+			// 	"pagePath": "pages/order/order",
+			// 	"iconPath": "static/icon/订单.png",
+			// 	"selectedIconPath": "static/icon/订单 (1).png"
+			// },
 			{
 				"text": "我的",
 				"pagePath": "pages/user/user",

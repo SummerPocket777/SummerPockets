@@ -1,6 +1,11 @@
 <!-- 工单模块 -->
 <template>
-    <div>工单</div>
+    <div class="question-container">
+        <div class="question-box">
+            <div>工单管理</div>
+
+        </div>
+    </div>
 </template>
 <script>
 

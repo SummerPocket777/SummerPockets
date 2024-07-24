@@ -31,6 +31,13 @@ public class OrderController {
         List<Orders> orders1 = orderService.listOrders(shopId);
         return ResultUtils.success(orders1);
     }
+
+    @GetMapping("/getHistoryOrdersListByShop")
+    private BaseResponse<List<Orders>> getHistoryOrdersListByShop(Long shopId) {
+
+        List<Orders> orders1 = orderService.listHistoryOrders(shopId);
+        return ResultUtils.success(orders1);
+    }
 //    @RequestMapping("/getOrdersListByShopId")
 //    private BaseResponse< PageResult<Orders>> getOrderByShopId(@RequestBody PageOrderVO pageOrderVO) {
 //        if (pageOrderVO== null ){
