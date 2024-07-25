@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -49,20 +50,20 @@ public class UserStatisticsController {
     }
 
     public static class RevenueData {
-        private double amount;
+        private BigDecimal amount;
         private String checkoutTime;
 
-        public RevenueData(double amount, Date checkoutTime) {
+        public RevenueData(BigDecimal amount, Date checkoutTime) {
             this.amount = amount;
             this.checkoutTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(checkoutTime); // Format date to ISO 8601
         }
 
         // Getters and setters
-        public double getAmount() {
+        public BigDecimal getAmount() {
             return amount;
         }
 
-        public void setAmount(double amount) {
+        public void setAmount(BigDecimal amount) {
             this.amount = amount;
         }
 

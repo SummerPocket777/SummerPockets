@@ -17,6 +17,7 @@ import com.sp.model.domain.ShoppingCart;
 import com.sp.model.dto.OrderSubmitDTO;
 import com.sp.model.vo.OrdersSubmitVO;
 import com.sp.service.OrderService;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,19 +71,6 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return res;
-    }
-
-    @Override
-    public List<Orders> listHistoryOrders(Long shopId) {
-
-        QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("business_id",shopId);
-        List<Orders> orders = orderMapper.selectList(queryWrapper);
-        for(Orders item : orders){
-            List<OrderDetail> orderDetails = listOrderDetail(item.getId());
-            item.setOrderDetailList(orderDetails);
-        }
-        return orders;
     }
 
     @Override

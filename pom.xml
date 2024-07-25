@@ -22,7 +22,6 @@
         <module>sp-consumer-voucher-service</module>
         <module>sp-admin-user-service</module>
         <module>sp-consumer-book-service</module>
-        <module>sp-websocket-service</module>
         <module>sp-shop-chat-service</module>
     </modules>
 
