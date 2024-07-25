@@ -28,8 +28,7 @@
                                 </div>
                                 <div class="msg robot" v-else>
                                     <div class="msg-left" worker="">
-                                        <!-- <div class="msg-host photo"
-                                            style="background-image: url(img/avatar/Member002.jpg)"></div> -->
+                                        <!-- <div class="msg-host photo" style="background-image: url(img/avatar/Member002.jpg)"></div> -->
                                         <div class="msg-ball">{{message.message}}</div>
                                     </div>
                                 </div>
@@ -355,7 +354,7 @@ export default {
     .headDefault {
         background-color: transparent !important;
         border-radius: 5px;
-        background-image: url(../img/avatar/Member002.jpg);
+        /* background-image: url(../img/avatar/Member002.jpg); */
         margin-left: auto;
         margin-right: 20px;
         margin-top: 10px;
