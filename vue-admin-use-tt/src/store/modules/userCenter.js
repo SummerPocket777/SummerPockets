@@ -1,4 +1,4 @@
-import { getUserDetail, updateUserCenter } from "@/api/userCenter";
+import { getUserDetail, updateUserCenter,updateLogo } from "@/api/userCenter";
 
 
 
@@ -17,6 +17,18 @@ const mutations = {
 }
 
 const actions = {
+    updateLogo({commit},data){
+        return new Promise((resolve,reject)=>{
+            updateLogo(data).then(res =>{
+
+                console.log("图片路径修改成功",res)
+                resolve()
+            }).catch(err =>{
+                console.log(err)
+                reject()
+            })
+        })
+    },
     updateUserInfo({ commit }, dataInfo) {
         return new Promise((resolve, reject) => {
             updateUserCenter(dataInfo).then(res => {
@@ -36,7 +48,7 @@ const actions = {
             getUserDetail().then(res => {
                 // console.log("获取到用户信息: ", res.data)
                 commit('getUserDetail', res.data)
-                console.log("getUserDetail: ", state.userDetail)
+                // console.log("getUserDetail: ", state.userDetail)
                 resolve()
             }).catch(error => {
                 console.log("获取用户信息error: ", error)

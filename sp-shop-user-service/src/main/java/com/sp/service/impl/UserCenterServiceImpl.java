@@ -21,10 +21,23 @@ public class UserCenterServiceImpl implements UserCenterService {
     private UserCenterMapper sysBusinessMapper;
     @Override
     public BaseResponse updateUserCenterInfo(SysBusiness business) {
+        //
         if (business == null){
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
         int result = sysBusinessMapper.updateUserCenterInfo(business);
+        if (result >0){
+            return ResultUtils.success();
+        }
+        return ResultUtils.error(ErrorCode.PARAMS_ERROR);
+    }
+
+    @Override
+    public BaseResponse updateLogo(SysBusiness business) {
+        if (business == null){
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
+        int result = sysBusinessMapper.updateLogo(business);
         if (result >0){
             return ResultUtils.success();
         }

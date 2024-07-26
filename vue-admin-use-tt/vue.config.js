@@ -45,6 +45,14 @@ module.exports = {
         },
         ws: true,
 
+      },
+      "/baiduApi":{
+        target:"http://aip.baidubce.com",
+        changeOrigin: true,
+        secure: false,  // 只有代理https地址需要此选项
+        pathRewrite:{
+          "^/baiduApi":''
+        }
       }
     },
     // before: require('./mock/mock-server.js')

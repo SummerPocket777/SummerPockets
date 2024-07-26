@@ -73,9 +73,11 @@
         </div>
         <el-upload
           class="upload-demo"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          multiple
-          :limit="1">
+          action="/api/common-fileupload/fileupload/file/upload"
+          :on-success="fileSuccess"
+          :limit= "1"
+          ref="upload"
+          :file-list="fileList">
           <el-button type="primary" style="margin-top: 10%;">修改logo</el-button>
         </el-upload>
       </div>
@@ -93,18 +95,24 @@
            <div class="firstImage" height="250px">
             <el-upload
               class="upload-demo"
-              :action="uploadAction"
+              action="/api/common-fileupload/fileupload/file/upload"
+              :on-success="identityCardFront"
               multiple
-              drag>
+              drag
+              ref="upload"
+              :file-list="identityFront.fileList">
               <el-button type="text">上传身份证人像面</el-button>
             </el-upload>
            </div>
            <div class="firstImage" height="250px">
             <el-upload
               class="upload-demo"
-              :action="uploadAction"
+              action="/api/common-fileupload/fileupload/file/upload"
+              :on-success="identityCardBack"
               multiple
-              drag>
+              drag
+              ref="upload"
+              :file-list="identityBack.fileList">
               <el-button type="text">上传身份证国徽面</el-button>
 
             </el-upload>
@@ -125,9 +133,12 @@
            <div class="firstImage" >
             <el-upload
               class="upload-demo"
-              :action="uploadAction"
+              action="/api/common-fileupload/fileupload/file/upload"
+              :on-success="businessLicense"
               multiple
-              drag>
+              drag
+              ref="upload"
+              :file-list="fileList">
               <el-button type="text">上传营业执照</el-button>
             </el-upload>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -151,7 +162,7 @@
               :action="uploadAction"
               multiple
               drag>
-              <el-button type="text">上传营业执照</el-button>
+              <el-button type="text">人脸识别</el-button>
             </el-upload>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
            </div>
@@ -172,6 +183,12 @@
 import mapView from './MapContainer.vue'
 import { mapState,mapActions } from 'vuex'
 // import { getUserDetail, updateUserCenter } from "@/api/userCenter";
+import { identityUpload } from '@/api/userCenter'
+import axios from 'axios'
+import qs from 'qs'
+const request = require('request')
+const AK = "Ofubt19l9kB32z5MjGEvImDm"
+const SK = "3ShlTz14PHF0eiQCovKKnYyYpmOdntvI"
 
 export default {
   components:{
@@ -186,14 +203,28 @@ export default {
         businessName: '',
         phone: '',
         address: '',
+        avatar:'',
         id:''
       },
+      fileList:[],
       formLabelWidth: '120px',
-
+      identityFront:{
+        id_card_side:"front",
+        url:"",
+        // access_token:"24.cbd76266a78aea403f60a96d44141018.2592000.1724485862.282335-98159941",
+        // fileList:[]
+      },
+      identityBack:{
+        id_card_side:"back",
+        url:"",
+        access_token: '24.43434239ec5c9e7929f548020e47e15a.2592000.1724383702.282335-98159941',
+        fileList:[]
+      },
       firstDialogVisible:false,
       uploadAction:'',
       secondDialogVisible:false,
-      thirdDialogVisible:false
+      thirdDialogVisible:false,
+
       // zoom: 12,
       // // center: [121.59996, 31.197646],
       // visible: true,
@@ -204,49 +235,121 @@ export default {
     ...mapState('userCenter',['userDetail','userInfo'])
   },
   created(){
-    
+
   },
   mounted() {
     this.getUserDetail().then(()=>{
       this.getInfo()
     })
-    
 
-
-
-    // getUserDetail().then(res => {
-    //             console.log("获取到用户信息: ", res.data)
-    //             // commit('getUserDetail', res.data)
-    //             // console.log("getUserDetail: ", state.userDetail)
-    //             this.dataForm = res.data
-
-
-    //         }).catch(error => {
-    //             console.log("error: ", error)
-
-    //         })
   },
   methods: {
-    ...mapActions('userCenter',['updateUserInfo','getUserDetail']),
-    getInfo(){
-      console.log("detail: ",this.userDetail)
+    ...mapActions('userCenter',['updateUserInfo','getUserDetail','updateLogo']),
+    businessLicense(){
+
+    },
+    async identityCardFront(res,file,fileList){
+       this.identityFront.fileList = fileList
+      //  console.log("res: ",res)
+       this.$refs.upload.clearFiles()
+       this.identityFront.url=res.data
+       console.log("frontUrl: ",this.identityFront.url)
+
+      //  const frontData = new URLSearchParams()
+      //  frontData.append('id_card_side',this.identityFront.id_card_side)
+      //  frontData.append('url',this.identityFront.url)
+      //  frontData.append('access_token',this.identityFront.access_token)
+      //  axios.post('/baiduApi/rest/2.0/ocr/v1/idcard',frontData,{
+      //   headers:{
+      //     'Content-Type':'application/x-www-form-urlencoded',
+      //     // 'Accept':'application/json'
+      //   }
+      //  }).then(res =>{
+      //     console.log("身份证正面: ",res)
+      //  }).catch(error =>{
+      //     console.log("error: ",error)
+      //  })
+
+
+      //  axios.request({
+      //   url:'/baiduApi/rest/2.0/ocr/v1/idcard?access_token=' + await this.getAccessToken(),
+      //   method:'post',
+      //   headers:{
+      //     'Content-Type':'application/x-www-form-urlencoded',
+      //     'Accept':'application/json'
+      //   },
+      //   data:qs.stringify(this.identityCardFront)
+      //  }).then(res=>{
+      //     console.log("res: ",res)
+      //  })
+
+     var t =  this.getAccessToken();
+     console.log("token======" + t);
+      axios.post('/baiduApi/rest/2.0/ocr/v1/idcard?access_token=' + await this.getAccessToken(),{
+          data:{
+             'id_card_side': this.identityFront.id_card_side,
+             'url': this.identityFront.url
+          }
+      },{
+         headers:{
+          'Content-Type':'application/x-www-form-urlencoded',
+          'Accept':'application/json'
+         }
+      },{
+        proxy: {
+          protocol: 'https',
+          host: '127.0.0.1',
+          port: 9528,
+        }
+      }).then(res=>{
+          console.log("res:",res)
+      }).catch(error =>{
+          console.log("error: ",error)
+      })
+    },
+    identityCardBack(res,file,fileList){
+      this.identityBack.fileList = fileList
+      //  console.log("res: ",res)
+       this.$refs.upload.clearFiles()
+       this.identityBack.url=res.data
+       console.log('backUrl: ',this.identityBack.url)
+    },
+
+    fileSuccess(response,file,fileList){  // 图片路径
+      // console.log("file: ",file)
+      // console.log("fileList: ",fileList)
+        console.log("res: ",response)
+        if(response.code == 20000){
+          this.fileList = fileList
+          this.dataForm.avatar = response.data
+          this.$message({
+            message:'修改图片成功',
+            type:'success',
+            duration:1000,
+            showClose:true,
+            center:true,
+            onClose:(()=>{
+              this.updateLogo(this.dataForm)
+              this.$refs.upload.clearFiles()
+              this.url = response.data
+            })
+          })
+
+        }
+    },
+
+    getInfo(){    // 店铺信息赋值
+      // console.log("detail: ",this.userDetail)
       this.dataForm.businessName = this.userDetail.businessName
       this.dataForm.phone = this.userDetail.phone
       this.dataForm.address = this.userDetail.address
+      this.dataForm.avatar = this.userDetail.avatar
+      this.url= this.userDetail.avatar
       this.dataForm.id = this.userDetail.id
-      console.log("被赋值后的form: ",this.dataForm)
+      // console.log("被赋值后的form: ",this.dataForm)
     },
-    updateUserDetail(){
-      // var form = {
-      //   businessName: this.dataForm.businessName,
-      //   id: this.dataForm.id,
-      //   phone:this.dataForm.phone,
-      //   address:this.dataForm.address
-      // };
-      // updateUserCenter(form).then((res)=>{
-      //    this.dataForm = form
-      // })
-        console.log("form1: ",this.dataForm)
+    updateUserDetail(){   // 修改店铺信息
+        // console.log("form1: ",this.dataForm)
         this.updateUserInfo(this.dataForm).then(() =>{
           console.log('-------------')
               this.getUserDetail().then(()=>{
@@ -282,6 +385,32 @@ export default {
         }).catch(error =>{
           console.log(error)
         })
+    },
+
+    getAccessToken() {  // 获取access_token
+      // let options = {
+      //     'method': 'POST',
+      //     'url': '/baiduApi/oauth/2.0/token?grant_type=client_credentials&client_id=' + AK + '&client_secret=' + SK,
+      // }
+      // return new Promise((resolve, reject) => {
+      //     request(options, (error, response) => {
+      //         if (error) { reject(error) }
+      //         else {
+      //           console.log("access_token: ",JSON.parse(response.body).access_token)
+      //           resolve(JSON.parse(response.body).access_token) }
+      //     })
+      // })
+      return new Promise((resolve,reject)=>{
+         axios.post(
+            '/baiduApi/oauth/2.0/token?grant_type=client_credentials&client_id=' + AK + '&client_secret=' + SK
+         ).then(res=>{
+              console.log("access_token: ",res.data.access_token)
+              // resolve(JSON.parse(response.body).access_token)
+              resolve(res.data.access_token)
+         }).catch(error=>{
+             reject(error)
+         })
+      })
     },
     getAddress(msg){
       // console.log("获取到地址: ",msg.address)

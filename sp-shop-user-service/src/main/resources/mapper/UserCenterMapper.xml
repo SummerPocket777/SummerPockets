@@ -5,5 +5,24 @@
 
     <update id="updateUserCenterInfo">
             update sys_business set business_name = #{businessName},address = #{address},phone= #{phone} where id = #{id}
+<!--            update sys_business-->
+<!--            <set>-->
+<!--                <if test="businessName != null and businessName != '' ">-->
+<!--                    business_name = #{businessName},-->
+<!--                </if>-->
+<!--                <if test="address != null and address != '' ">-->
+<!--                    address = #{address},-->
+<!--                </if>-->
+<!--                <if test="phone != null and phone != '' ">-->
+<!--                    phone = #{phone},-->
+<!--                </if>-->
+<!--                <if test="avatar != null and avatar != ''">-->
+<!--                    avatar = #{avatar}-->
+<!--                </if>-->
+<!--            </set>-->
+<!--            where id =#{id}-->
+    </update>
+    <update id="updateLogo">
+         update sys_business set avatar = #{avatar} where id = #{id}
     </update>
 </mapper>

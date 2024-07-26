@@ -11,4 +11,6 @@ import com.sp.model.domain.SysBusiness;
  */
 public interface UserCenterService {
     BaseResponse updateUserCenterInfo(SysBusiness business);
+
+    BaseResponse updateLogo(SysBusiness business);
 }
