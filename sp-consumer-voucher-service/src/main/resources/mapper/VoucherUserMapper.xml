@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sp.mapper.VoucherUserMapper">
+        <select id="findValidVouchers" resultType="com.sp.model.domain.Voucher">
+            SELECT * FROM voucher WHERE expiration_time > NOW()
+        </select>
+
+        <select id="findExpiredVouchers" resultType="com.sp.model.domain.Voucher">
+            SELECT * FROM voucher WHERE expiration_time &lt; NOW()
+        </select>
+
+        <select id="findUsedVouchers" resultType="com.sp.model.domain.Voucher">
+            SELECT * FROM voucher WHERE id IN
+            (SELECT voucher_id FROM voucher_user WHERE user_id = #{userId} AND status = 'used')
+        </select>
+
+</mapper>
+
+
