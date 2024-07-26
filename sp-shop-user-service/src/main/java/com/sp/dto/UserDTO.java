@@ -8,6 +8,7 @@ public class UserDTO {
     private String avatar;
     private String introduction;
     private String name;
+    private Long userId;
     private ArrayList<String> roles;
 
 }

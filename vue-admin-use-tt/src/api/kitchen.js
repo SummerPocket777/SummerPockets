@@ -10,6 +10,16 @@ export function getOrderList(shopId) {
   })
 }
 
+export function getHistoryOrdersListByShop(shopId) {
+  return request({
+    url: '/consumer-order/order/getHistoryOrdersListByShop',
+    method: 'get',
+    params: {
+      shopId: shopId
+    }
+  })
+}
+
 
 export function updateOrderStatus(status, id) {
   return request({
@@ -21,3 +31,4 @@ export function updateOrderStatus(status, id) {
     }
   })
 }
+

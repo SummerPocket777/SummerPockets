@@ -54,7 +54,7 @@ public class CartController {
      * 清空购物车
      *
      */
-    @DeleteMapping("/clean")
+    @GetMapping("/clean")
     public BaseResponse clean(Long tableId, Long businessId){
         cartService.cleanCart(tableId,businessId);
         return ResultUtils.success();

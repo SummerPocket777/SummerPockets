@@ -7,6 +7,7 @@ import com.sp.core.exception.BusinessException;
 import com.sp.model.domain.Category;
 import com.sp.model.dto.UserDishDTO;
 import com.sp.service.impl.CategoryServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/consumer/dish/cate")
+@Slf4j
 public class CateController {
     @Autowired
     private CategoryServiceImpl cateService;
@@ -34,6 +36,7 @@ public class CateController {
      */
     @GetMapping("getDishList")
     public BaseResponse<UserDishDTO> getUserDishList(@RequestParam("businessId") Long businessId){
+        log.info("用户端根据商家id获取全部的菜品{}",businessId);
         if (businessId == null){
             new BusinessException(ErrorCode.PARAMS_ERROR,"商家店铺ID不能为空");
         }

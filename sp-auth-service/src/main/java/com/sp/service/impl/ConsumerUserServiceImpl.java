@@ -1,7 +1,6 @@
 package com.sp.service.impl;
 
 
-import cn.dev33.satoken.stp.StpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -18,11 +17,9 @@ import com.sp.properties.WeChatProperties;
 import com.sp.service.ConsumerUserService;
 import com.sp.utils.HttpClientUtil;
 import com.sp.utils.VXUserStpUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

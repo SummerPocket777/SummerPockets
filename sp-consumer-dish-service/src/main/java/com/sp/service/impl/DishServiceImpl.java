@@ -3,14 +3,17 @@ package com.sp.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sp.core.constants.StatusConstant;
+import com.sp.core.enums.ErrorCode;
+import com.sp.core.exception.BusinessException;
 import com.sp.mapper.DishFlavorMapper;
 import com.sp.mapper.DishMapper;
+import com.sp.mapper.SetmealDishMapper;
+import com.sp.mapper.SetmealMapper;
 import com.sp.model.PageRequest;
 import com.sp.model.PageResult;
-import com.sp.model.domain.Category;
-import com.sp.model.domain.Dish;
-import com.sp.model.domain.DishFlavor;
-import com.sp.model.domain.SysBusiness;
+import com.sp.model.domain.*;
 import com.sp.model.dto.DishDTO;
 import com.sp.service.DishService;
 import com.sp.vo.PageVO;
@@ -21,16 +24,23 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
 @Service
-public class DishServiceImpl implements DishService {
+public class DishServiceImpl extends ServiceImpl<DishMapper, Dish>  implements DishService {
     @Autowired
     private RocketMQTemplate rocketMQTemplate;
-    @Autowired
+    @Resource
     private DishMapper dishMapper;
     @Resource
     private DishFlavorMapper dishFlavorMapper;
+    @Resource
+    private SetmealDishMapper setmealDishMapper;
+    @Resource
+    private SetmealMapper setmealMapper;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
@@ -120,19 +130,108 @@ public class DishServiceImpl implements DishService {
         //1 根据id查询菜品
         Dish dish = this.dishMapper.selectById(id);
 
-
         //2 根据菜品查询口味
         QueryWrapper<DishFlavor> dishFlavorQueryWrapper = new QueryWrapper<>();
         dishFlavorQueryWrapper.eq("dish_id",id);
 
         List<DishFlavor> dishFlavors= dishFlavorMapper.selectList(dishFlavorQueryWrapper);
 
-
         //3 封装到vo
         DishDTO dishDTO = new DishDTO();
         BeanUtils.copyProperties(dish,dishDTO);
         dishDTO.setFlavors(dishFlavors);
         return dishDTO;
+    }
+
+    @Override
+    public void delete(List<Long> ids) {
+        //要删除三张表
+
+        //1 判断当前菜品是否在起售中
+        for (Long id : ids) {
+            Dish dish = this.getById(id);
+            if (dish.getStatus()== StatusConstant.ENABLE){
+                //在起售状态 不能删除 抛个异常
+                throw new BusinessException(ErrorCode.PARAMS_ERROR,"在起售状态 不能删除");
+            }
+        }
+
+        //2 如果当前菜品是否被某个套餐关联
+        List<Long> setmealIds= setmealDishMapper.getSetmealIdsByDishIds(ids);
+        if (setmealIds!=null && setmealIds.size()>0){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"当前菜品关联了套餐,不能删除");
+        }
+
+        //3 如果都能删除
+        for (Long id : ids) {
+            //3.1 删除菜品表中的数据
+            dishMapper.deleteById(id);
+            //3.2 删除菜品关联的口味表的数据
+            dishFlavorMapper.deleteById(id);
+        }
+
+    }
+
+    /**
+     * 开始或停止
+     *
+     * @param status 状态
+     * @param id     id
+     */
+    @Override
+    public void startOtStop(Integer status, Long id) {
+        Dish dish = new Dish();
+        dish.setId(id);
+        dish.setStatus(status);
+
+        this.updateById(dish);
+
+        if (Objects.equals(status, StatusConstant.DISABLE)) {
+            // 如果是停售操作，还需要将包含当前菜品的套餐也停售
+            List<Long> dishIds = new ArrayList<>();
+            dishIds.add(id);
+            // select setmeal_id from setmeal_dish where dish_id in (?,?,?)
+            List<Long> setmealIds = setmealDishMapper.getSetmealIdsByDishIds(dishIds);
+            System.err.println(setmealIds);
+            if (setmealIds != null && setmealIds.size() > 0) {
+                for (Long setmealId : setmealIds) {
+                    Setmeal setmeal = Setmeal.builder()
+                            .id(setmealId)
+                            .status(StatusConstant.DISABLE)
+                            .build();
+                    setmealMapper.updateById(setmeal);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * 更新菜品与味道
+     *
+     * @param dishDTO 菜dto
+     */
+    @Override
+    public void updateWithFlavor(DishDTO dishDTO) {
+        // 先修改基本信息
+        Dish dish = new Dish();
+        BeanUtils.copyProperties(dishDTO,dish);
+        this.updateById(dish);
+
+        //1 先把原先菜品口味删掉
+        QueryWrapper<DishFlavor> dishFlavorQueryWrapper = new QueryWrapper<>();
+        dishFlavorQueryWrapper.eq("dish_id",dishDTO.getId());
+        dishFlavorMapper.delete(dishFlavorQueryWrapper);
+
+        //2 再重新插入新的口味
+        List<DishFlavor> flavors = dishDTO.getFlavors();
+        if (flavors!=null && flavors.size()>0){
+            for (DishFlavor flavor : flavors) {
+                flavor.setDishId(dishDTO.getId());
+            }
+            //批量插入数据
+            dishFlavorMapper.insert(flavors);
+        }
     }
 
     //添加菜品

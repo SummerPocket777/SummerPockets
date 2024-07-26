@@ -5,6 +5,7 @@ import store from '..'
 
 const getDefaultState = () => {
   return {
+    id: '',
     token: getToken(),
     name: '',
     avatar: '',
@@ -21,6 +22,9 @@ const mutations = {
   },
   SET_TOKEN: (state, token) => {
     state.token = token
+  },
+  SET_ID: (state, id) => {
+    state.id = id
   },
   SET_NAME: (state, name) => {
     state.name = name
@@ -63,12 +67,12 @@ const actions = {
           return reject('验证失败，请重新登录')
         }
 
-        const { name, avatar, roles } = data.user
-
+        const { name, avatar, roles, userId } = data.user
         commit('SET_NAME', name)  // 设置用户名
         commit('SET_AVATAR', avatar)  // 设置头像
         commit('SET_ROLE', roles)  // 设置角色列表
         commit('SET_MENU', data.menuTree)  // 设置菜单树
+        commit('SET_ID', userId)
         resolve(data)
       }).catch(error => {
         reject(error)

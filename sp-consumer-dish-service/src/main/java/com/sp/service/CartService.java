@@ -29,4 +29,6 @@ public interface CartService {
      * 清空购物车
      */
     void cleanCart(Long tableId, Long businessId);
+
+    void del(ShoppingCartVO shoppingCartVO);
 }

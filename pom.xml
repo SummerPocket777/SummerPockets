@@ -22,7 +22,7 @@
         <module>sp-consumer-voucher-service</module>
         <module>sp-admin-user-service</module>
         <module>sp-consumer-book-service</module>
-        <module>sp-websocket-service</module>
+        <module>sp-shop-chat-service</module>
     </modules>
 
     <properties>
@@ -40,6 +40,7 @@
         <spring.cloud.starter.bootstrap>3.1.5</spring.cloud.starter.bootstrap>
         <satoken.spring.boot.starter>1.38.0</satoken.spring.boot.starter>
     </properties>
+
 
 
     <dependencyManagement>

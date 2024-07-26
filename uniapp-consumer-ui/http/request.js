@@ -20,7 +20,7 @@ const request = (options) => {
 		title: '加载中...',
 	});
 	return new Promise((resolve, reject) => {
-		console.log("request url", config.baseUrl + url);
+		// console.log("request url", config.baseUrl + url);
 		uni.request({
 			header: header,
 			method: method,
@@ -28,8 +28,8 @@ const request = (options) => {
 			url: config.baseUrl + url,
 			data: data,
 			success: (res) => {
-				console.log("request data", res);
-				console.log("request data.statusCode", res.statusCode);
+				// console.log("request data", res);
+				// console.log("request data.statusCode", res.statusCode);
 				if (res.statusCode === 200) {
 					resolve(res.data);
 				} else {

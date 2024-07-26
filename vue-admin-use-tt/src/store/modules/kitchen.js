@@ -1,13 +1,17 @@
-import { getOrderList, updateOrderStatus } from '@/api/kitchen'
+import { getOrderList, updateOrderStatus, getHistoryOrdersListByShop } from '@/api/kitchen'
 
 // 共享状态
 const state = {
-  orderList: []
+  orderList: [],
+  historyorderList: []
 }
 // 改变状态的唯一途径
 const mutations = {
   set_orderList(state, list) {
     state.orderList = list
+  },
+  set_historyorderList(state, list) {
+    state.historyorderList = list
   },
 
   update_orderStatus(state, data) {
@@ -50,7 +54,23 @@ const actions = {
         reject(error)
       })
     })
-  }
+  },
+
+  getHistoryOrdersListByShop({ commit }, shopid) {
+
+    return new Promise((resolve, reject) => {
+      getHistoryOrdersListByShop(shopid).then(res => {
+
+        if (res.data) {
+
+          commit('set_historyorderList', res.data)
+        }
+        resolve(res.data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
 
 }
 

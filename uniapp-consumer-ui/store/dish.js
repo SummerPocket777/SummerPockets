@@ -12,8 +12,10 @@ export const dishStore = defineStore('dish',{
 	},
 	actions:{
 		getDishList(data){
-			console.log("user.js data",data)
 			return new handlePromise(dish.getDishList,data)
-		}
+		},
+		sumbitOrder(data){
+			return new handlePromise(dish.sumbitOrder,data)
+		},
 	}
 })

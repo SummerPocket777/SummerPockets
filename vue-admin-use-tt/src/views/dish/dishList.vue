@@ -49,12 +49,12 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="check_status" label="商品状态" align="center">
-        <template slot-scope="{ row, $index }">
-          <div :class=" $index ">{{ row.status==1 ? "已上架" : "待审核" }}</div>
+      <el-table-column prop="status"  sortable label="起售/禁售">
+        <template slot-scope="scope">
+          <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" @change="switchChange(scope.row)">
+          </el-switch>
         </template>
       </el-table-column>
-
       <el-table-column label="操作" width="230" align="center">
         <template slot-scope="{ row }">
           <el-button type="primary" size="mini">编辑</el-button>
@@ -71,7 +71,7 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="pageData.totalRow"
        @size-change="handlePageSizeChange"
-      :page-sizes="[3, 5, 10]"
+      :page-sizes="[5, 10, 20]"
       :page-size="pageData.pageSize"
       :current-page="pageData.pageNo"
       @current-change="handleCurrentChange" />
@@ -82,7 +82,7 @@
 
 <script>
 import dialogForm from './components/listForm.vue'
-import {getDishList,getAllCate,getDishDetail} from '@/api/dish'
+import {getDishList, getAllCate, getDishDetail, startOtStop} from '@/api/dish'
 
 
 
@@ -151,8 +151,20 @@ export default {
       getDishDetail(id).then(res => {
         console.log("getDishDetail res",res)
       })
-    }
-
+    },
+    // 起售/禁售
+    switchChange(row) {
+      console.log("起售/禁售 row",row)
+      let params = {
+        id: row.id,
+        status: row.status,
+      };
+      startOtStop(params).then(res => {
+        console.log("startOtStop res", res);
+      }).catch(error => {
+        console.error("Error in startOtStop", error);
+      });
+    },
 
   },
   created(){

@@ -1,10 +1,11 @@
 <template>
-	<view class="content" style="background-image: url(../../static/index-back.jpg);">
+	<view class="content" >
+		<!-- style="background-image: url(../../static/index-back.jpg);" -->
 		<!-- 小程序基础库需配置为 2.22.1 -->
 		<view class="uni-list">
 			<view class="uni-list-cell">
 				<view class="uni-list-cell-left">
-					当前选择的餐厅
+					当前选择的文具店
 				</view>
 				<view>
 					<picker :value="index" :range="arr" @change="bindChange">
@@ -21,8 +22,8 @@
 			</view>
 
 			<view class="yuyue-view">
-				<text style="width: 150rpx;padding-top: 13rpx;">用餐人数</text>
-				<input class="yuyue-input" v-model="yuyueInfo.peopleNumber" placeholder="请输入用餐人数" type="number"
+				<text style="width: 150rpx;padding-top: 13rpx;">来店人数</text>
+				<input class="yuyue-input" v-model="yuyueInfo.peopleNumber" placeholder="请输来店人数" type="number"
 					maxlength="2" />
 			</view>
 			<view class="yuyue-view">

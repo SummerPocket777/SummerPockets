@@ -286,7 +286,7 @@ public class CategoryServiceImpl extends ServiceImpl<CateMapper, Category> imple
         ValueOperations<String, Object> valueOps = redisTemplate.opsForValue();
 
         UserDishDTO userDishDTO;
-        if (redisTemplate.hasKey(listDishByShopKey)) {
+        if (Boolean.TRUE.equals(redisTemplate.hasKey(listDishByShopKey))) {
             // 从缓存中获取数据
 //            userDishDTO = (UserDishDTO) valueOps.get(listDishByShopKey);
             userDishDTO = redisCacheUtil.getCacheObject(listDishByShopKey);
@@ -299,7 +299,7 @@ public class CategoryServiceImpl extends ServiceImpl<CateMapper, Category> imple
         String cateCacheKey = DishConstants.REDIS_CATEGORY_LIST + businessId;
         ListOperations<String, Object> listOps = redisTemplate.opsForList();
         List<Category> categoryList = new ArrayList<>();
-        if (redisTemplate.hasKey(cateCacheKey)) {
+        if (Boolean.TRUE.equals(redisTemplate.hasKey(cateCacheKey))) {
             List<Object> cachedCategories = listOps.range(cateCacheKey, 0, -1);
             if (cachedCategories != null) {
                 for (Object obj : cachedCategories) {
@@ -314,7 +314,7 @@ public class CategoryServiceImpl extends ServiceImpl<CateMapper, Category> imple
             // 缓存分类列表
             if (!categoryList.isEmpty()) {
 //                listOps.rightPushAll(cateCacheKey, categoryList.toArray());
-                redisCacheUtil.setCacheList(cateCacheKey, categoryList);
+//                redisCacheUtil.setCacheList(cateCacheKey, categoryList);
             }
         }
         userDishDTO.setCateList(categoryList);
@@ -329,7 +329,7 @@ public class CategoryServiceImpl extends ServiceImpl<CateMapper, Category> imple
             // 查询菜品并缓存
             String dishCacheKey = DishConstants.REDIS_CATEGORY_DISH + businessId + ":" + categoryId;
             List<Dish> dishList = new ArrayList<>();
-            if (redisTemplate.hasKey(dishCacheKey)!=null) {
+            if (Boolean.TRUE.equals(redisTemplate.hasKey(dishCacheKey))) {
                 List<Object> cachedDishes = listOps.range(dishCacheKey, 0, -1);
                 if (cachedDishes != null) {
                     for (Object obj : cachedDishes) {
@@ -343,7 +343,7 @@ public class CategoryServiceImpl extends ServiceImpl<CateMapper, Category> imple
                 dishList = dishMapper.selectList(dishQueryWrapper);
                 // 缓存菜品列表
                 if (!dishList.isEmpty()) {
-                    listOps.rightPushAll(dishCacheKey, dishList.toArray());
+//                    listOps.rightPushAll(dishCacheKey, dishList.toArray());
                 }
             }
 
@@ -363,7 +363,7 @@ public class CategoryServiceImpl extends ServiceImpl<CateMapper, Category> imple
             // 查询套餐并缓存
             String setmealCacheKey = DishConstants.REDIS_CATEGORY_SETMEAL + businessId + ":" + categoryId;
             List<Setmeal> setmealList = new ArrayList<>();
-            if (redisTemplate.hasKey(setmealCacheKey)!=null) {
+            if (Boolean.TRUE.equals(redisTemplate.hasKey(setmealCacheKey))) {
                 List<Object> cachedSetmeals = listOps.range(setmealCacheKey, 0, -1);
                 if (cachedSetmeals != null) {
                     for (Object obj : cachedSetmeals) {
@@ -376,7 +376,7 @@ public class CategoryServiceImpl extends ServiceImpl<CateMapper, Category> imple
                 setmealList = setmealMapper.selectList(setmealQueryWrapper);
                 // 缓存套餐列表
                 if (!setmealList.isEmpty()) {
-                    listOps.rightPushAll(setmealCacheKey, setmealList.toArray());
+//                    listOps.rightPushAll(setmealCacheKey, setmealList.toArray());
                 }
             }
 

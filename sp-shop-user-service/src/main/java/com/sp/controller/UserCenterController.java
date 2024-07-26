@@ -23,4 +23,9 @@ public class UserCenterController {
     public BaseResponse updateUserInfo(@RequestBody SysBusiness sysBusiness){
         return userCenterService.updateUserCenterInfo(sysBusiness);
     }
+
+    @RequestMapping("/updateLogo")
+    public BaseResponse updateLogo(@RequestBody SysBusiness business){
+        return userCenterService.updateLogo(business);
+    }
 }
