@@ -42,3 +42,10 @@ export function addDish(data) {
     data
   })
 }
+export function updateDish(data) {
+  return request({
+    url: '/consumer-dish/dish/update',
+    method: 'post',
+    data
+  })
+}

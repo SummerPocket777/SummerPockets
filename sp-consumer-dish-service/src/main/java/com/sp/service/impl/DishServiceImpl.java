@@ -16,6 +16,7 @@ import com.sp.model.PageResult;
 import com.sp.model.domain.*;
 import com.sp.model.dto.DishDTO;
 import com.sp.service.DishService;
+import com.sp.vo.DishVO;
 import com.sp.vo.PageVO;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.BeanUtils;
@@ -139,6 +140,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish>  implements D
         //3 封装到vo
         DishDTO dishDTO = new DishDTO();
         BeanUtils.copyProperties(dish,dishDTO);
+        dishDTO.setShopId(dish.getBusinessId());
         dishDTO.setFlavors(dishFlavors);
         return dishDTO;
     }
@@ -150,7 +152,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish>  implements D
         //1 判断当前菜品是否在起售中
         for (Long id : ids) {
             Dish dish = this.getById(id);
-            if (dish.getStatus()== StatusConstant.ENABLE){
+            if (Objects.equals(dish.getStatus(), StatusConstant.ENABLE)){
                 //在起售状态 不能删除 抛个异常
                 throw new BusinessException(ErrorCode.PARAMS_ERROR,"在起售状态 不能删除");
             }
@@ -231,6 +233,30 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish>  implements D
             }
             //批量插入数据
             dishFlavorMapper.insert(flavors);
+        }
+    }
+
+    @Override
+    public void saveWishFlavor(DishVO dishVO) {
+        Dish dish = new Dish();
+
+        // 对象属性拷贝赋值
+        BeanUtils.copyProperties(dishVO, dish);
+        // 向菜品表插入1数据
+        dish.setCreateTime(new Date());
+        dishMapper.insert(dish);
+
+        //获取insert语句生成的主键值
+        Long dishId = dish.getId();
+
+        // 向口味表插入多个数据
+        List<DishFlavor> flavors = dishVO.getFlavors();
+        if (flavors != null && flavors.size() > 0) {// 说明口味数据不为空
+            flavors.forEach(dishFlavor -> {
+                dishFlavor.setDishId(dishId);
+            });
+            // 向口味表插入n条数据
+            dishFlavorMapper.insertBatch(flavors);
         }
     }
 

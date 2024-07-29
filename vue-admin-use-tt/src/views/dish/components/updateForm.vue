@@ -13,7 +13,6 @@
                 <!--        <CateSelect v-model="formData.cate" />-->
                 <el-select v-model="formData.cate" placeholder="请选择" style="width: 200px">
                     <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-
                 </el-select>
             </el-form-item>
             <!-- 商品价格 -->

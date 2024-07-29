@@ -7,6 +7,7 @@ import com.sp.model.domain.Dish;
 import com.sp.model.dto.DishDTO;
 import com.sp.service.impl.DishServiceImpl;
 import com.sp.utils.RedisCacheUtil;
+import com.sp.vo.DishVO;
 import com.sp.vo.PageVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -33,10 +34,16 @@ public class DishController {
         return ResultUtils.success(dishListThroughSQL);
     }
 
-    @RequestMapping("/add")
+    @PostMapping("/add")
     //添加菜品
-    public BaseResponse<String> addDish(@RequestBody Dish dish){
-        dishService.insertDish(dish);
+    public BaseResponse<String> addDish(@RequestBody DishVO dishVO){
+        log.info("新增菜品：{}",dishVO);
+        dishService.saveWishFlavor(dishVO);
+
+        //清理缓存数据
+//        String key="dish_"+dishVO.getId();
+//        cleanDishRedis(key);
+
         return ResultUtils.success("添加成功");
     }
 
@@ -86,7 +93,7 @@ public class DishController {
         return ResultUtils.success();
     }
 
-    @PutMapping
+    @PostMapping("/update")
     public  BaseResponse update(@RequestBody DishDTO dishDTO){
         log.info("修改菜品信息:{}",dishDTO);
         dishService.updateWithFlavor(dishDTO);

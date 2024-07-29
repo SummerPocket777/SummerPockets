@@ -57,9 +57,8 @@
       </el-table-column>
       <el-table-column label="操作" width="230" align="center">
         <template slot-scope="{ row }">
-          <el-button type="primary" size="mini">编辑</el-button>
-          <el-button v-if="row.status==1" type="primary" size="mini" @click="getDishDetail(row.id)">详情</el-button>
-          <el-button v-else type="success" size="mini">审核</el-button>
+          <el-button type="primary" size="mini" @click="openForm(row.id)">编辑</el-button>
+<!--          <el-button type="primary" size="mini" @click="getDishDetail(row.id)">详情</el-button>-->
           <el-button size="mini" type="danger">删除</el-button>
         </template>
       </el-table-column>
@@ -109,6 +108,7 @@ export default {
   },
   methods: {
     openForm(id){
+      console.log("点击了openForm")
       if(id){
         this.$refs.dialogForm.open(id)
       }else{

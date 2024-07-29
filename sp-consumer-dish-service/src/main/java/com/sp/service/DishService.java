@@ -5,6 +5,7 @@ import com.sp.model.PageResult;
 import com.sp.model.domain.Dish;
 import com.sp.model.domain.SetmealDish;
 import com.sp.model.dto.DishDTO;
+import com.sp.vo.DishVO;
 import com.sp.vo.PageVO;
 
 import java.util.List;
@@ -29,4 +30,6 @@ public interface DishService extends IService<Dish> {
     void startOtStop(Integer status, Long id);
 
     void updateWithFlavor(DishDTO dishDTO);
+
+    void saveWishFlavor(DishVO dishVO);
 }

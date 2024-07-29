@@ -74,6 +74,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Orders> listHistoryOrders(Long shopId) {
+        return null;
+    }
+
+    @Override
     //根据商家id和用户id来查询用户订单
     public List<Orders> listOrders(Long userId, Long shopId) {
         QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();

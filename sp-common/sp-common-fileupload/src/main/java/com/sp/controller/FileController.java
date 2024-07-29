@@ -34,6 +34,7 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/file")
+@CrossOrigin(origins = "*")
 public class FileController {
 
     /**
